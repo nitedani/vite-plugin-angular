@@ -8,6 +8,7 @@ import {
   AngularSwapPlatformDynamic,
 } from './swc';
 import { defu } from 'defu';
+import { join } from 'path';
 
 export function vpa(options?: AngularVitePluginOptions): Plugin {
   let isProduction = false;
@@ -19,6 +20,12 @@ export function vpa(options?: AngularVitePluginOptions): Plugin {
       return {
         resolve: {
           preserveSymlinks: true,
+          alias: [
+            {
+              find: /~/,
+              replacement: join(__dirname, 'node_modules') + '/',
+            },
+          ],
         },
         esbuild: false,
         build: {
@@ -116,7 +123,7 @@ export function vpa(options?: AngularVitePluginOptions): Plugin {
               : []),
           ]),
         })
-      ).then(res => {
+      ).then((res) => {
         return {
           code: res.code,
           map: res.map,

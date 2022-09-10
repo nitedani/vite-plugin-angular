@@ -1,0 +1,29 @@
+{
+  "name": "vite-ng-app",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@angular/animations": "^14.2.1",
+    "@angular/cdk": "^14.2.1",
+    "@angular/common": "^14.0.0",
+    "@angular/compiler": "^14.0.0",
+    "@angular/core": "^14.0.0",
+    "@angular/material": "^14.2.1",
+    "@angular/platform-browser": "^14.0.0",
+    "@angular/platform-browser-dynamic": "^14.0.0",
+    "@nitedani/vite-plugin-angular": "^14.0.0",
+    "rxjs": "^7.5.6",
+    "sass": "^1.54.9",
+    "zone.js": "^0.11.8"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.5",
+    "vite": "^3.1.0"
+  },
+  "prettier": {
+    "singleQuote": true
+  }
+}
