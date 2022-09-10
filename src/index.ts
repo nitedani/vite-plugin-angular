@@ -9,6 +9,7 @@ import {
 } from './swc';
 import { defu } from 'defu';
 import { join } from 'path';
+import { cwd } from 'process';
 
 export function vpa(options?: AngularVitePluginOptions): Plugin {
   let isProduction = false;
@@ -23,7 +24,7 @@ export function vpa(options?: AngularVitePluginOptions): Plugin {
           alias: [
             {
               find: /~/,
-              replacement: join(__dirname, 'node_modules') + '/',
+              replacement: join(cwd(), 'node_modules') + '/',
             },
           ],
         },
