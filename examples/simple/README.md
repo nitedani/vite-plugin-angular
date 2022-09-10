@@ -1,7 +1,8 @@
 # vite angular app
 
-usage:
+How to run:
 
 ```
-pnpm dev
+npm i
+npm run dev
 ```
