@@ -1,0 +1,34 @@
+{
+  "name": "@nitedani/vite-plugin-angular",
+  "version": "14.0.0",
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "vite"
+  ],
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/nitedani/vite-plugin-angular"
+  },
+  "main": "lib/cjs/index.js",
+  "typings": "./lib/cjs/index.d.ts",
+  "scripts": {
+    "build": "npm run build:esm && npm run  build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs"
+  },
+  "dependencies": {
+    "@swc/core": "^1.2.249",
+    "defu": "^6.1.0",
+    "swc-ast-helpers": "^0.2.2",
+    "vite": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.16",
+    "typescript": "^4.8.3"
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "singleQuote": true
+  }
+}
