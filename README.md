@@ -7,7 +7,7 @@ This plugin is work in progress. Don't use it for production!
 - [Angular Material example](./examples/material/)
 - [Angular Universal + NestJS SSR example](./examples/universal/)
 
-What's working:
+Kind of working:
 - hot-reload
 - scss support
 - dependency injection
