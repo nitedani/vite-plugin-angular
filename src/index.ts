@@ -63,8 +63,6 @@ export function angular(options?: VitePluginAngularOptions): Plugin {
                     }
 
                     if (id.includes('node_modules')) {
-                      console.log(id, 'asdsadassdsad');
-
                       return 'vendor';
                     }
                     return null;

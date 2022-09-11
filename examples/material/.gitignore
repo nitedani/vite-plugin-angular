@@ -5,3 +5,4 @@ dist
 /out-tsc
 .pnpm-store
 .pnpm_store
+package-lock.json
