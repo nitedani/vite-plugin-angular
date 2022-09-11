@@ -1,4 +1,4 @@
-# vite angular app
+# vite angular material app
 
 How to run:
 

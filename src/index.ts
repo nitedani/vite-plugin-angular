@@ -1,6 +1,6 @@
-import { AngularVitePluginOptions } from './plugin-options';
-import { Plugin } from 'vite';
-import { transform, plugins, Program } from '@swc/core';
+import { AngularVitePluginOptions as VitePluginAngularOptions } from './plugin-options';
+import { Plugin, UserConfig } from 'vite';
+import { transform, plugins, Program, minify } from '@swc/core';
 import {
   AngularComponents,
   AngularImportCompilerComponents,
@@ -10,15 +10,21 @@ import {
 import { defu } from 'defu';
 import { join } from 'path';
 import { cwd } from 'process';
+import { JsMinifyOptions } from '@swc/core/types';
 
-export function vpa(options?: AngularVitePluginOptions): Plugin {
+export function angular(options?: VitePluginAngularOptions): Plugin {
   let isProduction = false;
+  let isSsr = false;
   const fileExtensionRE = /\.[^/\s?]+$/;
   return {
     name: 'vite-plugin-angular',
     enforce: 'pre',
-    config() {
-      return {
+    config(userConfig) {
+      isSsr = !!userConfig.build?.ssr;
+      const config: UserConfig = {
+        ssr: {
+          external: ['reflect-metadata'],
+        },
         resolve: {
           preserveSymlinks: true,
           alias: [
@@ -30,28 +36,62 @@ export function vpa(options?: AngularVitePluginOptions): Plugin {
         },
         esbuild: false,
         build: {
+          outDir: isSsr ? 'dist/server' : 'dist/client',
           rollupOptions: {
             output: {
-              manualChunks: {
-                vendor: [
-                  '@angular/core',
-                  '@angular/common',
-                  '@angular/platform-browser',
-                  '@angular/platform-browser-dynamic',
-                  'zone.js/dist/zone',
-                ],
-              },
+              manualChunks: isSsr
+                ? undefined
+                : (id) => {
+                    if (
+                      ['zone.js', '@angular/compiler', 'tslib'].some((p) =>
+                        id.includes(p)
+                      )
+                    ) {
+                      return 'runtime0';
+                    }
+
+                    if (
+                      [
+                        '@angular/core',
+                        '@angular/common',
+                        '@angular/platform-browser',
+                        '@angular/animations',
+                        'rxjs',
+                      ].some((p) => id.includes(p))
+                    ) {
+                      return 'runtime1';
+                    }
+
+                    if (id.includes('node_modules')) {
+                      console.log(id, 'asdsadassdsad');
+
+                      return 'vendor';
+                    }
+                    return null;
+                  },
             },
           },
         },
       };
+
+      return config;
     },
     configResolved(config) {
       isProduction = config.isProduction;
     },
     transform: (code, id) => {
+      const minifyOptions: JsMinifyOptions = {
+        compress: !isSsr && isProduction,
+        mangle: !isSsr && isProduction,
+        ecma: '2020',
+        module: true,
+        format: {
+          comments: false,
+        },
+      };
+
       if (id.includes('node_modules')) {
-        return code;
+        return minify(code, minifyOptions);
       }
 
       const [filepath, querystring = ''] = id.split('?');
@@ -59,10 +99,6 @@ export function vpa(options?: AngularVitePluginOptions): Plugin {
         querystring.match(fileExtensionRE) ||
         filepath.match(fileExtensionRE) ||
         [];
-
-      if (id.includes('node_modules')) {
-        return code;
-      }
 
       if (!/\.(js|ts|tsx|jsx?)$/.test(extension)) {
         return;
@@ -74,7 +110,7 @@ export function vpa(options?: AngularVitePluginOptions): Plugin {
         defu(options?.swc ?? {}, {
           sourceMaps: !isProduction,
           jsc: {
-            target: options?.target ?? 'es2020',
+            target: 'es2020',
             parser: {
               syntax: 'typescript',
               tsx: false,
@@ -85,23 +121,9 @@ export function vpa(options?: AngularVitePluginOptions): Plugin {
               decoratorMetadata: true,
               legacyDecorator: true,
             },
-            minify: {
-              compress: isProduction
-                ? {
-                    unused: true,
-                    dead_code: true,
-                  }
-                : false,
-              ecma: '2016',
-              module: true,
-              mangle: isProduction,
-            },
+            minify: minifyOptions,
           },
-          minify: isProduction,
-          module: {
-            type: 'es6',
-            lazy: true,
-          },
+          minify: !isSsr && isProduction,
           plugin: plugins([
             (m: Program) => {
               const angularComponentPlugin = new AngularComponents({
@@ -124,12 +146,7 @@ export function vpa(options?: AngularVitePluginOptions): Plugin {
               : []),
           ]),
         })
-      ).then((res) => {
-        return {
-          code: res.code,
-          map: res.map,
-        };
-      });
+      );
     },
   };
 }

@@ -1,6 +1,5 @@
-import type { JscTarget, Options } from '@swc/core';
+import type { Options } from '@swc/core';
 
 export interface AngularVitePluginOptions {
-  target: JscTarget;
   swc?: Options;
 }
