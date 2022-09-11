@@ -55,7 +55,7 @@ export class AngularComponents extends Visitor {
           span: createSpan(),
           typeOnly: false,
           specifiers: [createImportDefaultSpecifier(identifier)],
-          source: createStringLiteral(`${url}?raw`),
+          source: createStringLiteral(url),
         });
       }
     }
@@ -106,7 +106,7 @@ export class AngularComponents extends Visitor {
     const identifier = randomIdentifier();
     this.importFiles.push({
       identifier,
-      url: templateUrl,
+      url: templateUrl + '?raw',
     });
     return createKeyValueProperty(
       createIdentifer('template'),
