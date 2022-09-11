@@ -4,6 +4,8 @@ Vite plugin for Angular.
 This plugin is work in progress. Don't use it for production!
 
 [A simple example](./examples/simple/)
+[Angular Material example](./examples/material/)
+[Angular Universal + NestJS SSR example](./examples/universal/)
 
 What's working:
 - hot-reload
