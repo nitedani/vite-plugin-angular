@@ -15,7 +15,7 @@ What's working:
 
 TODO:
 - handling of environment files
-
+- make sure it works with angular libraries
 
 Usage:
 
