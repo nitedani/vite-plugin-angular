@@ -1,16 +1,16 @@
+import { Type } from '@angular/core';
 import { DynamicModule, Inject, Module, OnModuleInit } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { CommonEngine } from '@nguniversal/common/engine';
 import type { Express, NextFunction, Request, Response } from 'express';
 import path, { join } from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OPTIONS = Symbol.for('vite-plugin-angular.options');
-import type { Type } from '@angular/core';
-import { CommonEngine } from '@nguniversal/common/engine';
 
-import { cwd } from 'process';
 import { readFile } from 'fs/promises';
+import { cwd } from 'process';
 
 interface AngularOptions {
   root?: string;
@@ -61,7 +61,7 @@ export class AngularUniversalModule implements OnModuleInit {
     }
     const app = httpAdapter.getInstance() as Express;
 
-    const engine = new CommonEngine(this.options.bootstrap, []);
+    const engine = new CommonEngine();
 
     const documentPath = import.meta.env.DEV
       ? join(cwd(), 'index.html')
@@ -74,10 +74,17 @@ export class AngularUniversalModule implements OnModuleInit {
       template = template.replace('</head>', `${devScript}</head>`);
     }
 
-    app.get('*', async (_req: Request, res: Response, _next: NextFunction) => {
+    app.get('*', async (req: Request, res: Response, _next: NextFunction) => {
+      const serverUrl = `${req.protocol}://${req.get('host')}`;
       const html = await engine.render({
         document: template,
         bootstrap: this.options.bootstrap,
+        providers: [
+          {
+            provide: 'serverUrl',
+            useValue: serverUrl,
+          },
+        ],
       });
       res.send(html);
     });
