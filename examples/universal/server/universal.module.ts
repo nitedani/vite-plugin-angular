@@ -55,9 +55,7 @@ export class AngularUniversalModule implements OnModuleInit {
     }
     const httpAdapter = this.httpAdapterHost.httpAdapter;
     if (!httpAdapter) {
-      throw new Error(
-        'httpAdapter is undefined, no decorator metadata available'
-      );
+      return;
     }
     const app = httpAdapter.getInstance() as Express;
 
