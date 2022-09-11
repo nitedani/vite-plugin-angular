@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
 import { XhrFactory } from '@angular/common';
 //@ts-ignore
-import * as xhr2 from 'xhr2';
+import xhr2 from 'xhr2';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UniversalInterceptorService } from './modules/universal-interceptor/universal-interceptor.service';
 export class ServerXhr implements XhrFactory {
