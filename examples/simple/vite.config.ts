@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
-import { vpa } from '@nitedani/vite-plugin-angular';
+import { angular } from '@nitedani/vite-plugin-angular';
 
 export default defineConfig({
-  plugins: [vpa()],
+  plugins: [angular()],
 });
