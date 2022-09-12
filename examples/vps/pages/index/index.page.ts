@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
-import { OnApplicationShutdown } from '@nestjs/common';
+import { Component, Input, OnChanges } from '@angular/core';
 export { Page };
 
 @Component({
