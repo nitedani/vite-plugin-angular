@@ -1,1 +1,1 @@
-export * from './visitors';
+export * from './visitors/index';

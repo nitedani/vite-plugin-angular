@@ -1,6 +1,6 @@
 {
   "name": "@nitedani/vite-plugin-angular",
-  "version": "14.1.2",
+  "version": "14.1.3",
   "license": "MIT",
   "keywords": [
     "angular",
@@ -19,11 +19,11 @@
   },
   "dependencies": {
     "@analogjs/vite-plugin-angular": "^0.2.0-alpha.7",
-    "@babel/core": "^7.19.0",
     "@angular-devkit/build-angular": "^14.2.2",
     "@angular/cli": "^14.2.2",
-    "@angular/compiler-cli": "^14.2.1",
     "@angular/compiler": "^14.0.0",
+    "@angular/compiler-cli": "^14.2.1",
+    "@babel/core": "^7.19.0",
     "@swc/core": "^1.2.249",
     "defu": "^6.1.0",
     "swc-ast-helpers": "^0.2.2",
