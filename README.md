@@ -5,7 +5,8 @@ This plugin is work in progress. Don't use it for production!
 
 - [A simple example](./examples/simple/)
 - [Angular Material example](./examples/material/)
-- [Angular Universal + NestJS SSR example](./examples/universal/)
+- [NestJS ssr example](./examples/universal/)
+- [vite-plugin-ssr example](./examples/vps/)
 
 Kind of working:
 - hot-reload
