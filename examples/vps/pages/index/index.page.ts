@@ -7,7 +7,7 @@ export { Page };
   template: `<div>Index page works</div>`,
 })
 class Page implements OnChanges {
-  @Input('pageProps') pageProps: any;
+  @Input() pageProps: any;
 
   ngOnChanges() {
     console.log(`Running on ${import.meta.env.SSR ? 'server' : 'browser'} `);
