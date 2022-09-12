@@ -8,10 +8,15 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  counter = 0;
   constructor(private appService: AppService, private httpClient: HttpClient) {
     httpClient.get('/api').subscribe((data) => {
       console.log(data);
     });
     console.log(appService.getHello());
+  }
+
+  increment() {
+    this.counter++;
   }
 }

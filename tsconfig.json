@@ -11,7 +11,7 @@
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
     "esModuleInterop": true,
-    "noImplicitReturns": true,
+    // "noImplicitReturns": true,
     "noImplicitThis": true,
     "skipLibCheck": true,
     "noImplicitAny": false,

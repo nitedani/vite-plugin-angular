@@ -20,11 +20,11 @@ export default defineConfig({
     },
   ],
   plugins: [
+    angular(),
     vavite({
       serverEntry: '/server/main.ts',
       serveClientAssetsInDev: true,
     }),
-    angular(),
     tsconfigPaths(),
   ],
 });

@@ -20,6 +20,20 @@
     ],
     "types": [
       "vite/client"
-    ]
-  }
+    ],
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "files": [
+    "src/main.ts",
+    "server/main.ts"
+  ],
+  "include": [
+    "src/**/*",
+    "server/**/*"
+  ]
 }

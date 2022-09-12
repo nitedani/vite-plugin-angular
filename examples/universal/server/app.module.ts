@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AppServerModule } from 'src/main.server';
+import { AppServerModule } from '../src/main.server';
 import { AngularUniversalModule } from './universal.module';
 import { AppController } from './app.controller';
 
