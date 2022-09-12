@@ -1,4 +1,8 @@
-# vavite + nestjs + angular universal ssr
+
+- vavite
+- angular
+- nestjs
+- vite-plugin-ssr
 
 How to run:
 
