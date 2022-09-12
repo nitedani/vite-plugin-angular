@@ -3,7 +3,6 @@ export { Page };
 
 @Component({
   standalone: true,
-  selector: 'my-component',
   template: `<div>Index page works</div>`,
 })
 class Page implements OnChanges {
