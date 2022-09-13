@@ -21,7 +21,10 @@ export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
   };
 
   if (id.includes('node_modules')) {
-    return minify(code, minifyOptions);
+    if (isProduction) {
+      return minify(code, minifyOptions);
+    }
+    return;
   }
 
   const [filepath, querystring = ''] = id.split('?');

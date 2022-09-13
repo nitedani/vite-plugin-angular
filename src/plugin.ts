@@ -73,11 +73,14 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
         isProduction = config.isProduction;
       },
       transform(code, id) {
-        const isComponent = code.includes('@Component');
+        const _id = normalizePath(id);
+        const _check = normalizePath(join(cwd(), 'server'));
+        const _check2 = normalizePath(join(cwd(), 'renderer'));
+        const isServerAsset = _id.includes(_check) || _id.includes(_check2);
+        const isComponent =
+          code.includes('@NgModule') || code.includes('@Component');
 
-        // We need to compile the component templates using @analogjs/vite-plugin-angular
-        // TODO: is this check working with third-party angular components?
-        if (isComponent) {
+        if (isComponent || (!isSsrBuild && !isServerAsset)) {
           return usePluginTransform({
             plugin: analogPlugin,
             code,

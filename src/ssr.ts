@@ -8,6 +8,7 @@ import {
   InjectionToken,
   Provider,
   reflectComponentType,
+  Type,
 } from '@angular/core';
 import {
   BEFORE_APP_SERIALIZED,
@@ -15,11 +16,16 @@ import {
 } from '@angular/platform-server';
 
 export const SSR_PAGE_PROPS = new InjectionToken<{
-  props: Record<string, unknown>;
+  pageProps: Record<string, unknown>;
+  page: Parameters<typeof renderApplication>[0];
   mirror: ComponentMirror<unknown>;
 }>('@nitedani/vite-plugin-angular/ssr-props', {
   factory() {
-    return { props: {}, mirror: {} as ComponentMirror<unknown> };
+    return {
+      pageProps: {},
+      page: null,
+      mirror: {} as ComponentMirror<unknown>,
+    };
   },
 });
 
@@ -30,38 +36,33 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
   useFactory: (
     appRef: ApplicationRef,
     {
-      props,
+      pageProps,
+      page,
       mirror,
     }: {
-      props: Record<string, unknown>;
+      pageProps: Record<string, unknown>;
+      page: any;
       mirror: ComponentMirror<unknown>;
     }
   ) => {
     return () => {
       const compRef = appRef.components[0];
 
-      if (compRef && props && mirror) {
-        for (const [key, value] of Object.entries(props)) {
-          if (
-            // we double-check inputs on ComponentMirror
-            // because Astro might add additional props
-            // that aren't actually Input defined on the Component
-            mirror.inputs.some(
-              ({ templateName, propName }) =>
-                templateName === key || propName === key
-            )
-          ) {
-            compRef.setInput(key, value);
+      if (compRef && (pageProps || page) && mirror) {
+        for (const i of mirror.inputs) {
+          if (pageProps) {
+            if (i.propName in pageProps || i.templateName in pageProps) {
+              compRef.setInput(i.propName, pageProps[i.propName]);
+            }
+            if (i.propName === 'pageProps' || i.templateName === 'pageProps') {
+              compRef.setInput('pageProps', pageProps);
+            }
           }
-        }
-
-        if (
-          mirror.inputs.some(
-            ({ templateName, propName }) =>
-              templateName === 'pageProps' || propName === 'pageProps'
-          )
-        ) {
-          compRef.setInput('pageProps', props);
+          if (page) {
+            if (i.propName === 'page' || i.templateName === 'page') {
+              compRef.setInput('page', page);
+            }
+          }
         }
         compRef.changeDetectorRef.detectChanges();
       }
@@ -72,26 +73,32 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
 };
 
 export const renderToString = <T>(
-  rootComponent: Parameters<typeof renderApplication>[0],
-  options: Partial<Parameters<typeof renderApplication>[1] & { pageProps: any }>
+  rootComponent: Type<T>,
+  options: Partial<
+    Parameters<typeof renderApplication>[1] & { pageProps: any }
+  >,
+  wrapper: Type<T> = null
 ) => {
-  const mirror = reflectComponentType(rootComponent);
-  options.appId ??=
-    mirror?.selector || rootComponent.name.toString().toLowerCase();
+  if (wrapper === null) {
+    wrapper = rootComponent;
+  }
+
+  const mirror = reflectComponentType(wrapper);
+  options.appId ??= mirror?.selector || wrapper.name.toString().toLowerCase();
   options.document ??= `<${options.appId}></${options.appId}>`;
 
   const providers: Provider[] = [];
-  if (options.pageProps) {
+  if (options.pageProps || wrapper !== rootComponent) {
     providers.push(
       {
         provide: SSR_PAGE_PROPS,
-        useValue: { props: options.pageProps, mirror },
+        useValue: { pageProps: options.pageProps, page: rootComponent, mirror },
       },
       SSR_PAGE_PROPS_HOOK_PROVIDER
     );
   }
 
-  return renderApplication(rootComponent, {
+  return renderApplication<T>(wrapper, {
     appId: options.appId,
     document: options.document,
     providers: [...providers, ...(options.providers || [])],
