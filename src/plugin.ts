@@ -31,24 +31,16 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
         const { buildSteps, ...rest } = _userConfig as any;
         const userConfig = rest as UserConfig;
 
-        if (!isSsrBuild) {
-          let cc = await usePluginConfig(analogPlugin, userConfig, env);
-          if (!isBuild) {
-            cc.esbuild = false;
-          }
-          return mergeConfig(cc, {
-            ssr: {
-              external: ['reflect-metadata'],
-            },
-            build: {
-              outDir: 'dist/client',
-            },
-          });
+        let cc = await usePluginConfig(analogPlugin, userConfig, env);
+        if (!isBuild) {
+          cc.esbuild = false;
         }
-
-        return {
+        return mergeConfig(cc, {
           ssr: {
             external: ['reflect-metadata'],
+          },
+          build: {
+            outDir: isSsrBuild ? 'dist/server' : 'dist/client',
           },
           resolve: {
             alias: [
@@ -58,11 +50,7 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
               },
             ],
           },
-          esbuild: false,
-          build: {
-            outDir: 'dist/server',
-          },
-        } as UserConfig;
+        });
       },
       configureServer(server) {
         if (!isSsrBuild) {
@@ -70,12 +58,10 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
         }
       },
       buildStart(options) {
-        if (!isSsrBuild) {
-          return usePluginBuildStart({
-            plugin: analogPlugin,
-            options,
-          });
-        }
+        return usePluginBuildStart({
+          plugin: analogPlugin,
+          options,
+        });
       },
       handleHotUpdate(ctx) {
         return usePluginHandleHotUpdate({
@@ -87,13 +73,11 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
         isProduction = config.isProduction;
       },
       transform(code, id) {
-        const _id = normalizePath(id);
-        const _check = normalizePath(join(cwd(), 'server'));
-        const _check2 = normalizePath(join(cwd(), 'renderer'));
-        const isServerAsset = _id.includes(_check) || _id.includes(_check2);
+        const isComponent = code.includes('@Component');
 
-        // Let the client-side code be handled by the @analogjs/vite-plugin-angular plugin
-        if (!isSsrBuild && !isServerAsset) {
+        // We need to compile the component templates using @analogjs/vite-plugin-angular
+        // TODO: is this check working with third-party angular components?
+        if (isComponent) {
           return usePluginTransform({
             plugin: analogPlugin,
             code,
@@ -102,7 +86,9 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
           });
         }
 
-        // On the server, we need decorator metadata, so use swc
+        // Run everything else through SWC
+        // On the server, we need decorator metadata,
+        // @analogjs/vite-plugin-angular uses esbuild, but esbuild doesn't support decorator metadata
         return swcTransform({
           code,
           id,

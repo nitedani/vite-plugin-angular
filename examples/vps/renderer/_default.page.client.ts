@@ -3,6 +3,7 @@ import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router';
 import { reflectComponentType } from '@angular/core';
 import { ApplicationRef, NgZone, createComponent } from '@angular/core';
 import { createApplication } from '@angular/platform-browser';
+import { Wrapper } from '../pages/wrapper';
 
 export { render };
 
@@ -15,32 +16,28 @@ async function render(pageContext: PageContextBuiltInClient & any) {
   createApplication().then((appRef: ApplicationRef) => {
     const zone = appRef.injector.get(NgZone);
     zone.run(() => {
-      const componentRef = createComponent(Page, {
+      const componentRef = createComponent(Wrapper, {
         environmentInjector: appRef.injector,
         hostElement: container,
       });
 
-      const mirror = reflectComponentType(Page);
+      const mirror = reflectComponentType(Wrapper);
 
-      if (pageProps && mirror) {
-        for (const [key, value] of Object.entries(pageProps)) {
-          if (
-            mirror.inputs.some(
-              ({ templateName, propName }) =>
-                templateName === key || propName === key
-            )
-          ) {
-            componentRef.setInput(key, value);
+      if ((pageProps || Page) && mirror) {
+        for (const i of mirror.inputs) {
+          if (pageProps) {
+            if (i.propName in pageProps || i.templateName in pageProps) {
+              componentRef.setInput(i.propName, pageProps[i.propName]);
+            }
+            if (i.propName === 'pageProps' || i.templateName === 'pageProps') {
+              componentRef.setInput('pageProps', pageProps);
+            }
           }
-        }
-
-        if (
-          mirror.inputs.some(
-            ({ templateName, propName }) =>
-              templateName === 'pageProps' || propName === 'pageProps'
-          )
-        ) {
-          componentRef.setInput('pageProps', pageProps);
+          if (Page) {
+            if (i.propName === 'page' || i.templateName === 'page') {
+              componentRef.setInput('page', Page);
+            }
+          }
         }
       }
 

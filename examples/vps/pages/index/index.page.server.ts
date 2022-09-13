@@ -8,6 +8,7 @@ async function onBeforeRender(pageContext) {
   const movies = Movie.findAll() */
   /* Or with SQL:
   const movies = sql`SELECT * FROM movies;` */
+
   return {
     pageContext: {
       pageProps: {
