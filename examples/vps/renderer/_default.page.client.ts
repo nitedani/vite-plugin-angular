@@ -3,7 +3,7 @@ import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router';
 import { reflectComponentType } from '@angular/core';
 import { ApplicationRef, NgZone, createComponent } from '@angular/core';
 import { createApplication } from '@angular/platform-browser';
-import { Wrapper } from '../pages/wrapper';
+import { WrapperPage } from './wrapper.page';
 
 export { render };
 
@@ -16,12 +16,12 @@ async function render(pageContext: PageContextBuiltInClient & any) {
   createApplication().then((appRef: ApplicationRef) => {
     const zone = appRef.injector.get(NgZone);
     zone.run(() => {
-      const componentRef = createComponent(Wrapper, {
+      const componentRef = createComponent(WrapperPage, {
         environmentInjector: appRef.injector,
         hostElement: container,
       });
 
-      const mirror = reflectComponentType(Wrapper);
+      const mirror = reflectComponentType(WrapperPage);
 
       if ((pageProps || Page) && mirror) {
         for (const i of mirror.inputs) {

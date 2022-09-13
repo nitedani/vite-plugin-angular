@@ -16,7 +16,7 @@ import {
     <ng-template #page></ng-template>
   </div> `,
 })
-export class Wrapper implements OnChanges {
+export class WrapperPage implements OnChanges {
   @ViewChild('page', { static: true, read: ViewContainerRef })
   pageTemplateRef: ViewContainerRef;
 
