@@ -3,8 +3,7 @@ import {
   escapeInject,
   PageContextBuiltIn,
 } from 'vite-plugin-ssr';
-
-import { renderToString } from './renderToString';
+import { renderToString } from '@nitedani/vite-plugin-angular/server';
 import { WrapperPage } from './wrapper.page';
 
 // See https://vite-plugin-ssr.com/data-fetching

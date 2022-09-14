@@ -17,7 +17,7 @@ import {
 
 export const SSR_PAGE_PROPS = new InjectionToken<{
   pageProps: Record<string, unknown>;
-  page: Parameters<typeof renderApplication>[0];
+  page: Parameters<typeof renderApplication>[0] | null;
   mirror: ComponentMirror<unknown>;
 }>('@nitedani/vite-plugin-angular/ssr-props', {
   factory() {
@@ -77,7 +77,7 @@ export const renderToString = <T>(
   options: Partial<
     Parameters<typeof renderApplication>[1] & { pageProps: any }
   >,
-  wrapper: Type<T> = null
+  wrapper: Type<T> | null = null
 ) => {
   if (wrapper === null) {
     wrapper = rootComponent;

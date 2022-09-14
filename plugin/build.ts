@@ -6,7 +6,7 @@ import {
   transform,
 } from '@swc/core';
 
-import { AngularComponents, AngularInjector } from './swc/index';
+import { AngularComponents, AngularInjector } from './swc/index.js';
 const fileExtensionRE = /\.[^/\s?]+$/;
 
 export const swcTransform = async ({ code, id, isSsr, isProduction }) => {

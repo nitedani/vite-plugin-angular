@@ -1,31 +1,20 @@
 {
-  "compilerOptions": {
-    "outDir": "lib/esm",
-    "module": "esnext",
-    "target": "ESNext",
-    "lib": [
-      "ESNext"
+    "compilerOptions": {
+        "composite": true,
+
+    },
+    "files": [],
+    "exclude": [
+        "node_modules",
+        "lib",
+        "examples",
     ],
-    "declaration": true,
-    "moduleResolution": "node",
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    "esModuleInterop": true,
-    // "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "skipLibCheck": true,
-    "noImplicitAny": false,
-    "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "allowSyntheticDefaultImports": true
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "lib",
-    "examples",
-    "src/ssr.ts"
-  ]
+    "references": [
+        {
+            "path": "./tsconfig.server.json"
+        },
+        {
+            "path": "./tsconfig.plugin.json"
+        }
+    ]
 }

@@ -1,7 +1,8 @@
 {
   "name": "@nitedani/vite-plugin-angular",
-  "version": "14.1.6",
+  "version": "14.1.12",
   "license": "MIT",
+  "type": "module",
   "keywords": [
     "angular",
     "vite"
@@ -10,13 +11,33 @@
     "type": "github",
     "url": "https://github.com/nitedani/vite-plugin-angular"
   },
-  "main": "lib/cjs/index.js",
-  "typings": "./lib/cjs/index.d.ts",
   "scripts": {
-    "build": "rimraf lib && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir lib/cjs"
+    "build": "rimraf lib && npm run build:esm",
+    "build:esm": "tsc -b"
   },
+  "exports": {
+    "./plugin": {
+      "node": "./lib/plugin/index.js"
+    },
+    "./server": {
+      "node": "./lib/server/index.js",
+      "default": "./lib/server/index.js",
+      "import": "./lib/server/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "plugin": [
+        "lib/plugin/index.d.ts"
+      ],
+      "server": [
+        "lib/server/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "@analogjs/vite-plugin-angular": "^0.2.0-alpha.7",
     "@angular-devkit/build-angular": "^14.2.2",
@@ -30,6 +51,8 @@
     "vite": "^3.1.0"
   },
   "devDependencies": {
+    "@angular/core": "^14.2.1",
+    "@angular/platform-server": "^14.2.1",
     "@types/node": "^18.7.16",
     "rimraf": "^3.0.2",
     "typescript": "^4.8.3"

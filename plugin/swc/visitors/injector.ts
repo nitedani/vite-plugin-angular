@@ -8,7 +8,7 @@ import {
   TsParameterProperty,
   TsType,
 } from '@swc/core';
-import Visitor from '@swc/core/Visitor.js';
+import { Visitor } from '@swc/core/Visitor.js';
 import {
   createIdentifer,
   createImportSpecifier,

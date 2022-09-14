@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "files": [
+    "./server/index.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "lib",
+    "module": "esnext",
+    "target": "ESNext",
+    "lib": [
+        "ESNext"
+    ],
+    "declaration": true,
+    "moduleResolution": "node",
+    "noImplicitThis": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+}
+}

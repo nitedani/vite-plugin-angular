@@ -1,6 +1,11 @@
 import 'zone.js/dist/zone.js';
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router';
-import { reflectComponentType } from '@angular/core';
+import {
+  ImportedNgModuleProviders,
+  Provider,
+  reflectComponentType,
+  Type,
+} from '@angular/core';
 import { ApplicationRef, NgZone, createComponent } from '@angular/core';
 import { createApplication } from '@angular/platform-browser';
 import { WrapperPage } from './wrapper.page';
@@ -9,21 +14,30 @@ export { render };
 
 export const clientRouting = true;
 
-async function render(pageContext: PageContextBuiltInClient & any) {
-  const { Page, pageProps } = pageContext;
-
-  const container = document.getElementById('page-view')!;
-  createApplication().then((appRef: ApplicationRef) => {
+const hydratePage = <T, U>({
+  page,
+  wrapperPage,
+  pageProps,
+  container,
+  providers,
+}: {
+  page: Type<T>;
+  wrapperPage: Type<U>;
+  pageProps: any;
+  container: Element;
+  providers?: Array<Provider | ImportedNgModuleProviders>;
+}) => {
+  createApplication({ providers }).then((appRef: ApplicationRef) => {
     const zone = appRef.injector.get(NgZone);
     zone.run(() => {
-      const componentRef = createComponent(WrapperPage, {
+      const componentRef = createComponent(wrapperPage, {
         environmentInjector: appRef.injector,
         hostElement: container,
       });
 
-      const mirror = reflectComponentType(WrapperPage);
+      const mirror = reflectComponentType(wrapperPage);
 
-      if ((pageProps || Page) && mirror) {
+      if ((pageProps || page) && mirror) {
         for (const i of mirror.inputs) {
           if (pageProps) {
             if (i.propName in pageProps || i.templateName in pageProps) {
@@ -33,9 +47,9 @@ async function render(pageContext: PageContextBuiltInClient & any) {
               componentRef.setInput('pageProps', pageProps);
             }
           }
-          if (Page) {
+          if (page) {
             if (i.propName === 'page' || i.templateName === 'page') {
-              componentRef.setInput('page', Page);
+              componentRef.setInput('page', page);
             }
           }
         }
@@ -43,5 +57,17 @@ async function render(pageContext: PageContextBuiltInClient & any) {
 
       appRef.attachView(componentRef.hostView);
     });
+  });
+};
+
+async function render(pageContext: PageContextBuiltInClient & any) {
+  const { Page, pageProps } = pageContext;
+
+  const container = document.getElementById('page-view')!;
+  hydratePage({
+    page: Page,
+    wrapperPage: WrapperPage,
+    pageProps,
+    container,
   });
 }

@@ -2,7 +2,7 @@ import analog from '@analogjs/vite-plugin-angular';
 import { join } from 'path';
 import { cwd } from 'process';
 import { mergeConfig, normalizePath, Plugin, UserConfig } from 'vite';
-import { swcTransform } from './build';
+import { swcTransform } from './build.js';
 import { AngularVitePluginOptions as VitePluginAngularOptions } from './plugin-options';
 import {
   usePluginBuildStart,
@@ -10,13 +10,14 @@ import {
   usePluginConfigureServer,
   usePluginHandleHotUpdate,
   usePluginTransform,
-} from './utils';
+} from './utils.js';
 
 export function angular(options?: VitePluginAngularOptions): Plugin[] {
   let isProduction = false;
   let isSsrBuild = false;
 
-  const analogPlugin = analog({
+  //@ts-ignore
+  const analogPlugin = analog.default({
     tsconfig: join(cwd(), 'tsconfig.json'),
     workspaceRoot: cwd(),
   });
@@ -38,9 +39,16 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
         return mergeConfig(cc, {
           ssr: {
             external: ['reflect-metadata'],
+            noExternal: ['@nitedani/vite-plugin-angular/server'],
           },
+          // optimizeDeps: {
+          //   exclude: ['@nitedani/vite-plugin-angular/server'],
+          // },
           build: {
             outDir: isSsrBuild ? 'dist/server' : 'dist/client',
+            rollupOptions: {
+              external: ['zone.js/dist/zone.js'],
+            },
           },
           resolve: {
             alias: [
@@ -50,7 +58,7 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
               },
             ],
           },
-        });
+        } as UserConfig);
       },
       configureServer(server) {
         if (!isSsrBuild) {

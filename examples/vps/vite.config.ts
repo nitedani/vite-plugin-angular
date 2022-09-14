@@ -1,10 +1,10 @@
 /// <reference types="vavite/vite-config" />
 
 import { defineConfig } from 'vite';
-import { angular } from '@nitedani/vite-plugin-angular';
+import { angular } from '@nitedani/vite-plugin-angular/plugin';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import vavite from 'vavite';
-import ssr from "vite-plugin-ssr/plugin";
+import ssr from 'vite-plugin-ssr/plugin';
 
 export default defineConfig({
   buildSteps: [
@@ -20,6 +20,9 @@ export default defineConfig({
       },
     },
   ],
+  ssr: {
+    noExternal: ['@nitedani/vite-plugin-angular/server'],
+  },
   plugins: [
     vavite({
       serverEntry: '/server/main.ts',
