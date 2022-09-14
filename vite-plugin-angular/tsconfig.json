@@ -1,7 +1,9 @@
 {
     "compilerOptions": {
         "composite": true,
-
+        "types": [
+            "vite/client"
+        ]
     },
     "files": [],
     "exclude": [
@@ -15,6 +17,9 @@
         },
         {
             "path": "./tsconfig.plugin.json"
+        },
+        {
+            "path": "./tsconfig.client.json"
         }
     ]
 }

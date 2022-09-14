@@ -39,16 +39,13 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
         return mergeConfig(cc, {
           ssr: {
             external: ['reflect-metadata'],
-            noExternal: ['@nitedani/vite-plugin-angular/server'],
+            noExternal: [/@nitedani\/vite-plugin-angular/],
           },
           // optimizeDeps: {
           //   exclude: ['@nitedani/vite-plugin-angular/server'],
           // },
           build: {
             outDir: isSsrBuild ? 'dist/server' : 'dist/client',
-            rollupOptions: {
-              external: ['zone.js/dist/zone.js'],
-            },
           },
           resolve: {
             alias: [
@@ -85,10 +82,14 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
         const _check = normalizePath(join(cwd(), 'server'));
         const _check2 = normalizePath(join(cwd(), 'renderer'));
         const isServerAsset = _id.includes(_check) || _id.includes(_check2);
-        const isComponent =
+        const isComponent = () =>
           code.includes('@NgModule') || code.includes('@Component');
 
-        if (isComponent || (!isSsrBuild && !isServerAsset)) {
+        // Only use in production build, for smaller bundle size
+        if (
+          isProduction &&
+          ((!isSsrBuild && !isServerAsset) || isComponent())
+        ) {
           return usePluginTransform({
             plugin: analogPlugin,
             code,

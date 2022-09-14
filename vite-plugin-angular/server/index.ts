@@ -5,15 +5,23 @@ import 'zone.js/dist/zone.js';
 import {
   ApplicationRef,
   ComponentMirror,
+  enableProdMode,
+  ImportedNgModuleProviders,
   InjectionToken,
   Provider,
   reflectComponentType,
   Type,
+  ViewContainerRef,
 } from '@angular/core';
 import {
   BEFORE_APP_SERIALIZED,
   renderApplication,
 } from '@angular/platform-server';
+import { mountPage } from '../shared/mountPage.js';
+
+if (import.meta.env.PROD) {
+  enableProdMode()
+}
 
 export const SSR_PAGE_PROPS = new InjectionToken<{
   pageProps: Record<string, unknown>;
@@ -48,6 +56,17 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
     return () => {
       const compRef = appRef.components[0];
 
+      const instance = compRef.instance;
+      const containerRef = instance.page;
+
+      if (containerRef && page) {
+        mountPage({
+          page,
+          containerRef,
+          pageProps,
+        });
+      }
+
       if (compRef && (pageProps || page) && mirror) {
         for (const i of mirror.inputs) {
           if (pageProps) {
@@ -72,35 +91,43 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
   multi: true,
 };
 
-export const renderToString = <T>(
-  rootComponent: Type<T>,
-  options: Partial<
-    Parameters<typeof renderApplication>[1] & { pageProps: any }
-  >,
-  wrapper: Type<T> | null = null
-) => {
-  if (wrapper === null) {
-    wrapper = rootComponent;
-  }
+interface WrapperPage<T> {
+  page: ViewContainerRef;
+}
 
-  const mirror = reflectComponentType(wrapper);
-  options.appId ??= mirror?.selector || wrapper.name.toString().toLowerCase();
-  options.document ??= `<${options.appId}></${options.appId}>`;
+export const renderToString = <T, U extends WrapperPage<T>>({
+  page,
+  wrapperPage,
+  pageProps,
+  providers = [],
+}: {
+  page: Type<T>;
+  wrapperPage: Type<U>;
+  pageProps: any;
+  providers?: Array<Provider | ImportedNgModuleProviders>;
+}) => {
+  const rootPage = wrapperPage || page;
 
-  const providers: Provider[] = [];
-  if (options.pageProps || wrapper !== rootComponent) {
+  //@ts-ignore
+  const mirror = reflectComponentType(rootPage);
+
+  const appId = mirror?.selector || rootPage.name.toString().toLowerCase();
+  const document = `<${appId}></${appId}>`;
+
+  if (pageProps || wrapperPage) {
     providers.push(
       {
         provide: SSR_PAGE_PROPS,
-        useValue: { pageProps: options.pageProps, page: rootComponent, mirror },
+        useValue: { pageProps, page, mirror },
       },
       SSR_PAGE_PROPS_HOOK_PROVIDER
     );
   }
 
-  return renderApplication<T>(wrapper, {
-    appId: options.appId,
-    document: options.document,
-    providers: [...providers, ...(options.providers || [])],
+  //   @ts-ignore
+  return renderApplication<T>(rootPage, {
+    appId,
+    document,
+    providers,
   });
 };

@@ -8,16 +8,10 @@ import {
 
 export class AngularImportCompilerComponents extends Visitor {
   override visitModuleItems(items: ModuleItem[]): ModuleItem[] {
-    return items.flatMap((item) => {
+    return items.flatMap(item => {
       if (isImportDeclaration(item)) {
         if (
-          item.specifiers.some((imp) =>
-            [
-              'platformBrowserDynamic',
-              'platformBrowser',
-              'platformServer',
-            ].includes(imp.local.value)
-          )
+          item.specifiers.some(imp => ['renderPage'].includes(imp.local.value))
         ) {
           return [
             {

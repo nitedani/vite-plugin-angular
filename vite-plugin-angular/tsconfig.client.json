@@ -1,14 +1,16 @@
 {
   "extends": "./tsconfig.json",
-  "files": [
-    "./server/index.ts"
+  "include": [
+    "./client",
+    "./shared",
   ],
   "compilerOptions": {
     "outDir": "lib",
     "module": "esnext",
     "target": "ESNext",
     "lib": [
-        "ESNext"
+      "ESNext",
+      "DOM"
     ],
     "declaration": true,
     "moduleResolution": "node",
@@ -17,5 +19,5 @@
     "noImplicitAny": false,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-}
+  }
 }

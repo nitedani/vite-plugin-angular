@@ -118,10 +118,10 @@ export class AngularComponents extends Visitor {
     const styleUrls = (prop as KeyValueProperty).value as ArrayExpression;
 
     const styles = styleUrls.elements.map(e => {
-      const styleUrl = (e?.expression as StringLiteral).value;
+      const styleUrl = (e!.expression as StringLiteral).value;
       const identifier = randomIdentifier();
       this.importFiles.push({
-        url: styleUrl,
+        url: styleUrl + '?inline',
         identifier,
       });
       return identifier;

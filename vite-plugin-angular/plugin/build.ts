@@ -6,7 +6,11 @@ import {
   transform,
 } from '@swc/core';
 
-import { AngularComponents, AngularInjector } from './swc/index.js';
+import {
+  AngularComponents,
+  AngularImportCompilerComponents,
+  AngularInjector,
+} from './swc/index.js';
 const fileExtensionRE = /\.[^/\s?]+$/;
 
 export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
@@ -63,9 +67,9 @@ export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
         const angularInjectorPlugin = new AngularInjector();
         return angularInjectorPlugin.visitProgram(m);
       },
-      // (m: Program) => {
-      //   return new AngularImportCompilerComponents().visitProgram(m);
-      // },
+      (m: Program) => {
+        return new AngularImportCompilerComponents().visitProgram(m);
+      },
       // ...(isProduction
       //   ? [
       //       (m: Program) =>
