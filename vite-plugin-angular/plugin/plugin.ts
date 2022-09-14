@@ -38,7 +38,7 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
         }
         return mergeConfig(cc, {
           ssr: {
-            external: ['reflect-metadata'],
+            external: ['reflect-metadata', 'xhr2'],
             noExternal: [/@nitedani\/vite-plugin-angular/],
           },
           // optimizeDeps: {
@@ -46,6 +46,9 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
           // },
           build: {
             outDir: isSsrBuild ? 'dist/server' : 'dist/client',
+            rollupOptions: {
+              external: ['xhr2'],
+            },
           },
           resolve: {
             alias: [

@@ -2,9 +2,11 @@
   "name": "@nitedani/vite-plugin-angular",
   "version": "0.0.0",
   "private": true,
-
-  "scripts": {},
-  "devDependencies": {},
-  "engines": {},
-  "dependencies": {}
+  "scripts": {
+    "build": "turbo run build"
+  },
+  "devDependencies": {
+    "turbo": "^1.4.6"
+  },
+  "engines": {}
 }
