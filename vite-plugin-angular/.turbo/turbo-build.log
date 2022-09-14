@@ -1,9 +1,0 @@
-[35m@nitedani/vite-plugin-angular:build[0m: cache hit, replaying output [2m43915cf7ac875838[0m
-[35m@nitedani/vite-plugin-angular:build: [0m
-[35m@nitedani/vite-plugin-angular:build: [0m> @nitedani/vite-plugin-angular@14.1.21 build E:\Projects\vite-plugin-angular\vite-plugin-angular
-[35m@nitedani/vite-plugin-angular:build: [0m> rimraf lib && npm run build:esm
-[35m@nitedani/vite-plugin-angular:build: [0m
-[35m@nitedani/vite-plugin-angular:build: [0m
-[35m@nitedani/vite-plugin-angular:build: [0m> @nitedani/vite-plugin-angular@14.1.21 build:esm
-[35m@nitedani/vite-plugin-angular:build: [0m> tsc -b
-[35m@nitedani/vite-plugin-angular:build: [0m

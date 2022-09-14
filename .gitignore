@@ -6,3 +6,4 @@ dist
 .pnpm-store
 .pnpm_store
 package-lock.json
+.turbo
