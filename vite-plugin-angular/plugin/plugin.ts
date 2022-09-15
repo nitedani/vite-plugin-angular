@@ -13,8 +13,8 @@ import {
 } from './utils.js';
 
 export function angular(options?: VitePluginAngularOptions): Plugin[] {
-  let isProduction = false;
   let isSsrBuild = false;
+  let isBuild = false;
 
   //@ts-ignore
   const analogPlugin = analog.default({
@@ -27,12 +27,15 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
       name: 'vite-plugin-angular',
       enforce: 'pre',
       async config(_userConfig, env) {
-        const isBuild = env.command === 'build';
+        isBuild = env.command === 'build';
         isSsrBuild = !!_userConfig.build?.ssr;
         const { buildSteps, ...rest } = _userConfig as any;
         const userConfig = rest as UserConfig;
 
-        let cc = await usePluginConfig(analogPlugin, userConfig, env);
+        let cc = isBuild
+          ? await usePluginConfig(analogPlugin, userConfig, env)
+          : userConfig;
+
         if (!isBuild) {
           cc.esbuild = false;
         }
@@ -41,9 +44,7 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
             external: ['reflect-metadata', 'xhr2'],
             noExternal: [/@nitedani\/vite-plugin-angular/],
           },
-          // optimizeDeps: {
-          //   exclude: ['@nitedani/vite-plugin-angular/server'],
-          // },
+          // optimizeDeps: false,
           build: {
             outDir: isSsrBuild ? 'dist/server' : 'dist/client',
             rollupOptions: {
@@ -61,25 +62,27 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
         } as UserConfig);
       },
       configureServer(server) {
-        if (!isSsrBuild) {
-          return usePluginConfigureServer({ plugin: analogPlugin, server });
-        }
+        return;
+        return usePluginConfigureServer({ plugin: analogPlugin, server });
       },
       buildStart(options) {
+        if (!isBuild) {
+          return;
+        }
+
         return usePluginBuildStart({
           plugin: analogPlugin,
           options,
         });
       },
       handleHotUpdate(ctx) {
+        return;
         return usePluginHandleHotUpdate({
           plugin: analogPlugin,
           ctx,
         });
       },
-      configResolved(config) {
-        isProduction = config.isProduction;
-      },
+      configResolved(config) {},
       transform(code, id) {
         const _id = normalizePath(id);
         const _check = normalizePath(join(cwd(), 'server'));
@@ -89,10 +92,8 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
           code.includes('@NgModule') || code.includes('@Component');
 
         // Only use in production build, for smaller bundle size
-        if (
-          isProduction &&
-          ((!isSsrBuild && !isServerAsset) || isComponent())
-        ) {
+        // Don't use in dev, because it slows down the build
+        if (isBuild && ((!isSsrBuild && !isServerAsset) || isComponent())) {
           return usePluginTransform({
             plugin: analogPlugin,
             code,
@@ -108,7 +109,7 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
           code,
           id,
           isSsr: isSsrBuild,
-          isProduction,
+          isProduction: isBuild,
         });
       },
     },

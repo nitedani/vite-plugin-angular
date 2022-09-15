@@ -1,5 +1,5 @@
-import 'zone.js/dist/zone';
 import './style.scss';
+
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 

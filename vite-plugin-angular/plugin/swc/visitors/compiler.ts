@@ -11,7 +11,13 @@ export class AngularImportCompilerComponents extends Visitor {
     return items.flatMap(item => {
       if (isImportDeclaration(item)) {
         if (
-          item.specifiers.some(imp => ['renderPage'].includes(imp.local.value))
+          item.specifiers.some(imp =>
+            [
+              'renderPage',
+              'platformBrowserDynamic',
+              'platformBrowser',
+            ].includes(imp.local.value)
+          )
         ) {
           return [
             {
