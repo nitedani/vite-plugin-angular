@@ -1,3 +1,4 @@
+import 'zone.js/dist/zone';
 import './style.scss';
 
 import { enableProdMode } from '@angular/core';
