@@ -4,23 +4,21 @@ import {
   escapeInject,
   PageContextBuiltIn,
 } from 'vite-plugin-ssr';
-import { WrapperPage } from './wrapper.page';
 import logoUrl from './logo.svg';
+import { PageContext } from './types';
 
 // See https://vite-plugin-ssr.com/data-fetching
 export const passToClient = ['pageProps'];
 
-export async function render(pageContext: PageContextBuiltIn & any) {
-  const { documentProps } = pageContext;
+export async function render(pageContext: PageContext) {
+  const { Page, pageProps, exports, documentProps } = pageContext;
   const title = (documentProps && documentProps.title) || 'App';
   let html = '';
-
-  const { Page, pageProps } = pageContext;
 
   if (Page) {
     html = await renderToString({
       page: Page,
-      wrapperPage: WrapperPage,
+      layout: exports.Layout,
       pageProps,
     });
   }

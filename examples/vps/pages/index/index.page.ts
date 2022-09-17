@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-export { Page };
+import { Layout } from 'pages/default.layout';
+export { Page, Layout };
 
 @Component({
   standalone: true,

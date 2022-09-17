@@ -9,18 +9,16 @@ import {
   ImportedNgModuleProviders,
   InjectionToken,
   Provider,
-  reflectComponentType,
   Type,
-  ViewContainerRef,
 } from '@angular/core';
 import {
   BEFORE_APP_SERIALIZED,
   renderApplication,
 } from '@angular/platform-server';
-import { mountPage } from '../shared/mountPage.js';
+import { DefaultWrapper, mountPage } from '../shared/mountPage.js';
 
 if (import.meta.env.PROD) {
-  enableProdMode()
+  enableProdMode();
 }
 
 export const SSR_PAGE_PROPS = new InjectionToken<{
@@ -37,8 +35,6 @@ export const SSR_PAGE_PROPS = new InjectionToken<{
   },
 });
 
-// Run beforeAppInitialized hook to set Input on the ComponentRef
-// before the platform renders to string
 export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
   provide: BEFORE_APP_SERIALIZED,
   useFactory: (
@@ -46,44 +42,23 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
     {
       pageProps,
       page,
-      mirror,
+      layout,
     }: {
       pageProps: Record<string, unknown>;
       page: any;
-      mirror: ComponentMirror<unknown>;
+      layout: any;
     }
   ) => {
     return () => {
       const compRef = appRef.components[0];
 
-      const instance = compRef.instance;
-      const containerRef = instance.page;
-
-      if (containerRef && page) {
+      if (page || layout) {
         mountPage({
           page,
-          containerRef,
+          compRef,
           pageProps,
+          layout,
         });
-      }
-
-      if (compRef && (pageProps || page) && mirror) {
-        for (const i of mirror.inputs) {
-          if (pageProps) {
-            if (i.propName in pageProps || i.templateName in pageProps) {
-              compRef.setInput(i.propName, pageProps[i.propName]);
-            }
-            if (i.propName === 'pageProps' || i.templateName === 'pageProps') {
-              compRef.setInput('pageProps', pageProps);
-            }
-          }
-          if (page) {
-            if (i.propName === 'page' || i.templateName === 'page') {
-              compRef.setInput('page', page);
-            }
-          }
-        }
-        compRef.changeDetectorRef.detectChanges();
       }
     };
   },
@@ -91,41 +66,31 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
   multi: true,
 };
 
-interface WrapperPage<T> {
-  page: ViewContainerRef;
-}
-
-export const renderToString = <T, U extends WrapperPage<T>>({
+export const renderToString = async <T, U>({
   page,
-  wrapperPage,
+  layout,
   pageProps,
   providers = [],
 }: {
   page: Type<T>;
-  wrapperPage: Type<U>;
+  layout: Type<U>;
   pageProps: any;
   providers?: Array<Provider | ImportedNgModuleProviders>;
 }) => {
-  const rootPage = wrapperPage || page;
-
-  //@ts-ignore
-  const mirror = reflectComponentType(rootPage);
-
-  const appId = mirror?.selector || rootPage.name.toString().toLowerCase();
+  const appId = 'ng-component';
   const document = `<${appId}></${appId}>`;
 
-  if (pageProps || wrapperPage) {
+  if (pageProps || layout) {
     providers.push(
       {
         provide: SSR_PAGE_PROPS,
-        useValue: { pageProps, page, mirror },
+        useValue: { pageProps, page, layout },
       },
       SSR_PAGE_PROPS_HOOK_PROVIDER
     );
   }
 
-  //   @ts-ignore
-  return renderApplication<T>(rootPage, {
+  return renderApplication(DefaultWrapper, {
     appId,
     document,
     providers,

@@ -28,10 +28,10 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-
   "include": [
     "server/**/*",
     "pages/**/*",
+    "layouts/**/*",
     "renderer/**/*"
   ],
   "exclude": [

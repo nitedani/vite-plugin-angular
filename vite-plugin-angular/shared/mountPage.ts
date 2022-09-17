@@ -1,27 +1,88 @@
-import { reflectComponentType, Type, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  reflectComponentType,
+  Type,
+  ViewChild,
+  ViewContainerRef,
+  Inject,
+} from '@angular/core';
 
-export const mountPage = <T>({
-  containerRef,
+@Component({
+  standalone: true,
+  template: `<ng-template #page></ng-template>`,
+})
+export class DefaultWrapper {
+  constructor(
+    @Inject(ComponentFactoryResolver) public resolver: ComponentFactoryResolver
+  ) {}
+  @ViewChild('page', { static: true, read: ViewContainerRef })
+  page: ViewContainerRef;
+}
+
+export const mountPage = <T, U>({
+  compRef,
   page,
   pageProps,
+  layout,
 }: {
-  containerRef: ViewContainerRef;
+  compRef: ComponentRef<DefaultWrapper>;
   page: Type<T>;
   pageProps: any;
+  layout?: Type<U>;
 }) => {
-  const pageRef = containerRef.createComponent(page);
-  if (pageProps) {
-    const mirror = reflectComponentType(page);
-    if (!mirror) {
-      throw new Error('Could not reflect component type');
+  let pageRef: ComponentRef<T> | null = null;
+  let layoutRef: ComponentRef<U> | null = null;
+
+  if (!layout) {
+    pageRef = compRef.instance.page.createComponent(page);
+  } else {
+    pageRef = compRef.instance.resolver
+      .resolveComponentFactory(page)
+      .create(compRef.injector);
+
+    layoutRef = compRef.instance.page.createComponent(layout, {
+      projectableNodes: [[pageRef.location.nativeElement]],
+    });
+  }
+
+  if (pageProps || page) {
+    if (layoutRef && layout) {
+      const mirror = reflectComponentType(layout);
+      if (!mirror) {
+        throw new Error('Could not reflect component type');
+      }
+      for (const i of mirror.inputs) {
+        if (i.propName in pageProps || i.templateName in pageProps) {
+          layoutRef.setInput(i.propName, pageProps[i.propName]);
+        }
+        if (i.propName === 'pageProps' || i.templateName === 'pageProps') {
+          layoutRef.setInput('pageProps', pageProps);
+        }
+        if (page) {
+          if (i.propName === 'page' || i.templateName === 'page') {
+            layoutRef.setInput('page', page);
+          }
+        }
+      }
+      layoutRef.changeDetectorRef.detectChanges();
     }
-    for (const i of mirror.inputs) {
-      if (i.propName in pageProps || i.templateName in pageProps) {
-        pageRef.setInput(i.propName, pageProps[i.propName]);
+
+    if (pageRef) {
+      const mirror = reflectComponentType(page);
+      if (!mirror) {
+        throw new Error('Could not reflect component type');
       }
-      if (i.propName === 'pageProps' || i.templateName === 'pageProps') {
-        pageRef.setInput('pageProps', pageProps);
+      for (const i of mirror.inputs) {
+        if (i.propName in pageProps || i.templateName in pageProps) {
+          pageRef.setInput(i.propName, pageProps[i.propName]);
+        }
+        if (i.propName === 'pageProps' || i.templateName === 'pageProps') {
+          pageRef.setInput('pageProps', pageProps);
+        }
       }
+      pageRef.changeDetectorRef.detectChanges();
     }
   }
 };

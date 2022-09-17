@@ -1,17 +1,16 @@
 import { renderPage } from '@nitedani/vite-plugin-angular/client';
-import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client/router';
-import { WrapperPage } from './wrapper.page';
+import { PageContext } from './types';
 
 export { render };
 export const clientRouting = true;
 
-async function render(pageContext: PageContextBuiltInClient & any) {
-  const { Page, pageProps } = pageContext;
+async function render(pageContext: PageContext) {
+  const { Page, pageProps, exports } = pageContext;
 
   const container = document.getElementById('page-view')!;
   renderPage({
     page: Page,
-    wrapperPage: WrapperPage,
+    layout: exports.Layout,
     pageProps,
     container,
   });
