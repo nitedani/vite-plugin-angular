@@ -19,7 +19,8 @@
       "dom"
     ],
     "types": [
-      "vite/client"
+      "vite/client",
+      "node"
     ],
   },
   "angularCompilerOptions": {
@@ -30,7 +31,8 @@
   },
   "files": [
     "src/main.ts",
-    "server/main.ts"
+    "server/main.ts",
+    "vite.config.ts"
   ],
   "include": [
     "src/**/*",
