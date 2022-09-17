@@ -20,9 +20,6 @@ export default defineConfig({
       },
     },
   ],
-  ssr: {
-    noExternal: ['@nitedani/vite-plugin-angular/server'],
-  },
   plugins: [
     vavite({
       serverEntry: '/server/main.ts',
