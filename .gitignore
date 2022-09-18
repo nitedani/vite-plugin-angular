@@ -6,3 +6,4 @@ dist
 package-lock.json
 .turbo
 .pnpm*
+*.tsbuildinfo

@@ -1,7 +1,7 @@
 {
     "extends": "./tsconfig.json",
     "include": [
-        "./src/plugin"
+        "./src/shared/angular",
     ],
     "compilerOptions": {
         "outDir": "lib",
@@ -19,5 +19,9 @@
         "suppressImplicitAnyIndexErrors": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
+    },
+    "angularCompilerOptions": {
+        "enableIvy": true,
+        "compilationMode": "full"
     }
 }

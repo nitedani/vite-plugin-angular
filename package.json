@@ -1,15 +1,17 @@
 {
   "name": "@nitedani/vite-plugin-angular",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "private": true,
   "workspaces": [
     "examples/*",
     "vite-plugin-angular"
   ],
   "scripts": {
-    "build": "turbo run build"
+    "build": "turbo run build",
+    "publish": "pnpm build && pnpm publish:vite-plugin-angular"
   },
   "devDependencies": {
+    "@brillout/release-me": "^0.0.7",
     "turbo": "^1.4.6"
   },
   "engines": {}
