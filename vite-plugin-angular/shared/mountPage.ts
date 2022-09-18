@@ -1,25 +1,5 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  ComponentRef,
-  reflectComponentType,
-  Type,
-  ViewChild,
-  ViewContainerRef,
-  Inject,
-} from '@angular/core';
-
-@Component({
-  standalone: true,
-  template: `<ng-template #page></ng-template>`,
-})
-export class DefaultWrapper {
-  constructor(
-    @Inject(ComponentFactoryResolver) public resolver: ComponentFactoryResolver
-  ) {}
-  @ViewChild('page', { static: true, read: ViewContainerRef })
-  page: ViewContainerRef;
-}
+import { ComponentRef, reflectComponentType, Type } from '@angular/core';
+import type { DefaultWrapper } from './angular/wrapper.js';
 
 export const mountPage = <T, U>({
   compRef,

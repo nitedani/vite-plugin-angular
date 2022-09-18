@@ -1,3 +1,4 @@
+import 'zone.js/dist/zone.js';
 import {
   createComponent,
   enableProdMode,
@@ -7,8 +8,8 @@ import {
   Type,
 } from '@angular/core';
 import { createApplication } from '@angular/platform-browser';
-import 'zone.js/dist/zone.js';
-import { DefaultWrapper, mountPage } from '../shared/mountPage.js';
+import { mountPage } from '../shared/mountPage.js';
+import { DefaultWrapper } from '../shared/angular/wrapper.js';
 if (import.meta.env.PROD) {
   enableProdMode();
 }

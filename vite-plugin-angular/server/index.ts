@@ -15,7 +15,8 @@ import {
   BEFORE_APP_SERIALIZED,
   renderApplication,
 } from '@angular/platform-server';
-import { DefaultWrapper, mountPage } from '../shared/mountPage.js';
+import { DefaultWrapper } from '../shared/angular/wrapper.js';
+import { mountPage } from '../shared/mountPage.js';
 
 if (import.meta.env.PROD) {
   enableProdMode();
