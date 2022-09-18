@@ -12,6 +12,8 @@
         ],
         "declaration": true,
         "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
         "noImplicitThis": true,
         "skipLibCheck": true,
         "noImplicitAny": false,

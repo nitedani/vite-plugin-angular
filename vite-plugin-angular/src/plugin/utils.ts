@@ -11,6 +11,7 @@ export const usePluginConfig = async (plugin, config, env) => {
       }
     }
   }
+
   return cc;
 };
 export const usePluginTransform = async ({ plugin, code, id, ctx }) => {
