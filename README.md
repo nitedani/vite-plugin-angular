@@ -1,18 +1,21 @@
 Vite plugin for Angular.
 ---
 
-This plugin is work in progress. Don't use it for production!
+This plugin is work in progress. The interfaces can change any time. Don't use it for production!
 
+Features:
+- Fast live-reload, both in browser and server
+- Easy SSR(optional) using vite-plugin-ssr, [filesystem routing](https://vite-plugin-ssr.com/filesystem-routing), [layout components](https://vite-plugin-ssr.com/layouts)
+- In development mode, it uses [SWC](https://swc.rs/) and the Angular JIT compiler in the browser to keep it fast.
+- In build mode, it uses the Angular AOT compiler to produce small bundles.
+
+Examples:
 - [A simple example](./examples/simple/)
 - [Angular Material example](./examples/material/)
 - [NestJS ssr example](./examples/universal/)
 - [vite-plugin-ssr example](./examples/vps/)
 
-Kind of working:
-- hot-reload
-- scss support
-- dependency injection
-- angular universal ssr
+
 
 TODO:
 - handling of environment files
