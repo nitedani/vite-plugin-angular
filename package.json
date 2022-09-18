@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "publish": "pnpm build && pnpm publish:vite-plugin-angular"
+    "release": "pnpm build && cd vite-plugin-angular/ && pnpm release"
   },
   "devDependencies": {
     "@brillout/release-me": "^0.0.7",

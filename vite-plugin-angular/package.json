@@ -1,6 +1,6 @@
 {
   "name": "@nitedani/vite-plugin-angular",
-  "version": "14.2.4",
+  "version": "14.2.5",
   "license": "MIT",
   "type": "module",
   "keywords": [
@@ -12,7 +12,8 @@
     "url": "https://github.com/nitedani/vite-plugin-angular"
   },
   "scripts": {
-    "build": "rimraf lib && tsc -b && node scripts/compile-angular"
+    "build": "rimraf lib && tsc -b && node scripts/compile-angular",
+    "release": "release-me patch"
   },
   "exports": {
     "./plugin": {
