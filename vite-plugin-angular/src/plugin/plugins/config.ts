@@ -10,7 +10,10 @@ export const CommonPlugin = (): Plugin => {
       return {
         ssr: {
           external: ['reflect-metadata', 'xhr2'],
-          noExternal: [/@nitedani\/vite-plugin-angular/],
+          noExternal: [
+            /@nitedani\/vite-plugin-angular/,
+            /@nitedani\/vite-plugin-ssr-adapter/,
+          ],
         },
         build: {
           outDir: env.ssrBuild ? 'dist/server' : 'dist/client',

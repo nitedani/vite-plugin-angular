@@ -1,3 +1,7 @@
+## [14.2.9](https://github.com/nitedani/vite-plugin-angular/compare/v14.2.8...v14.2.9) (2022-09-19)
+
+
+
 ## [14.2.8](https://github.com/nitedani/vite-plugin-angular/compare/v14.2.7...v14.2.8) (2022-09-19)
 
 
