@@ -4,7 +4,7 @@ Vite plugin for Angular.
 This plugin is work in progress. The interfaces can change any time. Don't use it for production!
 
 Features:
-- Fast live-reload, both in browser([vite](https://vitejs.dev/)) and server([vavite reloader](https://github.com/cyco130/vavite))
+- Fast live-reload, both in browser([vite](https://vitejs.dev/)) and server([vavite](https://github.com/cyco130/vavite))
 - Easy SSR(optional) using [vite-plugin-ssr](https://vite-plugin-ssr.com/), [filesystem routing](https://vite-plugin-ssr.com/filesystem-routing), [layout components](https://vite-plugin-ssr.com/layouts)
 - In development mode, it uses [SWC](https://swc.rs/) and the Angular JIT compiler in the browser to keep it fast.
 - In build mode, it uses [esbuild](https://esbuild.github.io/) and the Angular AOT compiler to produce small bundles.
