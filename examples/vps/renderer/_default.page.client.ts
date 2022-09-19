@@ -8,7 +8,7 @@ async function render(pageContext: PageContext) {
   const { Page, pageProps, exports } = pageContext;
 
   const container = document.getElementById('page-view')!;
-  renderPage({
+  await renderPage({
     page: Page,
     layout: exports.Layout,
     pageProps,
