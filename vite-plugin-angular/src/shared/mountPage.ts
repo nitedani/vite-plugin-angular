@@ -34,12 +34,15 @@ export const mountPage = <T, U>({
         throw new Error('Could not reflect component type');
       }
       for (const i of mirror.inputs) {
-        if (i.propName in pageProps || i.templateName in pageProps) {
-          layoutRef.setInput(i.propName, pageProps[i.propName]);
+        if (pageProps) {
+          if (i.propName in pageProps || i.templateName in pageProps) {
+            layoutRef.setInput(i.propName, pageProps[i.propName]);
+          }
+          if (i.propName === 'pageProps' || i.templateName === 'pageProps') {
+            layoutRef.setInput('pageProps', pageProps);
+          }
         }
-        if (i.propName === 'pageProps' || i.templateName === 'pageProps') {
-          layoutRef.setInput('pageProps', pageProps);
-        }
+
         if (page) {
           if (i.propName === 'page' || i.templateName === 'page') {
             layoutRef.setInput('page', page);
@@ -49,12 +52,12 @@ export const mountPage = <T, U>({
       layoutRef.changeDetectorRef.detectChanges();
     }
 
-    if (pageRef) {
+    if (pageRef && pageProps) {
       const mirror = reflectComponentType(page);
       if (!mirror) {
         throw new Error('Could not reflect component type');
       }
-      for (const i of mirror.inputs) {
+      for (const i of mirror.inputs) {        
         if (i.propName in pageProps || i.templateName in pageProps) {
           pageRef.setInput(i.propName, pageProps[i.propName]);
         }
