@@ -1,9 +1,5 @@
 import { renderToString } from '@nitedani/vite-plugin-angular/server';
-import {
-  dangerouslySkipEscape,
-  escapeInject,
-  PageContextBuiltIn,
-} from 'vite-plugin-ssr';
+import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 import logoUrl from './logo.svg';
 import { PageContext } from './types';
 
