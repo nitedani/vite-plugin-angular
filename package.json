@@ -2,10 +2,6 @@
   "name": "@nitedani/vite-plugin-angular",
   "version": "0.0.4",
   "private": true,
-  "workspaces": [
-    "examples/*",
-    "vite-plugin-angular"
-  ],
   "scripts": {
     "build": "turbo run build",
     "release": "pnpm build && cd vite-plugin-angular/ && pnpm release"

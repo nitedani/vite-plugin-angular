@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { VpsModule } from './vps.module';
 import { AppController } from './app.controller';
-
+import { VpsModule } from '@nitedani/vite-plugin-ssr-adapter-nestjs';
 @Module({
   controllers: [AppController],
-  imports: [VpsModule.forRoot()],
+  imports: [VpsModule.forRoot({})],
   providers: [],
 })
 export class AppModule {}

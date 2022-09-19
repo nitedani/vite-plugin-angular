@@ -57,7 +57,7 @@ export class AngularUniversalModule implements OnModuleInit {
     if (!httpAdapter) {
       return;
     }
-    const app = httpAdapter.getInstance() as Express;
+    const app = httpAdapter.getInstance<Express>();
 
     const engine = new CommonEngine();
 

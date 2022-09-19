@@ -20,6 +20,9 @@ export default defineConfig({
       },
     },
   ],
+  ssr: {
+    noExternal: [/@nitedani\/vite-plugin-ssr-adapter-nestjs/],
+  },
   plugins: [
     vavite({
       serverEntry: '/server/main.ts',
