@@ -126,8 +126,8 @@ export const ProductionPlugin = (
       async transform(code, id) {
         const _id = normalizePath(id);
         const _check = normalizePath(join(cwd(), 'server'));
-        // const _check2 = normalizePath(join(cwd(), 'renderer'));
-        const isServerAsset = _id.includes(_check);
+        const _check2 = normalizePath(join(cwd(), 'renderer'));
+        const isServerAsset = _id.includes(_check) || _id.includes(_check2);
         const isComponent = () =>
           code.includes('@NgModule') || code.includes('@Component');
 

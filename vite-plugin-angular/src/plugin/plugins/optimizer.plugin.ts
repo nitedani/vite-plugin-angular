@@ -8,6 +8,7 @@ export const OptimizerPlugin = (): Plugin => {
   return {
     name: 'vite-plugin-angular-optimizer',
     apply: 'build',
+    enforce: 'post',
     config() {
       return {
         esbuild: {
