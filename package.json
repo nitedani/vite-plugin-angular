@@ -1,13 +1,14 @@
 {
   "name": "@nitedani/vite-plugin-angular",
-  "version": "0.0.4",
+  "version": "14.3.1",
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "release": "pnpm i && pnpm build && cd vite-plugin-angular/ && pnpm release"
+    "release": "bumpp package.json packages/*/package.json examples/*/package.json"
   },
   "devDependencies": {
     "@brillout/release-me": "^0.0.7",
+    "bumpp": "^8.2.1",
     "turbo": "^1.4.6"
   },
   "engines": {}
