@@ -7,11 +7,9 @@ export const clientRouting = true;
 async function render(pageContext: PageContext) {
   const { Page, pageProps, exports } = pageContext;
 
-  const container = document.getElementById('page-view')!;
   await renderPage({
     page: Page,
     layout: exports.Layout,
-    pageProps,
-    container,
+    pageContext: { pageProps },
   });
 }

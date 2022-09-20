@@ -11,6 +11,7 @@ import {
 import { createApplication } from '@angular/platform-browser';
 import { mountPage } from '../shared/mountPage.js';
 import { DefaultWrapper } from '../shared/angular/wrapper.js';
+import { HttpClientModule } from '@angular/common/http';
 if (import.meta.env.PROD) {
   enableProdMode();
 }
@@ -18,15 +19,16 @@ if (import.meta.env.PROD) {
 export const renderPage = async <T, U>({
   page,
   layout,
-  pageProps,
+  pageContext,
   providers,
   ...componentParameters
 }: {
   page: Type<T>;
   layout?: Type<U>;
-  pageProps?: any;
+  pageContext?: any;
   providers?: Array<Provider | ImportedNgModuleProviders>;
 } & Pick<Component, 'imports' | 'selector'>) => {
+  componentParameters.imports ??= [import.meta.env.SSR ? [] : HttpClientModule];
   componentParameters.selector ??= 'app-root';
   let wrapper = DefaultWrapper;
   if (import.meta.env.PROD) {
@@ -47,13 +49,13 @@ export const renderPage = async <T, U>({
   zone.run(() => {
     const compRef = createComponent(wrapper, {
       environmentInjector: appRef.injector,
-      hostElement: document.getElementById(componentParameters.selector!)!,
+      hostElement: document.querySelector(componentParameters.selector!)!,
     });
 
     mountPage({
       page,
       compRef,
-      pageProps,
+      pageProps: pageContext?.pageProps,
       layout,
     });
 
