@@ -109,21 +109,16 @@ export const renderToString = async <T, U>({
   ...componentParameters
 }: RenderToStringOptions<T, U>) => {
   const appId = 'server-app';
+  componentParameters.imports ??= [];
   componentParameters.selector ??= 'app-root';
   document ??= `<${componentParameters.selector}></${componentParameters.selector}>`;
   root ??= join(__dirname, '..', 'client');
-  let wrapper = DefaultWrapper;
-  if (import.meta.env.PROD) {
-    //@ts-ignore
-    wrapper.ɵcmp.selectors = [[componentParameters.selector]];
-    //@ts-ignore
-    wrapper.ɵcmp.dependencies = componentParameters.imports;
-    //TODO: check if anything else needs to be set
-  } else {
-    // wrapper.ɵcmp would be undefined in JIT mode
-    const { getWrapper } = await import('../shared/angular/wrapper.dev.js');
-    wrapper = getWrapper(componentParameters);
-  }
+
+  //@ts-ignore
+  DefaultWrapper.ɵcmp.selectors = [[componentParameters.selector]];
+  //@ts-ignore
+  DefaultWrapper.ɵcmp.dependencies = componentParameters.imports;
+  //TODO: check if anything else needs to be set
 
   if (indexHtml) {
     const documentPath = import.meta.env.DEV
@@ -163,7 +158,7 @@ export const renderToString = async <T, U>({
     });
   }
 
-  return renderApplication(wrapper, {
+  return renderApplication(DefaultWrapper, {
     appId,
     document,
     providers: [
