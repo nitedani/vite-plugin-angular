@@ -672,7 +672,7 @@ packages:
       '@angular/common': 14.2.2_i7tktysnynbuwpamqlvgeyyawi
       '@angular/compiler': 14.2.2_@angular+core@14.2.2
       '@angular/core': 14.2.2_rxjs@7.5.6+zone.js@0.11.8
-      '@angular/platform-browser': 14.2.2_ici7bxm3f3ipt7voeaylpzxsu4
+      '@angular/platform-browser': 14.2.2_up5r4dprhsl675p6iwoivdibvu
       tslib: 2.4.0
 
   /@angular/platform-browser/14.2.2_ici7bxm3f3ipt7voeaylpzxsu4:
@@ -689,6 +689,7 @@ packages:
       '@angular/common': 14.2.2_i7tktysnynbuwpamqlvgeyyawi
       '@angular/core': 14.2.2_rxjs@7.5.6+zone.js@0.11.8
       tslib: 2.4.0
+    dev: false
 
   /@angular/platform-browser/14.2.2_up5r4dprhsl675p6iwoivdibvu:
     resolution: {integrity: sha512-1NrtOIvevoDDT6DU+Fsm5TsNN/XJhIV/UhfInmU/rz97RERl8etcOQRsxWnjGwZjk9rjt+0lBbW5oVDFKOJa+w==}
@@ -3225,7 +3226,7 @@ packages:
     dev: false
 
   /array-flatten/1.1.1:
-    resolution: {integrity: sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=}
+    resolution: {integrity: sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==}
 
   /array-flatten/2.1.2:
     resolution: {integrity: sha512-hNfzcOV8W4NdualtqBFPyVO+54DSJuZGY9qT4pRroB6S9e3iiido2ISIC5h9R2sPJ8H3FHCIiEnsv1lPXO3KtQ==}
@@ -3460,7 +3461,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001407
-      electron-to-chromium: 1.4.255
+      electron-to-chromium: 1.4.256
       node-releases: 2.0.6
       update-browserslist-db: 1.0.9_browserslist@4.21.4
     dev: false
@@ -4274,8 +4275,8 @@ packages:
   /ee-first/1.1.1:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
 
-  /electron-to-chromium/1.4.255:
-    resolution: {integrity: sha512-H+mFNKow6gi2P5Gi2d1Fvd3TUEJlB9CF7zYaIV9T83BE3wP1xZ0mRPbNTm0KUjyd1QiVy7iKXuIcjlDtBQMiAQ==}
+  /electron-to-chromium/1.4.256:
+    resolution: {integrity: sha512-x+JnqyluoJv8I0U9gVe+Sk2st8vF0CzMt78SXxuoWCooLLY2k5VerIBdpvG7ql6GKI4dzNnPjmqgDJ76EdaAKw==}
     dev: false
 
   /emoji-regex/8.0.0:
