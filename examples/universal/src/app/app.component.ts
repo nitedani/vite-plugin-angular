@@ -7,9 +7,6 @@ import { AppService } from './app.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-
-  // provide both on server and client
-  providers: [AppService],
 })
 export class AppComponent {
   counter = 0;
