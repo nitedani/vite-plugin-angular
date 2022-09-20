@@ -26,8 +26,9 @@ Examples:
 
 TODO:
 - provide documentation of the features
-- handling of environment files
 - make sure it works with angular libraries
+- typechecking in development(currently only build is typechecked)
+- handling of environment files(do we need them?)
 
 Usage:
 
