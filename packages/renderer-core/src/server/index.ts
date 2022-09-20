@@ -5,7 +5,6 @@ import 'zone.js/dist/zone.js';
 import {
   ApplicationRef,
   Component,
-  ComponentMirror,
   enableProdMode,
   ImportedNgModuleProviders,
   InjectionToken,
@@ -29,6 +28,7 @@ import { readFile } from 'fs/promises';
 import { cwd } from 'process';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class ServerXhr implements XhrFactory {
@@ -44,14 +44,14 @@ if (import.meta.env.PROD) {
 
 export const SSR_PAGE_PROPS = new InjectionToken<{
   pageProps: Record<string, unknown>;
-  page: Parameters<typeof renderApplication>[0] | null;
-  mirror: ComponentMirror<unknown>;
+  page: Type<{}> | null;
+  layout: Type<{}> | null;
 }>('@nitedani/vite-plugin-angular/ssr-props', {
   factory() {
     return {
       pageProps: {},
       page: null,
-      mirror: {} as ComponentMirror<unknown>,
+      layout: null,
     };
   },
 });
@@ -144,7 +144,7 @@ export const renderToString = async <T, U>({
         intercept(req: HttpRequest<any>, next: HttpHandler) {
           // check if the request is for the server
           if (req.url.startsWith('/') || req.url.startsWith(serverUrl!)) {
-            // if so, call the express server
+            // if so, call the server
             return next.handle(
               req.clone({
                 url: `${serverUrl}${req.url}`,
@@ -161,8 +161,13 @@ export const renderToString = async <T, U>({
   return renderApplication(DefaultWrapper, {
     appId,
     document,
+
     providers: [
       ...providers,
+      {
+        provide: 'pageContext',
+        useValue: pageContext,
+      },
       { provide: XhrFactory, useClass: ServerXhr },
       {
         provide: SSR_PAGE_PROPS,

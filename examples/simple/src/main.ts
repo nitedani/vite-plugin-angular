@@ -1,14 +1,10 @@
-import 'zone.js/dist/zone';
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { renderPage } from '@nitedani/vite-plugin-angular/client';
+import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app/app.component';
+import { AppService } from './app/app.service';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
-
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
+renderPage({
+  page: AppComponent,
+  imports: [HttpClientModule],
+  providers: [AppService],
+});

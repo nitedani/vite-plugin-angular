@@ -5,11 +5,17 @@ import { AppController } from './app.controller';
 
 @Module({
   controllers: [AppController],
+  // nestjs providers
+  providers: [],
+
   imports: [
     AngularUniversalModule.forRoot({
       page: AppComponent,
+      // import only on server
+      imports: [],
+      // provide only on server
+      providers: [],
     }),
   ],
-  providers: [],
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
-import type { Request, Response } from 'express';
-import type { PageContextBuiltIn } from 'vite-plugin-ssr';
-import type { Type } from '@angular/core';
+import { Request, Response } from 'express';
+import { PageContextBuiltIn } from 'vite-plugin-ssr';
+import { Type } from '@angular/core';
 
 export interface PageContext extends PageContextBuiltIn {
   req: Request;

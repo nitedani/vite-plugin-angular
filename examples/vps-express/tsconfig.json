@@ -32,7 +32,8 @@
     "server/**/*",
     "pages/**/*",
     "layouts/**/*",
-    "renderer/**/*"
+    "renderer/**/*",
+    "types.ts"
   ],
   "exclude": [
     "node_modules",

@@ -1,16 +1,12 @@
-import 'zone.js/dist/zone';
 import './style.scss';
+import { renderPage } from '@nitedani/vite-plugin-angular/client';
+import { AppComponent } from './app/app.component';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { AppService } from './app/app.service';
 
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
-
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
+renderPage({
+  page: AppComponent,
+  imports: [CommonModule, MatButtonModule],
+  providers: [AppService],
+});

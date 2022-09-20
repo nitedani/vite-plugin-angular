@@ -1,14 +1,17 @@
+import { HttpClientModule } from '@angular/common/http';
 import { renderPage } from '@nitedani/vite-plugin-angular/client';
-import { PageContext } from './types';
+import { PageContext } from 'types';
 
-export { render };
 export const clientRouting = true;
+export { render };
 
 async function render(pageContext: PageContext) {
-  const { Page, pageProps, exports } = pageContext;
+  const { Page, exports } = pageContext;
+
   await renderPage({
     page: Page,
+    pageContext,
     layout: exports.Layout,
-    pageContext: { pageProps },
+    imports: [HttpClientModule],
   });
 }

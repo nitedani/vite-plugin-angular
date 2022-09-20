@@ -20,7 +20,7 @@ export const renderPage = async <T, U>({
   page,
   layout,
   pageContext,
-  providers,
+  providers = [],
   ...componentParameters
 }: {
   page: Type<T>;
@@ -37,7 +37,15 @@ export const renderPage = async <T, U>({
   DefaultWrapper.ɵcmp.dependencies = componentParameters.imports;
   //TODO: check if anything else needs to be set
 
-  const appRef = await createApplication({ providers: providers || [] });
+  const appRef = await createApplication({
+    providers: [
+      ...providers,
+      {
+        provide: 'pageContext',
+        useValue: pageContext,
+      },
+    ],
+  });
   const zone = appRef.injector.get(NgZone);
 
   zone.run(() => {

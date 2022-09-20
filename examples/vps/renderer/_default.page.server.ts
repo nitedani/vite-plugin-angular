@@ -1,13 +1,13 @@
 import { renderToString } from '@nitedani/vite-plugin-angular/server';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 import logoUrl from './logo.svg';
-import { PageContext } from './types';
+import { PageContext } from 'types';
 
 // See https://vite-plugin-ssr.com/data-fetching
 export const passToClient = ['pageProps'];
 
 export async function render(pageContext: PageContext) {
-  const { Page, pageProps, exports, documentProps } = pageContext;
+  const { Page, exports, documentProps } = pageContext;
   const title = (documentProps && documentProps.title) || 'App';
   let html = '';
 
@@ -15,7 +15,7 @@ export async function render(pageContext: PageContext) {
     html = await renderToString({
       page: Page,
       layout: exports.Layout,
-      pageProps,
+      pageContext,
     });
   }
   // See https://vite-plugin-ssr.com/head

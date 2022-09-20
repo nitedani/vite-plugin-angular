@@ -4,5 +4,8 @@ import { AppComponent } from './app/app.component';
 
 renderPage({
   page: AppComponent,
+  // import only on client
   imports: [HttpClientModule],
+  // provide only on client
+  providers: [],
 });

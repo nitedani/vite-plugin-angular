@@ -22,6 +22,18 @@ export const CommonPlugin = (): Plugin => {
           outDir: env.ssrBuild ? 'dist/server' : 'dist/client',
           rollupOptions: {
             external: ['xhr2'],
+            output: {
+              manualChunks: id => {
+                const runtime1 = [
+                  '@nitedani/vite-plugin-angular/client',
+                  '@angular',
+                  "zone.js",
+                ];
+                if (runtime1.some(s => id.includes(s))) {
+                  return 'runtime1';
+                }
+              },
+            },
           },
         },
         resolve: {

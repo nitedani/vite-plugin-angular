@@ -1,12 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   standalone: true,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+
+  // provide both on server and client
   providers: [AppService],
 })
 export class AppComponent {
