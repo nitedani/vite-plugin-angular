@@ -42,7 +42,3 @@ export default defineConfig({
 
 
 ```
-
-Credits:
-- https://github.com/nxext/nx-extensions
-- https://github.com/analogjs/analog
