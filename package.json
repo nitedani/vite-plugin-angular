@@ -7,8 +7,8 @@
     "release": "pnpm build && bumpp package.json packages/*/package.json examples/*/package.json && pnpm -r publish --access=public"
   },
   "devDependencies": {
-    "@brillout/release-me": "^0.0.7",
     "bumpp": "^8.2.1",
+    "cypress": "^10.8.0",
     "turbo": "^1.4.6"
   },
   "engines": {}
