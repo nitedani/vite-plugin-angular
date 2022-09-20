@@ -1,6 +1,6 @@
 {
   "name": "vite-ng-vps-app",
-  "version": "14.3.8",
+  "version": "14.3.9",
   "type": "module",
   "private": true,
   "scripts": {
