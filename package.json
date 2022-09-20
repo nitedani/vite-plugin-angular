@@ -1,6 +1,6 @@
 {
   "name": "@nitedani/vite-plugin-angular",
-  "version": "14.3.6",
+  "version": "14.3.7",
   "private": true,
   "scripts": {
     "build": "turbo run build",
