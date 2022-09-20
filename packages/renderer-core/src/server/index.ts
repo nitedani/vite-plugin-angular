@@ -116,29 +116,8 @@ export const renderToString = async <T, U>({
 
   //@ts-ignore
   DefaultWrapper.ɵcmp.selectors = [[componentParameters.selector]];
-
-  //These modules are already included by Angular for the server renderer
-  const filteredModules = [
-    'HttpClientModule',
-    'BrowserModule',
-    'NoopAnimationsModule',
-  ];
-
-  const recursiveMapDependencies = module => {
-    if (module.ɵcmp?.dependencies?.length) {
-      module.ɵcmp.dependencies = module.ɵcmp.dependencies.flatMap(dep =>
-        recursiveMapDependencies(dep).flat()
-      );
-    }
-    if (module.name && filteredModules.includes(module.name)) {
-      return [];
-    }
-    return [module];
-  };
-
   //@ts-ignore
   DefaultWrapper.ɵcmp.dependencies = componentParameters.imports;
-  recursiveMapDependencies(DefaultWrapper);
   //TODO: check if anything else needs to be set
 
   if (indexHtml) {

@@ -1,5 +1,6 @@
 // needs to be first import, it loads the polyfills
 import { renderPage } from '@nitedani/vite-plugin-angular/client';
+import { HttpClientModule } from '@angular/common/http';
 import { PageContext } from 'types';
 import { SharedModule } from './shared.module';
 
@@ -13,6 +14,6 @@ async function render(pageContext: PageContext) {
     page: Page,
     pageContext,
     layout: exports.Layout,
-    imports: [SharedModule],
+    imports: [SharedModule, HttpClientModule],
   });
 }

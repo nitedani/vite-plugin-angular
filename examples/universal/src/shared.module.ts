@@ -1,4 +1,3 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AppService } from './app/app.service';
 
@@ -6,7 +5,7 @@ import { AppService } from './app/app.service';
 // This module is imported on server, inside server/app.module.ts
 
 @NgModule({
-  imports: [HttpClientModule],
+  imports: [],
   providers: [AppService],
 })
 export class SharedModule {}
