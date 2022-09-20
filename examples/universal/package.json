@@ -19,7 +19,6 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.0.0",
     "@nestjs/core": "^9.0.0",
-    "@nestjs/ng-universal": "^6.1.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/serve-static": "^3.0.0",
     "@nguniversal/common": "^14.2.0",

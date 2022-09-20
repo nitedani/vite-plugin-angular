@@ -126,9 +126,9 @@ export const renderToString = async <T, U>({
 
   const recursiveMapDependencies = module => {
     if (module.ɵcmp?.dependencies?.length) {
-      module.ɵcmp.dependencies = module.ɵcmp.dependencies.map(dep => {
-        return recursiveMapDependencies(dep).flat();
-      });
+      module.ɵcmp.dependencies = module.ɵcmp.dependencies.flatMap(dep =>
+        recursiveMapDependencies(dep).flat()
+      );
     }
     if (module.name && filteredModules.includes(module.name)) {
       return [];

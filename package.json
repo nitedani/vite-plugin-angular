@@ -2,13 +2,16 @@
   "name": "@nitedani/vite-plugin-angular",
   "version": "14.3.7",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
-    "release": "pnpm build && bumpp package.json packages/*/package.json examples/*/package.json && pnpm -r publish --access=public"
+    "release": "pnpm build && bumpp package.json packages/*/package.json examples/*/package.json && pnpm -r publish --access=public",
+    "test": "node scripts/test"
   },
   "devDependencies": {
     "bumpp": "^8.2.1",
     "cypress": "^10.8.0",
+    "fs-extra": "^10.1.0",
     "turbo": "^1.4.6"
   },
   "engines": {}
