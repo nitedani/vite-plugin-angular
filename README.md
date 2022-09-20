@@ -13,11 +13,19 @@ Examples:
 - [A simple example](./examples/simple/)
 - [Angular Material example](./examples/material/)
 - [NestJS SSR example](./examples/universal/)
-- [vite-plugin-ssr example](./examples/vps/)
+- [vite-plugin-ssr + NestJS example](./examples/vps/)
+- [vite-plugin-ssr + Express example](./examples/vps-express/)
 
-
+| Related packages                          | Included in @nitedani/vite-plugin-angular |
+|-------------------------------------------|-------------------------------------------|
+| @nitedani/angular-renderer-core           | ✓                                         |
+| @nitedani/angular-renderer-express        | X                                         |
+| @nitedani/angular-renderer-nestjs         | X                                         |
+| @nitedani/vite-plugin-ssr-adapter-express | X                                         |
+| @nitedani/vite-plugin-ssr-adapter-nestjs  | X                                         |
 
 TODO:
+- provide documentation of the features
 - handling of environment files
 - make sure it works with angular libraries
 
