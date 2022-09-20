@@ -23,7 +23,7 @@
   "dependencies": {
     "@nitedani/shrink-ray-current": "^4.1.4",
     "defu": "^6.1.0",
-    "@nitedani/angular-renderer-core": "14.3.0"
+    "@nitedani/angular-renderer-core": "*"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",

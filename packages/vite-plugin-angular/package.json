@@ -57,7 +57,7 @@
     "@angular-devkit/build-angular": "^14.2.3",
     "@babel/core": "^7.19.1",
     "@ngtools/webpack": "^14.2.3",
-    "@nitedani/angular-renderer-core": "14.3.0"
+    "@nitedani/angular-renderer-core": "*"
   },
   "devDependencies": {
     "@angular/core": "^14.2.1",

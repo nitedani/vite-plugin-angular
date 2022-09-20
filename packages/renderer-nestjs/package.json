@@ -21,7 +21,7 @@
     "lib"
   ],
   "dependencies": {
-    "@nitedani/angular-renderer-express": "14.3.0"
+    "@nitedani/angular-renderer-express": "*"
   },
   "devDependencies": {
     "@nestjs/common": "^9.0.11",
