@@ -1,4 +1,5 @@
-import { renderPage } from '@nitedani/vite-plugin-angular/client'; // <-- needs to be first import
+// needs to be first import, it loads the polyfills
+import { renderPage } from '@nitedani/vite-plugin-angular/client';
 import { AppComponent } from './app/app.component';
 import { SharedModule } from './shared.module';
 

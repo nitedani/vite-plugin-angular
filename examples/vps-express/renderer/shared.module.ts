@@ -1,0 +1,16 @@
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule, OnInit } from '@angular/core';
+import { AppService } from 'services/app.service';
+
+// This module is imported on client, inside _default.page.client.ts
+// This module is imported on server, inside _default.page.server.ts
+
+@NgModule({
+  imports: [HttpClientModule],
+  providers: [AppService],
+})
+export class SharedModule implements OnInit {
+  ngOnInit(): void {
+    console.log('This is a shared module, it is imported on client and server');
+  }
+}

@@ -33,6 +33,7 @@
     "pages/**/*",
     "layouts/**/*",
     "renderer/**/*",
+    "services/**/*",
     "types.ts"
   ],
   "exclude": [

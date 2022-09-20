@@ -1,5 +1,6 @@
+// needs to be first import, it loads the polyfills
+import { AngularRendererModule } from '@nitedani/angular-renderer-nestjs';
 import { Module } from '@nestjs/common';
-import { AngularUniversalModule } from '@nitedani/angular-renderer-nestjs';
 import { AppComponent } from 'src/app/app.component';
 import { SharedModule } from 'src/shared.module';
 import { AppController } from './app.controller';
@@ -10,7 +11,7 @@ import { AppController } from './app.controller';
   providers: [],
 
   imports: [
-    AngularUniversalModule.forRoot({
+    AngularRendererModule.forRoot({
       page: AppComponent,
       // import only on server
       imports: [SharedModule],

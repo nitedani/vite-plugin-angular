@@ -1,7 +1,9 @@
+// needs to be first import, it loads the polyfills
 import { renderToString } from '@nitedani/vite-plugin-angular/server';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 import logoUrl from './logo.svg';
 import { PageContext } from 'types';
+import { SharedModule } from './shared.module';
 
 // See https://vite-plugin-ssr.com/data-fetching
 export const passToClient = ['pageProps'];
@@ -14,8 +16,9 @@ export async function render(pageContext: PageContext) {
   if (Page) {
     html = await renderToString({
       page: Page,
-      layout: exports.Layout,
       pageContext,
+      layout: exports.Layout,
+      imports: [SharedModule],
     });
   }
   // See https://vite-plugin-ssr.com/head

@@ -9,7 +9,7 @@ const OPTIONS = Symbol.for('angular-renderer.options');
 @Module({
   providers: [{ provide: OPTIONS, useValue: {} }],
 })
-export class AngularUniversalModule implements OnModuleInit {
+export class AngularRendererModule implements OnModuleInit {
   constructor(
     private readonly httpAdapterHost: HttpAdapterHost,
     @Inject(OPTIONS)
@@ -18,7 +18,7 @@ export class AngularUniversalModule implements OnModuleInit {
 
   static forRoot(options?: AngularRendererOptions): DynamicModule {
     return {
-      module: AngularUniversalModule,
+      module: AngularRendererModule,
       providers: [{ provide: OPTIONS, useValue: options || {} }],
     };
   }
