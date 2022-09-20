@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 import { angular } from '@nitedani/vite-plugin-angular/plugin';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import vavite from 'vavite';
+import ssr from 'vite-plugin-ssr/plugin';
 
 export default defineConfig({
   buildSteps: [
@@ -19,15 +20,13 @@ export default defineConfig({
       },
     },
   ],
-  ssr: {
-    noExternal: [/@nitedani\/angular/],
-  },
   plugins: [
-    angular(),
     vavite({
       serverEntry: '/server/main.ts',
       serveClientAssetsInDev: true,
     }),
+    angular(),
+    ssr({ disableAutoFullBuild: true }),
     tsconfigPaths(),
   ],
 });

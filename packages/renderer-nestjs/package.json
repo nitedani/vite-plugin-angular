@@ -1,0 +1,38 @@
+{
+  "name": "@nitedani/angular-renderer-nestjs",
+  "version": "14.3.0",
+  "license": "MIT",
+  "type": "module",
+  "types": "lib/index.d.ts",
+  "main": "lib/index.js",
+  "keywords": [
+    "express",
+    "vite"
+  ],
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/nitedani/vite-plugin-angular/packages/renderer-nestjs"
+  },
+  "scripts": {
+    "build": "rimraf lib && tsc",
+    "release": "release-me patch"
+  },
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "@nitedani/angular-renderer-express": "14.3.0"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^9.0.11",
+    "@nestjs/core": "^9.0.11",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
+    "rxjs": "^7.5.6",
+    "typescript": "^4.8.3"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  }
+}

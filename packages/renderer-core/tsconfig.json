@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "rootDir": "./src",
+        "baseUrl": "./src",
+        // "composite": true,
+        "types": [
+            "vite/client",
+        ],
+    },
+    "files": [],
+    "exclude": [
+        "node_modules",
+        "lib",
+        "examples",
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.server.json"
+        },
+        {
+            "path": "./tsconfig.client.json"
+        }
+    ]
+}

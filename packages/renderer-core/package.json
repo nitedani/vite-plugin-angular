@@ -1,0 +1,59 @@
+{
+  "name": "@nitedani/angular-renderer-core",
+  "version": "14.3.0",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "angular",
+    "vite"
+  ],
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/nitedani/vite-plugin-angular"
+  },
+  "scripts": {
+    "build": "rimraf lib && tsc -b && node scripts/compile-angular"
+  },
+  "exports": {
+    "./server": {
+      "node": "./lib/server/index.js",
+      "default": "./lib/server/index.js",
+      "import": "./lib/server/index.js"
+    },
+    "./client": {
+      "default": "./lib/client/index.js",
+      "import": "./lib/client/index.js",
+      "browser": "./lib/client/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "server": [
+        "lib/server/index.d.ts"
+      ],
+      "client": [
+        "lib/client/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "lib"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@angular/compiler": "^14.0.0",
+    "defu": "^6.1.0",
+    "vite": "^3.1.0",
+    "zone.js": "^0.11.8",
+    "@angular/core": "^14.2.1",
+    "@angular/platform-browser": "^14.2.1",
+    "@angular/platform-server": "^14.2.1",
+    "@types/node": "^18.7.16",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.8.3"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  }
+}

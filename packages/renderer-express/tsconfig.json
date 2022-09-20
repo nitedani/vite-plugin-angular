@@ -1,0 +1,33 @@
+{
+    "include": [
+        "./src",
+    ],
+    "exclude": [
+        "node_modules",
+        "lib",
+        "examples",
+    ],
+    "compilerOptions": {
+        "outDir": "lib/",
+        "module": "esnext",
+        "target": "ESNext",
+        "lib": [
+            "ESNext",
+            "DOM",
+        ],
+        "types": [
+            "node",
+            "vite/client"
+        ],
+        "declaration": true,
+        "moduleResolution": "node",
+        "noImplicitThis": true,
+        "skipLibCheck": true,
+        "noImplicitAny": false,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+    },
+}

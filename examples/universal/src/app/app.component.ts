@@ -3,9 +3,11 @@ import { AppService } from './app.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  providers: [AppService],
 })
 export class AppComponent {
   counter = 0;
