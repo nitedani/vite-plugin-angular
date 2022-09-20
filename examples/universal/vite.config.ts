@@ -19,9 +19,6 @@ export default defineConfig({
       },
     },
   ],
-  ssr: {
-    noExternal: [/@nitedani\/angular/],
-  },
   plugins: [
     angular(),
     vavite({
