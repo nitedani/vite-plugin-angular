@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "vite --open",
-    "build": "vite build"
+    "build": "vite build",
+    "start": "vite preview --open"
   },
   "dependencies": {
     "@angular/common": "^14.0.0",
