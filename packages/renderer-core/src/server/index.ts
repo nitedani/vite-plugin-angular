@@ -160,16 +160,26 @@ export const renderToString = async <T, U>({
     });
   }
 
+  if (pageContext) {
+    extraProviders.push({
+      provide: 'pageContext',
+      useValue: new Proxy(pageContext, {
+        get: (target, prop) => {
+          if (prop === 'ngOnDestroy') {
+            return null;
+          }
+          return target[prop];
+        },
+      }),
+    });
+  }
+
   return renderApplication(DefaultWrapper, {
     appId,
     document,
     providers: [
       ...providers,
       ...extraProviders,
-      {
-        provide: 'pageContext',
-        useValue: pageContext,
-      },
       { provide: XhrFactory, useClass: ServerXhr },
       {
         provide: SSR_PAGE_PROPS,

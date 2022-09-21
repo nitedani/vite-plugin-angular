@@ -37,24 +37,24 @@ export const renderPage = async <T, U>({
   DefaultWrapper.ɵcmp.dependencies = componentParameters.imports;
   //TODO: check if anything else needs to be set
 
+  const extraProviders: Provider[] = [];
+  if (pageContext) {
+    extraProviders.push({
+      provide: 'pageContext',
+      useValue: new Proxy(pageContext, {
+        get: (target, prop) => {
+          if (prop === 'ngOnDestroy') {
+            return null;
+          }
+          return target[prop];
+        },
+      }),
+    });
+  }
   const appRef = await createApplication({
-    providers: [
-      ...providers,
-      {
-        provide: 'pageContext',
-        useValue: new Proxy(pageContext, {
-          get: (target, prop) => {
-            if (prop === 'ngOnDestroy') {
-              return null;
-            }
-            return target[prop];
-          },
-        }),
-      },
-    ],
+    providers: [...providers, ...extraProviders],
   });
   const zone = appRef.injector.get(NgZone);
-
   zone.run(() => {
     const compRef = createComponent(DefaultWrapper, {
       environmentInjector: appRef.injector,
