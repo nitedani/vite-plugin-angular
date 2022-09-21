@@ -8,4 +8,8 @@ import { AppService } from './app/app.service';
   imports: [],
   providers: [AppService],
 })
-export class SharedModule {}
+export class SharedModule {
+  constructor() {
+    console.log('This is a shared module, it is imported on client and server');
+  }
+}

@@ -1,4 +1,4 @@
-import { NgModule, OnInit } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { AppService } from 'services/app.service';
 
 // This module is imported on client, inside _default.page.client.ts
@@ -8,8 +8,8 @@ import { AppService } from 'services/app.service';
   imports: [],
   providers: [AppService],
 })
-export class SharedModule implements OnInit {
-  ngOnInit(): void {
+export class SharedModule {
+  constructor() {
     console.log('This is a shared module, it is imported on client and server');
   }
 }
