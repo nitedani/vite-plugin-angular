@@ -42,7 +42,14 @@ export const renderPage = async <T, U>({
       ...providers,
       {
         provide: 'pageContext',
-        useValue: pageContext,
+        useValue: new Proxy(pageContext, {
+          get: (target, prop) => {
+            if (prop === 'ngOnDestroy') {
+              return null;
+            }
+            return target[prop];
+          },
+        }),
       },
     ],
   });
