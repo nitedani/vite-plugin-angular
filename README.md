@@ -10,11 +10,13 @@ This plugin is work in progress. The interfaces can change any time. Don't use i
 - In build mode, it uses [esbuild](https://esbuild.github.io/) and the Angular AOT compiler to produce small bundles.
 
 ### Examples without SSR:
+
 - [Simple](./examples/simple/)
 - [Angular routing module](./examples/routing-module/)
 - [Angular Material](./examples/material/)
 
 ### Examples with SSR:
+
 - [NestJS SSR](./examples/universal/)
 - [vite-plugin-ssr + NestJS](./examples/vps/)
 - [vite-plugin-ssr + Express](./examples/vps-express/)
@@ -27,13 +29,6 @@ This plugin is work in progress. The interfaces can change any time. Don't use i
 | @nitedani/vite-plugin-ssr-adapter-express | X                                         |
 | @nitedani/vite-plugin-ssr-adapter-nestjs  | X                                         |
 
-### TODO:
-- [ ] add cypress tests to ensure nothing breaks
-- [ ] provide documentation of the features
-- [ ] make sure it works with angular libraries
-- [ ] typechecking in development(currently only build is typechecked)
-- [ ] handling of environment files(do we need them?)
-
 ### Usage:
 
 ```typescript
@@ -45,3 +40,11 @@ export default defineConfig({
   plugins: [angular()],
 });
 ```
+
+TODO:
+
+- [ ] add cypress tests to ensure nothing breaks
+- [ ] provide documentation of the features
+- [ ] make sure it works with angular libraries
+- [ ] typechecking in development(currently only build is typechecked)
+- [ ] handling of environment files(do we need them?)
