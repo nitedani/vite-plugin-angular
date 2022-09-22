@@ -1,6 +1,6 @@
 {
   "name": "@nitedani/angular-renderer-nestjs",
-  "version": "14.3.12",
+  "version": "14.3.13",
   "license": "MIT",
   "type": "module",
   "types": "lib/index.d.ts",
