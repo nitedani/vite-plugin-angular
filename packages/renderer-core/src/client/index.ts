@@ -1,9 +1,11 @@
 import 'zone.js/dist/zone.js';
 import {
+  APP_BOOTSTRAP_LISTENER,
   Component,
   createComponent,
   enableProdMode,
   ImportedNgModuleProviders,
+  importProvidersFrom,
   NgZone,
   Provider,
   Type,
@@ -21,21 +23,16 @@ export const renderPage = async <T, U>({
   layout,
   pageContext,
   providers = [],
+  imports = [],
   ...componentParameters
 }: {
   page: Type<T>;
   layout?: Type<U>;
   pageContext?: any;
-  providers?: Array<Provider | ImportedNgModuleProviders>;
-} & Pick<Component, 'imports' | 'selector'>) => {
-  componentParameters.imports ??= [];
+} & Pick<Component, 'imports' | 'selector' | 'providers'>) => {
   componentParameters.selector ??= 'app-root';
-
   //@ts-ignore
   DefaultWrapper.ɵcmp.selectors = [[componentParameters.selector]];
-  //@ts-ignore
-  DefaultWrapper.ɵcmp.dependencies = componentParameters.imports;
-  //TODO: check if anything else needs to be set
 
   const extraProviders: Provider[] = [];
   if (pageContext) {
@@ -51,11 +48,14 @@ export const renderPage = async <T, U>({
       }),
     });
   }
+
   const appRef = await createApplication({
-    providers: [...providers, ...extraProviders],
+    providers: [...providers, ...extraProviders, importProvidersFrom(imports)],
   });
+
   const zone = appRef.injector.get(NgZone);
-  zone.run(() => {
+
+  return zone.run(() => {
     const compRef = createComponent(DefaultWrapper, {
       environmentInjector: appRef.injector,
       hostElement: document.querySelector(componentParameters.selector!)!,
@@ -69,6 +69,11 @@ export const renderPage = async <T, U>({
     });
 
     appRef.attachView(compRef.hostView);
+    appRef.tick();
+    appRef.components.push(compRef);
+    const listeners = appRef.injector.get(APP_BOOTSTRAP_LISTENER, []);
+    listeners.forEach(listener => listener(compRef));
+
+    return appRef;
   });
-  return appRef;
 };

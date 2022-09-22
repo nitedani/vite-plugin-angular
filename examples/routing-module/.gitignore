@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+dist
+*.local
+/out-tsc
+.pnpm-store
+.pnpm_store
+package-lock.json

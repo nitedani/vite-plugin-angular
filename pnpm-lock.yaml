@@ -47,6 +47,35 @@ importers:
       typescript: 4.8.3
       vite: 3.1.3_sass@1.54.9
 
+  examples/routing-module:
+    specifiers:
+      '@angular/common': ^14.0.0
+      '@angular/compiler': ^14.0.0
+      '@angular/core': ^14.0.0
+      '@angular/platform-browser': ^14.0.0
+      '@angular/platform-browser-dynamic': ^14.0.0
+      '@angular/router': ^14.2.3
+      '@nitedani/vite-plugin-angular': '*'
+      rxjs: ^7.5.6
+      sass: ^1.54.9
+      typescript: ^4.1.5
+      vite: ^3.1.0
+      zone.js: ^0.11.8
+    dependencies:
+      '@angular/common': 14.2.2_i7tktysnynbuwpamqlvgeyyawi
+      '@angular/compiler': 14.2.2_@angular+core@14.2.2
+      '@angular/core': 14.2.2_rxjs@7.5.6+zone.js@0.11.8
+      '@angular/platform-browser': 14.2.2_ici7bxm3f3ipt7voeaylpzxsu4
+      '@angular/platform-browser-dynamic': 14.2.2_gf7arh6eabrcgg4u4pslefw65y
+      '@angular/router': 14.2.3_je3aiuh7ehflvcah6g3rhw23jq
+      rxjs: 7.5.6
+      zone.js: 0.11.8
+    devDependencies:
+      '@nitedani/vite-plugin-angular': link:../../packages/vite-plugin-angular
+      sass: 1.54.9
+      typescript: 4.8.3
+      vite: 3.1.3_sass@1.54.9
+
   examples/simple:
     specifiers:
       '@angular/common': ^14.0.0
@@ -672,7 +701,7 @@ packages:
       '@angular/common': 14.2.2_i7tktysnynbuwpamqlvgeyyawi
       '@angular/compiler': 14.2.2_@angular+core@14.2.2
       '@angular/core': 14.2.2_rxjs@7.5.6+zone.js@0.11.8
-      '@angular/platform-browser': 14.2.2_up5r4dprhsl675p6iwoivdibvu
+      '@angular/platform-browser': 14.2.2_ici7bxm3f3ipt7voeaylpzxsu4
       tslib: 2.4.0
 
   /@angular/platform-browser/14.2.2_ici7bxm3f3ipt7voeaylpzxsu4:
@@ -689,7 +718,6 @@ packages:
       '@angular/common': 14.2.2_i7tktysnynbuwpamqlvgeyyawi
       '@angular/core': 14.2.2_rxjs@7.5.6+zone.js@0.11.8
       tslib: 2.4.0
-    dev: false
 
   /@angular/platform-browser/14.2.2_up5r4dprhsl675p6iwoivdibvu:
     resolution: {integrity: sha512-1NrtOIvevoDDT6DU+Fsm5TsNN/XJhIV/UhfInmU/rz97RERl8etcOQRsxWnjGwZjk9rjt+0lBbW5oVDFKOJa+w==}
@@ -727,6 +755,22 @@ packages:
       domino: 2.1.6
       tslib: 2.4.0
       xhr2: 0.2.1
+
+  /@angular/router/14.2.3_je3aiuh7ehflvcah6g3rhw23jq:
+    resolution: {integrity: sha512-ACSBYZCMWBaVHmclaFS5C+zSTTcMbY6iJFjI0tiTqicqdpzAOIt6s5Ius1wzN9L6ANijn1ZdGAzH6j45GV/XtQ==}
+    engines: {node: ^14.15.0 || >=16.10.0}
+    peerDependencies:
+      '@angular/common': 14.2.3
+      '@angular/core': 14.2.3
+      '@angular/platform-browser': 14.2.3
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      '@angular/common': 14.2.2_i7tktysnynbuwpamqlvgeyyawi
+      '@angular/core': 14.2.2_rxjs@7.5.6+zone.js@0.11.8
+      '@angular/platform-browser': 14.2.2_ici7bxm3f3ipt7voeaylpzxsu4
+      rxjs: 7.5.6
+      tslib: 2.4.0
+    dev: false
 
   /@assemblyscript/loader/0.10.1:
     resolution: {integrity: sha512-H71nDOOL8Y7kWRLqf6Sums+01Q5msqBW2KhDUTemh1tvY04eSkSXrK0uj/4mmY0Xr16/3zyZmsrxN7CKuRbNRg==}

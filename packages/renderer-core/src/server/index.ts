@@ -7,6 +7,7 @@ import {
   Component,
   enableProdMode,
   ImportedNgModuleProviders,
+  importProvidersFrom,
   InjectionToken,
   Provider,
   Type,
@@ -86,12 +87,11 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
 
 let indexHtmlString: string | null = null;
 export interface RenderToStringOptions<T = any, U = any>
-  extends Pick<Component, 'imports' | 'selector'> {
+  extends Pick<Component, 'imports' | 'selector' | 'providers'> {
   page: Type<T>;
   layout?: Type<U>;
   pageContext?: { pageProps?: any; req?: any; res?: any; urlOriginal?: string };
   document?: string;
-  providers?: Array<Provider | ImportedNgModuleProviders>;
   serverUrl?: string;
   indexHtml?: boolean;
   root?: string;
@@ -102,6 +102,7 @@ export const renderToString = async <T, U>({
   layout,
   pageContext,
   providers = [],
+  imports = [],
   document,
   serverUrl,
   indexHtml,
@@ -109,15 +110,12 @@ export const renderToString = async <T, U>({
   ...componentParameters
 }: RenderToStringOptions<T, U>) => {
   const appId = 'server-app';
-  componentParameters.imports ??= [];
   componentParameters.selector ??= 'app-root';
   document ??= `<${componentParameters.selector}></${componentParameters.selector}>`;
   root ??= join(__dirname, '..', 'client');
 
   //@ts-ignore
   DefaultWrapper.ɵcmp.selectors = [[componentParameters.selector]];
-  //@ts-ignore
-  DefaultWrapper.ɵcmp.dependencies = componentParameters.imports;
   //TODO: check if anything else needs to be set
 
   if (indexHtml) {
@@ -180,6 +178,7 @@ export const renderToString = async <T, U>({
     providers: [
       ...providers,
       ...extraProviders,
+      importProvidersFrom(imports),
       { provide: XhrFactory, useClass: ServerXhr },
       {
         provide: SSR_PAGE_PROPS,
