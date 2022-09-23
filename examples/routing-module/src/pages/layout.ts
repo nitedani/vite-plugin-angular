@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AppService } from '../services/app.service';
 
 @Component({
@@ -29,7 +29,6 @@ import { AppService } from '../services/app.service';
       </ul>
     </nav>
     <!-- The routed views render in the <router-outlet>-->
-    <ng-content></ng-content>
     <router-outlet></router-outlet>`,
 })
 export class RootComponent {
