@@ -6,11 +6,12 @@
   "scripts": {
     "build": "turbo run build",
     "release": "pnpm build && bumpp package.json packages/*/package.json examples/*/package.json && pnpm -r publish --access=public",
-    "test": "node scripts/test"
+    "test": "playwright test"
+
   },
   "devDependencies": {
+    "@playwright/test": "^1.26.0",
     "bumpp": "^8.2.1",
-    "cypress": "^10.8.0",
     "fs-extra": "^10.1.0",
     "turbo": "^1.4.6"
   },
