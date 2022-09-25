@@ -43,7 +43,6 @@ export default defineConfig({
 
 TODO:
 
-- [ ] add cypress tests
 - [ ] provide more documentation
 - [ ] make sure it works with angular libraries
 - [ ] typechecking in development(currently only build is typechecked)
