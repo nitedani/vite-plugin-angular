@@ -11,34 +11,35 @@ export const passToClient = ['pageProps'];
 export async function render(pageContext: PageContext) {
   const { Page, exports, documentProps } = pageContext;
   const title = (documentProps && documentProps.title) || 'App';
-  let html = '';
+
+  // See https://vite-plugin-ssr.com/head
+  let document = `<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta name="color-scheme" content="dark light" />
+      <meta name="description" content="App" />
+      <meta charset="UTF-8" />
+      <link rel="icon" href="${logoUrl}" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>${title}</title>
+    </head>
+    <body style="height: 100vh;">
+      <app-root></app-root>
+    </body>
+  </html>`;
 
   if (Page) {
-    html = await renderToString({
+    document = await renderToString({
       page: Page,
       pageContext,
       layout: exports.Layout,
       imports: [SharedModule],
+      document,
     });
   }
-  // See https://vite-plugin-ssr.com/head
+
   return {
-    documentHtml: escapeInject`<!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta name="color-scheme" content="dark light" />
-        <meta name="description" content="App" />
-        <meta charset="UTF-8" />
-        <link rel="icon" href="${logoUrl}" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>${title}</title>
-      </head>
-      <body style="height: 100vh;">
-        <div id="page-view" style="height: 100%; overflow: hidden;">${dangerouslySkipEscape(
-          html
-        )}</div>
-      </body>
-    </html>`,
+    documentHtml: escapeInject`${dangerouslySkipEscape(document)}`,
     pageContext: {},
   };
 }
