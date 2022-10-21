@@ -1,6 +1,24 @@
+import { existsSync, statSync } from 'fs';
 import { join } from 'path';
 import { cwd } from 'process';
 import { Plugin } from 'vite';
+
+// a hack to support ~ angular scss imports
+const findNodeModules = () => {
+  const candidates = [
+    join(cwd(), '..', '..', '..', 'node_modules', '@angular'),
+    join(cwd(), '..', '..', 'node_modules', '@angular'),
+    join(cwd(), '..', 'node_modules', '@angular'),
+    join(cwd(), 'node_modules', '@angular'),
+  ];
+  for (const candidate of candidates) {
+    if (existsSync(candidate) && statSync(candidate).isDirectory()) {
+      return candidate.replace('/@angular', '');
+    }
+  }
+};
+
+const nodeModulesDir = findNodeModules()!;
 
 export const CommonPlugin = (): Plugin => {
   return {
@@ -25,9 +43,10 @@ export const CommonPlugin = (): Plugin => {
             output: {
               manualChunks: id => {
                 const runtime1 = [
+                  '@nitedani/angular-renderer-core',
                   '@nitedani/vite-plugin-angular/client',
                   '@angular',
-                  "zone.js",
+                  'zone.js',
                 ];
                 if (runtime1.some(s => id.includes(s))) {
                   return 'runtime1';
@@ -40,7 +59,8 @@ export const CommonPlugin = (): Plugin => {
           alias: [
             {
               find: /~/,
-              replacement: join(cwd(), 'node_modules') + '/',
+              //@ts-ignore
+              replacement: nodeModulesDir + '/',
             },
           ],
         },
