@@ -2,6 +2,12 @@
 
 This plugin is work in progress. The interfaces can change any time. Don't use it for production!
 
+
+
+```
+npm init @nitedani/vite-angular-app
+```
+
 ### Features:
 
 - Fast live-reload, both in browser([vite](https://vitejs.dev/)) and server code([vavite](https://github.com/cyco130/vavite))
