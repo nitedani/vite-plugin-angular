@@ -231,6 +231,51 @@ importers:
       reflect-metadata: ^0.1.13
       rxjs: ^7.5.6
       sass: ^1.54.9
+      typescript: ^4.1.5
+      vavite: ^1.4.3
+      vite: ^3.1.0
+      vite-plugin-ssr: ^0.4.34
+      vite-tsconfig-paths: ^3.5.0
+      zone.js: ^0.11.8
+    dependencies:
+      '@angular/animations': 14.2.7_@angular+core@14.2.7
+      '@angular/common': 14.2.7_mhxwww7bfpzvikl64i6lpyc2ua
+      '@angular/compiler': 14.2.7_@angular+core@14.2.7
+      '@angular/core': 14.2.7_rxjs@7.5.7+zone.js@0.11.8
+      '@angular/platform-browser': 14.2.7_kbr7ogish5x5hzkphqt6t2txom
+      '@angular/platform-browser-dynamic': 14.2.7_q4va4uwl4uyjrhqsdbamttsfvi
+      '@angular/platform-server': 14.2.7_254kuffdkzxiuunokmlzprcdsq
+      '@nguniversal/common': 14.2.0_aaupshc3v455velby5cf2mmuay
+      '@nitedani/vite-plugin-ssr-adapter-express': 0.0.3
+      reflect-metadata: 0.1.13
+      rxjs: 7.5.7
+      vite-plugin-ssr: 0.4.43_vite@3.1.8
+      zone.js: 0.11.8
+    devDependencies:
+      '@nitedani/vite-plugin-angular': link:../../packages/vite-plugin-angular
+      '@types/express': 4.17.14
+      sass: 1.55.0
+      typescript: 4.8.4
+      vavite: 1.5.0_vite@3.1.8
+      vite: 3.1.8_sass@1.55.0
+      vite-tsconfig-paths: 3.5.2_vite@3.1.8
+
+  examples/vps-express-telefunc:
+    specifiers:
+      '@angular/animations': ^14.2.1
+      '@angular/common': ^14.0.0
+      '@angular/compiler': ^14.0.0
+      '@angular/core': ^14.0.0
+      '@angular/platform-browser': ^14.0.0
+      '@angular/platform-browser-dynamic': ^14.0.0
+      '@angular/platform-server': ^14.2.1
+      '@nguniversal/common': ^14.2.0
+      '@nitedani/vite-plugin-angular': '*'
+      '@nitedani/vite-plugin-ssr-adapter-express': ^0.0.3
+      '@types/express': ^4.17.13
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.5.6
+      sass: ^1.54.9
       telefunc: ^0.1.26
       typescript: ^4.1.5
       vavite: ^1.4.3
