@@ -22,6 +22,7 @@ const tiged = require("tiged");
     name: "template",
     choices: [
       { title: "vps-express".green, value: "vps-express" },
+      { title: "vps-express-telefunc".green, value: "vps-express-telefunc" },
       { title: "vps".green, value: "vps" },
       { title: "universal".green, value: "universal" },
       { title: "simple".blue, value: "simple" },
