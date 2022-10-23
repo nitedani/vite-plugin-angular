@@ -6,7 +6,6 @@ import {
   ApplicationRef,
   Component,
   enableProdMode,
-  ImportedNgModuleProviders,
   importProvidersFrom,
   InjectionToken,
   Provider,

@@ -4,13 +4,12 @@ import {
   Component,
   createComponent,
   enableProdMode,
-  ImportedNgModuleProviders,
   importProvidersFrom,
   NgZone,
   Provider,
   Type,
 } from '@angular/core';
-import { createApplication } from '@angular/platform-browser';
+import { BrowserModule, createApplication } from '@angular/platform-browser';
 import { mountPage } from '../shared/mountPage.js';
 import { DefaultWrapper } from '../shared/angular/wrapper.js';
 
@@ -30,6 +29,7 @@ export const renderPage = async <T, U>({
   layout?: Type<U>;
   pageContext?: any;
 } & Pick<Component, 'imports' | 'selector' | 'providers'>) => {
+  const appId = 'server-app';
   componentParameters.selector ??= 'app-root';
   //@ts-ignore
   DefaultWrapper.ɵcmp.selectors = [[componentParameters.selector]];
@@ -50,7 +50,14 @@ export const renderPage = async <T, U>({
   }
 
   const appRef = await createApplication({
-    providers: [...providers, ...extraProviders, importProvidersFrom(imports)],
+    providers: [
+      ...providers,
+      ...extraProviders,
+      importProvidersFrom(
+        imports,
+        BrowserModule.withServerTransition({ appId })
+      ),
+    ],
   });
 
   const zone = appRef.injector.get(NgZone);

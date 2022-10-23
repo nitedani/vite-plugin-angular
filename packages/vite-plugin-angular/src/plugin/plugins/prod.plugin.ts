@@ -124,23 +124,12 @@ export const ProductionPlugin = (
         await buildAndAnalyze();
       },
       async transform(code, id) {
-        const _id = normalizePath(id);
-        const _check = normalizePath(join(cwd(), 'server'));
-        const _check2 = normalizePath(join(cwd(), 'renderer'));
-        const isServerAsset = _id.includes(_check) || _id.includes(_check2);
-        const isComponent = () =>
-          code.includes('@NgModule') || code.includes('@Component');
-
-        if (isServerAsset && !isComponent()) {
-          return swcTransform({
-            code,
-            id,
-            isSsr: env.ssrBuild,
-            isProduction: true,
-          });
-        }
-
-        if (id.includes('node_modules')) {
+        if (
+          id.includes('node_modules') ||
+          //TODO: why is this needed? vite-plugin-ssr throws an error if this is not here
+          // debug and remove this if possible
+          code.includes('@nitedani/vite-plugin-angular/client')
+        ) {
           return;
         }
 
