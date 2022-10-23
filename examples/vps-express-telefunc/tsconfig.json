@@ -32,7 +32,7 @@
     "layouts/**/*",
     "renderer/**/*",
     "services/**/*",
-    "types.ts"
+    "types_.ts"
   ],
   "exclude": [
     "node_modules",

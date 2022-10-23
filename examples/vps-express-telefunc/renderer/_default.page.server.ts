@@ -4,7 +4,6 @@ import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 import logoUrl from './logo.svg';
 import { PageContext } from 'types_';
 import { SharedModule } from './shared.module';
-import { provideTelefuncContext } from 'telefunc';
 
 // See https://vite-plugin-ssr.com/data-fetching
 export const passToClient = ['pageProps'];
@@ -30,7 +29,6 @@ export async function render(pageContext: PageContext) {
   </html>`;
 
   if (Page) {
-    provideTelefuncContext({ req: pageContext.req, res: pageContext.res });
     document = await renderToString({
       page: Page,
       pageContext,
