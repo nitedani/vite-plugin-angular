@@ -1,7 +1,7 @@
 // needs to be first import, it loads the polyfills
 import { renderPage } from '@nitedani/vite-plugin-angular/client';
 import { SharedModule } from './shared.module';
-import { PageContext } from 'types';
+import { PageContext } from 'types_';
 import { HttpClientModule } from '@angular/common/http';
 
 export const clientRouting = true;

@@ -2,7 +2,7 @@
 import { renderToString } from '@nitedani/vite-plugin-angular/server';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 import logoUrl from './logo.svg';
-import { PageContext } from 'types';
+import { PageContext } from 'types_';
 import { SharedModule } from './shared.module';
 import { provideTelefuncContext } from 'telefunc';
 

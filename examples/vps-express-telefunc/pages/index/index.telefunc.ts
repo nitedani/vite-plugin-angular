@@ -1,7 +1,7 @@
 // only runs on server
 
 import { getContext } from 'telefunc';
-import { ReqRes } from 'types';
+import { ReqRes } from 'types_';
 
 export const getPets = async () => {
   const { req, res } = getContext<ReqRes>();
