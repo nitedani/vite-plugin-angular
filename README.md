@@ -26,6 +26,7 @@ npm init @nitedani/vite-angular-app
 - [NestJS SSR](./examples/universal/)
 - [vite-plugin-ssr + NestJS](./examples/vps/)
 - [vite-plugin-ssr + Express](./examples/vps-express/)
+- [vite-plugin-ssr + Express + Telefunc](./examples/vps-express-telefunc/)
 
 | Related packages                          | Included in @nitedani/vite-plugin-angular |
 | ----------------------------------------- | ----------------------------------------- |
