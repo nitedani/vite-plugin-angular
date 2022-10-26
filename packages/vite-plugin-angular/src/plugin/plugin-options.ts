@@ -1,1 +1,3 @@
-export interface AngularVitePluginOptions {}
+export interface AngularVitePluginOptions {
+  typecheck?: boolean;
+}

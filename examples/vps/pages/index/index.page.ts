@@ -3,6 +3,7 @@ import { Layout } from 'pages/default.layout';
 import { AppService } from 'services/app.service';
 export { Page, Layout };
 
+
 @Component({
   standalone: true,
   template: `<div>Index page works</div>`,
@@ -12,7 +13,7 @@ class Page implements OnInit {
 
   // pageContext is globally available for injection
   constructor(
-    @Inject('pageContext') pageContext,
+    @Inject('pageContext') pageContext: any,
     private appService: AppService
   ) {}
 

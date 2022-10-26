@@ -11,6 +11,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "target": "es2020",
     "module": "es2020",
     "lib": [

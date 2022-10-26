@@ -12,7 +12,7 @@ class Page implements OnInit {
 
   // pageContext is globally available for injection
   constructor(
-    @Inject('pageContext') pageContext,
+    @Inject('pageContext') pageContext: any,
     private appService: AppService
   ) {}
 

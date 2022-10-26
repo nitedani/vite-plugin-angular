@@ -1,6 +1,8 @@
+import { PageContext } from 'types';
+
 export { onBeforeRender };
 
-async function onBeforeRender(pageContext) {
+async function onBeforeRender(pageContext: PageContext) {
   const response = await fetch(
     'https://petstore.swagger.io/v2/store/inventory'
   ).then((response) => response.json());

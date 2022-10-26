@@ -6,8 +6,8 @@ export const DevelopmentPlugin: Plugin = {
   enforce: 'pre',
   apply(config, env) {
     const isBuild = env.command === 'build';
-    const isSsrBuild = env.ssrBuild;
-    return !isBuild || !!isSsrBuild;
+    const isSsrBuild = env.ssrBuild === true;
+    return !isBuild || isSsrBuild;
   },
   config(_userConfig, env) {
     return {
