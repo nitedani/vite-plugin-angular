@@ -13,8 +13,7 @@ import {
 } from '@ngtools/webpack/src/ivy/transformation.js';
 import { cwd } from 'process';
 import ts from 'typescript';
-import { ConfigEnv, normalizePath, Plugin, UserConfig } from 'vite';
-import { swcTransform } from '../swc/transform.js';
+import { Plugin } from 'vite';
 import { OptimizerPlugin } from './optimizer.plugin.js';
 
 interface EmitFileResult {
@@ -25,10 +24,7 @@ interface EmitFileResult {
 }
 type FileEmitter = (file: string) => Promise<EmitFileResult | undefined>;
 
-export const ProductionPlugin = (
-  config: UserConfig,
-  env: ConfigEnv
-): Plugin[] => {
+export const ProductionPlugin = (): Plugin[] => {
   const tsconfigPath = join(cwd(), 'tsconfig.json');
   const workspaceRoot = cwd();
 
@@ -68,7 +64,11 @@ export const ProductionPlugin = (
     {
       name: 'vite-plugin-angular-prod',
       enforce: 'pre',
-      apply: 'build',
+      apply(config, env) {
+        const isBuild = env.command === 'build';
+        const isSsrBuild = env.ssrBuild;
+        return isBuild && !isSsrBuild;
+      },
       config(_userConfig, env) {
         return {
           optimizeDeps: {
@@ -167,7 +167,7 @@ export const ProductionPlugin = (
         return undefined;
       },
     },
-    ...(!env.ssrBuild ? [OptimizerPlugin()] : []),
+    OptimizerPlugin,
   ];
 };
 
