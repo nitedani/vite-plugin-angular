@@ -11,11 +11,14 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
   const { typecheck } = defu(options, {
     typecheck: true,
   });
-  return [
+  const plugins = [
     CommonPlugin,
     DirImporterPlugin,
     DevelopmentPlugin,
     ...ProductionPlugin(),
-    checker({ typescript: typecheck }),
   ];
+  if (typecheck) {
+    plugins.push(checker({ typescript: true }));
+  }
+  return plugins;
 }
