@@ -1,6 +1,6 @@
 {
   "name": "vite-ng-universal-app",
-  "version": "14.3.21",
+  "version": "14.3.22",
   "type": "module",
   "private": true,
   "scripts": {
