@@ -1,12 +1,14 @@
 // needs to be first import, it loads the polyfills
 import { renderToString } from '@nitedani/vite-plugin-angular/server';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
+import { QueryClientService } from '@ngneat/query';
+import { QueryClient, dehydrate } from '@tanstack/query-core';
 import logoUrl from './logo.svg';
 import { PageContext } from 'types_';
 import { SharedModule } from './shared.module';
 
 // See https://vite-plugin-ssr.com/data-fetching
-export const passToClient = ['pageProps'];
+export const passToClient = ['pageProps', 'queryState'];
 
 export async function render(pageContext: PageContext) {
   const { Page, exports, documentProps } = pageContext;
@@ -28,18 +30,26 @@ export async function render(pageContext: PageContext) {
     </body>
   </html>`;
 
+  const queryClient = new QueryClient();
+
   if (Page) {
     document = await renderToString({
       page: Page,
       pageContext,
       layout: exports.Layout,
       imports: [SharedModule],
+      providers: [
+        {
+          provide: QueryClientService,
+          useValue: queryClient,
+        },
+      ],
       document,
     });
   }
 
   return {
     documentHtml: escapeInject`${dangerouslySkipEscape(document)}`,
-    pageContext: {},
+    pageContext: { queryState: dehydrate(queryClient) },
   };
 }

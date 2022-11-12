@@ -8,6 +8,7 @@ export interface ReqRes {
 export interface PageContext extends PageContextBuiltIn, ReqRes {
   documentProps: any;
   pageProps: any;
+  queryState: any;
   exports: {
     Layout: Type<any>;
     [key: string]: unknown;

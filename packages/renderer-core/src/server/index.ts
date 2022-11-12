@@ -29,6 +29,7 @@ import { readFile } from 'fs/promises';
 import { cwd } from 'process';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import { filter, firstValueFrom } from 'rxjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -83,14 +84,9 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
           appRef,
         });
 
-        await new Promise(resolve => {
-          const sub = appRef.isStable.subscribe(isStable => {
-            if (isStable) {
-              sub.unsubscribe();
-              resolve(null);
-            }
-          });
-        });
+        await firstValueFrom(
+          appRef.isStable.pipe(filter(isStable => isStable))
+        );
 
         for (const c of appRef.components) {
           c.changeDetectorRef.detectChanges();

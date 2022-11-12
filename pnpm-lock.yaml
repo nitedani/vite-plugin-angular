@@ -269,9 +269,11 @@ importers:
       '@angular/platform-browser': ^14.0.0
       '@angular/platform-browser-dynamic': ^14.0.0
       '@angular/platform-server': ^14.2.1
+      '@ngneat/query': 1.0.0-beta.9
       '@nguniversal/common': ^14.2.0
       '@nitedani/vite-plugin-angular': '*'
       '@nitedani/vite-plugin-ssr-adapter-express': ^0.0.3
+      '@tanstack/query-core': ^4.15.0
       '@types/express': ^4.17.13
       reflect-metadata: ^0.1.13
       rxjs: ^7.5.6
@@ -291,8 +293,10 @@ importers:
       '@angular/platform-browser': 14.2.7_kbr7ogish5x5hzkphqt6t2txom
       '@angular/platform-browser-dynamic': 14.2.7_q4va4uwl4uyjrhqsdbamttsfvi
       '@angular/platform-server': 14.2.7_254kuffdkzxiuunokmlzprcdsq
+      '@ngneat/query': 1.0.0-beta.9_aaupshc3v455velby5cf2mmuay
       '@nguniversal/common': 14.2.0_aaupshc3v455velby5cf2mmuay
       '@nitedani/vite-plugin-ssr-adapter-express': 0.0.3
+      '@tanstack/query-core': 4.15.0
       reflect-metadata: 0.1.13
       rxjs: 7.5.7
       telefunc: 0.1.26
@@ -328,9 +332,12 @@ importers:
       '@types/node': ^18.7.16
       defu: ^6.1.0
       rimraf: ^3.0.2
+      rxjs: ^7.5.6
       typescript: ^4.8.3
       vite: ^3.1.0
       zone.js: ~0.11.4
+    dependencies:
+      rxjs: 7.5.7
     devDependencies:
       '@angular/compiler': 14.2.7_@angular+core@14.2.7
       '@angular/core': 14.2.7_rxjs@7.5.7+zone.js@0.11.8
@@ -2452,6 +2459,18 @@ packages:
       path-to-regexp: 0.2.5
     dev: false
 
+  /@ngneat/query/1.0.0-beta.9_aaupshc3v455velby5cf2mmuay:
+    resolution: {integrity: sha512-5E1Cr+dnQDgIRWvzeT/1sUXr582g2HdzHaBtFhdw84enYWCrq+cxqjoQ1v1aiXJzpQUQtwMxRBklmpGf3Wyy/w==}
+    peerDependencies:
+      '@angular/common': ^14.0.0
+      '@angular/core': ^14.0.0
+    dependencies:
+      '@angular/common': 14.2.7_mhxwww7bfpzvikl64i6lpyc2ua
+      '@angular/core': 14.2.7_rxjs@7.5.7+zone.js@0.11.8
+      '@tanstack/query-core': 4.15.0
+      tslib: 2.4.0
+    dev: false
+
   /@ngtools/webpack/14.2.6_z34ypwcp5iqzf5bbvvgqj3cage:
     resolution: {integrity: sha512-HdfoHLGPzyP135BOlvTQcpeWisVfiH0u40YNTBVK3QAsrLnY17e2QG5BWBOrVYipRu1975cZtTC9rPjcCY8aLQ==}
     engines: {node: ^14.15.0 || >=16.10.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -2798,6 +2817,10 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@tanstack/query-core/4.15.0:
+    resolution: {integrity: sha512-zEZ7AuQRb8Ts+WXw9TtGtqydxmcOSRsWkFYxxH8dykPcumsV49BcNDLhHtYqVGPQpMjqMS4RoVYQP+budT6WbA==}
+    dev: false
 
   /@tootallnate/once/2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
