@@ -73,6 +73,7 @@ export const renderPage = async <T, U>({
       compRef,
       pageProps: pageContext?.pageProps,
       layout,
+      appRef,
     });
 
     appRef.attachView(compRef.hostView);

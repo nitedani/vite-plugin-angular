@@ -74,23 +74,28 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
     return async () => {
       const compRef = appRef.components[0];
       const zone = appRef.injector.get(NgZone);
-      zone.run(() => {
+      await zone.run(async () => {
         mountPage({
           page,
           compRef,
           pageProps,
           layout,
+          appRef,
         });
-      });
-      await new Promise(resolve => {
-        const sub = appRef.isStable.subscribe(isStable => {
-          if (isStable) {
-            sub.unsubscribe();
-            resolve(null);
-          }
+
+        await new Promise(resolve => {
+          const sub = appRef.isStable.subscribe(isStable => {
+            if (isStable) {
+              sub.unsubscribe();
+              resolve(null);
+            }
+          });
         });
+
+        for (const c of appRef.components) {
+          c.changeDetectorRef.detectChanges();
+        }
       });
-      compRef.changeDetectorRef.detectChanges();
     };
   },
   deps: [ApplicationRef, SSR_PAGE_PROPS],

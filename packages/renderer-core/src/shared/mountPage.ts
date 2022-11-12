@@ -1,4 +1,9 @@
-import { ComponentRef, reflectComponentType, Type } from '@angular/core';
+import {
+  ApplicationRef,
+  ComponentRef,
+  reflectComponentType,
+  Type,
+} from '@angular/core';
 import type { IDefaultWrapper } from './angular/wrapper.js';
 
 export const mountPage = <T, U>({
@@ -6,25 +11,31 @@ export const mountPage = <T, U>({
   page,
   pageProps,
   layout,
+  appRef,
 }: {
   compRef: ComponentRef<IDefaultWrapper>;
   page: Type<T>;
   pageProps: any;
   layout?: Type<U>;
+  appRef: ApplicationRef;
 }) => {
   let pageRef: ComponentRef<T> | null = null;
   let layoutRef: ComponentRef<U> | null = null;
 
   if (!layout) {
     pageRef = compRef.instance.page.createComponent(page);
+    appRef.components.push(pageRef);
   } else {
     pageRef = compRef.instance.resolver
       .resolveComponentFactory(page)
       .create(compRef.injector);
 
+    appRef.components.push(pageRef);
+    appRef.attachView(pageRef.hostView);
     layoutRef = compRef.instance.page.createComponent(layout, {
       projectableNodes: [[pageRef.location.nativeElement]],
     });
+    appRef.components.push(layoutRef);
   }
 
   if (pageProps || page) {
@@ -70,4 +81,8 @@ export const mountPage = <T, U>({
       pageRef.changeDetectorRef.detectChanges();
     }
   }
+  return {
+    pageRef,
+    layoutRef,
+  };
 };
