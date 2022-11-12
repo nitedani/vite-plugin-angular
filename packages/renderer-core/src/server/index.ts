@@ -8,6 +8,7 @@ import {
   enableProdMode,
   importProvidersFrom,
   InjectionToken,
+  NgZone,
   Provider,
   Type,
 } from '@angular/core';
@@ -70,14 +71,26 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
       pageProps?: Record<string, unknown>;
     }
   ) => {
-    return () => {
+    return async () => {
       const compRef = appRef.components[0];
-      mountPage({
-        page,
-        compRef,
-        pageProps,
-        layout,
+      const zone = appRef.injector.get(NgZone);
+      zone.run(() => {
+        mountPage({
+          page,
+          compRef,
+          pageProps,
+          layout,
+        });
       });
+      await new Promise(resolve => {
+        const sub = appRef.isStable.subscribe(isStable => {
+          if (isStable) {
+            sub.unsubscribe();
+            resolve(null);
+          }
+        });
+      });
+      compRef.changeDetectorRef.detectChanges();
     };
   },
   deps: [ApplicationRef, SSR_PAGE_PROPS],

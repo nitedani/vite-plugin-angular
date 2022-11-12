@@ -40,7 +40,7 @@ export const DirImporterPlugin: Plugin = {
   config(config, env) {
     return {
       ssr: {
-        noExternal: ['apollo-angular'],
+        noExternal: /apollo-angular|@angular/,
       },
     };
   },
