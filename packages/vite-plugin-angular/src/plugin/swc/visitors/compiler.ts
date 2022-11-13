@@ -16,6 +16,7 @@ export class AngularImportCompilerComponents extends Visitor {
               'renderPage',
               'platformBrowserDynamic',
               'platformBrowser',
+              'bootstrapApplication',
             ].includes(imp.local.value)
           )
         ) {

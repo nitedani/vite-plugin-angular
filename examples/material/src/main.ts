@@ -1,11 +1,9 @@
 import './style.scss';
-// needs to be first import, it loads the polyfills
-import { renderPage } from '@nitedani/vite-plugin-angular/client';
+import 'zone.js/dist/zone';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { AppService } from './app/app.service';
 
-renderPage({
-  page: AppComponent,
-  // provide globally available services
+bootstrapApplication(AppComponent, {
   providers: [AppService],
 });

@@ -10,6 +10,7 @@ import {
   AngularComponents,
   AngularImportCompilerComponents,
   AngularInjector,
+  AngularSwapPlatformDynamic,
 } from './index.js';
 const fileExtensionRE = /\.[^/\s?]+$/;
 
@@ -70,12 +71,12 @@ export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
       (m: Program) => {
         return new AngularImportCompilerComponents().visitProgram(m);
       },
-      // ...(isProduction
-      //   ? [
-      //       (m: Program) =>
-      //         new AngularSwapPlatformDynamic().visitProgram(m),
-      //     ]
-      //   : []),
+      ...(isProduction
+        ? [
+            (m: Program) =>
+              new AngularSwapPlatformDynamic().visitProgram(m),
+          ]
+        : []),
     ]),
   });
 };

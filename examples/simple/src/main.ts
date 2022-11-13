@@ -1,11 +1,10 @@
-// needs to be first import, it loads the polyfills
-import { renderPage } from '@nitedani/vite-plugin-angular/client';
+import 'zone.js/dist/zone';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { AppService } from './app/app.service';
+import { importProvidersFrom } from '@angular/core';
 
-renderPage({
-  page: AppComponent,
-  imports: [HttpClientModule],
-  providers: [AppService],
+bootstrapApplication(AppComponent, {
+  providers: [AppService, importProvidersFrom(HttpClientModule)],
 });
