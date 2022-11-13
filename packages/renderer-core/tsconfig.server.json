@@ -3,6 +3,7 @@
   "include": [
     "./src/server",
     "./src/shared",
+    "./src/index.ts"
   ],
   "compilerOptions": {
     "outDir": "lib",

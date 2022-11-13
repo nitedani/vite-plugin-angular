@@ -3,18 +3,16 @@
 import { getContext } from 'telefunc';
 import { ReqRes } from 'types_';
 
-export const getPets = async () => {
+export const getPokemon = async (): Promise<{
+  results: { name: string; url: string }[];
+}> => {
   const { req, res } = getContext<ReqRes>();
 
-  const response: {
-    results: { name: string; url: string }[];
-  } = await fetch('https://pokeapi.co/api/v2/pokemon').then((response) =>
-    response.json()
-  );
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon');
   /* Or with an ORM:
   const movies = Movie.findAll() */
   /* Or with SQL:
   const movies = sql`SELECT * FROM movies;` */
 
-  return response;
+  return response.json();
 };

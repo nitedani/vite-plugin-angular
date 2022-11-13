@@ -15,6 +15,12 @@
     "build": "rimraf lib && tsc -b && node scripts/compile-angular"
   },
   "exports": {
+    ".": {
+      "node": "./lib/index.js",
+      "default": "./lib/index.js",
+      "import": "./lib/index.js",
+      "browser": "./lib/index.js"
+    },
     "./server": {
       "node": "./lib/server/index.js",
       "default": "./lib/server/index.js",
@@ -33,6 +39,9 @@
       ],
       "client": [
         "lib/client/index.d.ts"
+      ],
+      "*": [
+        "lib/index.d.ts"
       ]
     }
   },

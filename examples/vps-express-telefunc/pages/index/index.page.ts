@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { UseQuery } from '@ngneat/query';
+import { wait$ } from '@nitedani/angular-renderer-core';
 import { Layout } from 'pages/default.layout';
-import { from } from 'rxjs';
 import { AppService } from 'services/app.service';
-import { getPets } from './index.telefunc';
+import { getPokemon as getPokemon } from './index.telefunc';
 
 export { Page, Layout };
 
@@ -14,10 +14,10 @@ export { Page, Layout };
   template: `<div>
     <div>Index page works</div>
 
-    <div *ngIf="pets.result$ | async as pets">
-      <p *ngIf="pets.isError">Error...</p>
-      <div *ngIf="pets.data">
-        <div *ngFor="let pet of pets.data.results">
+    <div *ngIf="pokemon.result$ | async as pokemon">
+      <p *ngIf="pokemon.isError">Error...</p>
+      <div *ngIf="pokemon.data">
+        <div *ngFor="let pet of pokemon.data.results">
           <div>{{ pet.name }}</div>
         </div>
       </div>
@@ -28,7 +28,7 @@ class Page implements OnInit {
   private appService = inject(AppService);
   private useQuery = inject(UseQuery);
 
-  pets = this.useQuery(['pets'], () => from(getPets()));
+  pokemon = this.useQuery(['pets'], () => wait$(getPokemon()));
 
   ngOnInit() {
     console.log(this.appService.getHello());

@@ -271,6 +271,7 @@ importers:
       '@angular/platform-server': ^14.2.1
       '@ngneat/query': 1.0.0-beta.9
       '@nguniversal/common': ^14.2.0
+      '@nitedani/angular-renderer-core': '*'
       '@nitedani/vite-plugin-angular': '*'
       '@nitedani/vite-plugin-ssr-adapter-express': ^0.0.3
       '@tanstack/query-core': ^4.15.0
@@ -295,6 +296,7 @@ importers:
       '@angular/platform-server': 14.2.7_254kuffdkzxiuunokmlzprcdsq
       '@ngneat/query': 1.0.0-beta.9_aaupshc3v455velby5cf2mmuay
       '@nguniversal/common': 14.2.0_aaupshc3v455velby5cf2mmuay
+      '@nitedani/angular-renderer-core': link:../../packages/renderer-core
       '@nitedani/vite-plugin-ssr-adapter-express': 0.0.3
       '@tanstack/query-core': 4.15.0
       reflect-metadata: 0.1.13
