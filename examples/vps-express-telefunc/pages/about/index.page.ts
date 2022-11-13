@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Layout } from 'pages/default.layout';
+import { Layout } from 'pages/layout';
 export { Page, Layout };
 
 @Component({

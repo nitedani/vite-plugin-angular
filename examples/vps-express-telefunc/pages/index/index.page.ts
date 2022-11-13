@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { UseQuery } from '@ngneat/query';
 import { wait$ } from '@nitedani/angular-renderer-core';
-import { Layout } from 'pages/default.layout';
+import { Layout } from 'pages/layout';
 import { AppService } from 'services/app.service';
 import { getPokemon as getPokemon } from './index.telefunc';
 
