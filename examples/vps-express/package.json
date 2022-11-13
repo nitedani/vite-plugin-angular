@@ -16,7 +16,6 @@
     "@angular/platform-browser": "^14.0.0",
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/platform-server": "^14.2.1",
-    "@nguniversal/common": "^14.2.0",
     "@nitedani/vite-plugin-ssr-adapter-express": "^0.0.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.6",
