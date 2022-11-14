@@ -393,6 +393,7 @@ importers:
       '@angular/core': ^14.2.1
       '@angular/platform-browser': ^14.2.1
       '@angular/platform-server': ^14.2.1
+      '@angularclass/hmr': ^3.0.0
       '@babel/core': ^7.19.1
       '@ngtools/webpack': ^14.2.3
       '@nitedani/angular-renderer-core': '*'
@@ -410,6 +411,7 @@ importers:
       '@angular/cli': 14.2.6
       '@angular/compiler': 14.2.7_@angular+core@14.2.7
       '@angular/compiler-cli': 14.2.7_2drcwksc5ljle4ujljyylhgl6q
+      '@angularclass/hmr': 3.0.0
       '@babel/core': 7.19.6
       '@ngtools/webpack': 14.2.6_z34ypwcp5iqzf5bbvvgqj3cage
       '@nitedani/angular-renderer-core': link:../renderer-core
@@ -835,6 +837,10 @@ packages:
       '@angular/platform-browser': 14.2.7_aaupshc3v455velby5cf2mmuay
       rxjs: 7.5.7
       tslib: 2.4.0
+    dev: false
+
+  /@angularclass/hmr/3.0.0:
+    resolution: {integrity: sha512-4A/DKmSafWUcffv7f536oY6RbpXEAD7f0NCGVLlRj9Gna8dkGc9JOHSr3NCWHd/NRc4ey8x+V0itsBqlPxEJ/A==}
     dev: false
 
   /@assemblyscript/loader/0.10.1:

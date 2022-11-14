@@ -27,6 +27,11 @@
       "default": "./lib/client/index.js",
       "import": "./lib/client/index.js",
       "browser": "./lib/client/index.js"
+    },
+    "./hmr": {
+      "default": "./lib/hmr/index.js",
+      "import": "./lib/hmr/index.js",
+      "browser": "./lib/hmr/index.js"
     }
   },
   "typesVersions": {
@@ -39,6 +44,9 @@
       ],
       "client": [
         "lib/client/index.d.ts"
+      ],
+      "hmr": [
+        "lib/hmr/index.d.ts"
       ]
     }
   },
@@ -50,6 +58,7 @@
     "@angular/cli": "^14.2.2",
     "@angular/compiler": "^14.0.0",
     "@angular/compiler-cli": "^14.2.1",
+    "@angularclass/hmr": "^3.0.0",
     "@babel/core": "^7.19.1",
     "@ngtools/webpack": "^14.2.3",
     "@nitedani/angular-renderer-core": "*",
