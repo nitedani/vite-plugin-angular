@@ -2,44 +2,47 @@ import { Plugin } from 'vite';
 import { swcTransform } from '../swc/transform.js';
 
 const hmrCode = `
+import {
+  createInputTransfer,
+  createNewHosts,
+  removeNgStyles,
+} from '@nitedani/vite-plugin-angular/hmr';
 let __appRef;
-const __bootstrapApplication = (...args) => bootstrapApplication(...args).then(appRef =>{
-  __appRef = appRef;
-  return appRef;
-});
+const __bootstrapApplication = (...args) => {
+  removeNgStyles();
+  bootstrapApplication(...args).then((appRef) => {
+    __appRef = appRef;
+    return appRef;
+  });
+};
 if (import.meta.hot) {
-  import('@nitedani/vite-plugin-angular/hmr').then(
-    ({ createInputTransfer, createNewHosts, removeNgStyles }) => {
-      //@ts-ignore
-      import.meta.hot.accept(() => {
-        //@ts-ignore
-        const store = import.meta.hot.data.store;
-        if (!store) return;
-        if ('restoreInputValues' in store) {
-          store.restoreInputValues();
-        }
-        __appRef.tick();
-        store.disposeOldHosts();
-        delete store.disposeOldHosts;
-        delete store.state;
-        delete store.restoreInputValues;
-      });
-      //@ts-ignore
-      import.meta.hot.dispose(() => {
-        const cmpLocation = __appRef.components.map(
-          (cmp) => cmp.location.nativeElement
-        );
-        const store = {};
-        //@ts-ignore
-        store.disposeOldHosts = createNewHosts(cmpLocation);
-        //@ts-ignore
-        store.restoreInputValues = createInputTransfer();
-        //@ts-ignore
-        import.meta.hot.data.store = store;
-        removeNgStyles();
-      });
+  //@ts-ignore
+  import.meta.hot.accept(() => {
+    //@ts-ignore
+    const store = import.meta.hot.data.store;
+    if (!store) return;
+    if ('restoreInputValues' in store) {
+      store.restoreInputValues();
     }
-  );
+    __appRef.tick();
+    store.disposeOldHosts();
+    delete store.disposeOldHosts;
+    delete store.state;
+    delete store.restoreInputValues;
+  });
+  //@ts-ignore
+  import.meta.hot.dispose(() => {
+    const cmpLocation = __appRef.components.map(
+      (cmp) => cmp.location.nativeElement
+    );
+    const store = {};
+    //@ts-ignore
+    store.disposeOldHosts = createNewHosts(cmpLocation);
+    //@ts-ignore
+    store.restoreInputValues = createInputTransfer();
+    //@ts-ignore
+    import.meta.hot.data.store = store;
+  });
 }
 `;
 
