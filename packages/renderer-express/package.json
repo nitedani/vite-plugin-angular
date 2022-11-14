@@ -1,6 +1,6 @@
 {
   "name": "@nitedani/angular-renderer-express",
-  "version": "14.3.26",
+  "version": "14.3.27",
   "license": "MIT",
   "type": "module",
   "types": "lib/index.d.ts",
