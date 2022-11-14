@@ -10,7 +10,7 @@ import {
 let __appRef;
 const __bootstrapApplication = (...args) => {
   removeNgStyles();
-  bootstrapApplication(...args).then((appRef) => {
+  return bootstrapApplication(...args).then((appRef) => {
     __appRef = appRef;
     return appRef;
   });
