@@ -7,43 +7,37 @@ import {
   createNewHosts,
   removeNgStyles,
 } from '@nitedani/vite-plugin-angular/hmr';
-let __appRef;
-const __bootstrapApplication = (...args) => {
+
+// @ts-ignore
+const __bootstrapApplication = async (...args) => {
   removeNgStyles();
+  // @ts-ignore
   return bootstrapApplication(...args).then((appRef) => {
-    __appRef = appRef;
+    if (import.meta.hot) {
+      import.meta.hot.accept();
+      import.meta.hot.dispose(() => {
+        const cmpLocation = appRef.components.map(
+          (cmp) => cmp.location.nativeElement
+        );
+
+        //@ts-ignore
+        import.meta.hot.data.store = {
+          disposeOldHosts: createNewHosts(cmpLocation),
+          restoreInputValues: createInputTransfer(),
+        };
+      });
+
+      const store = import.meta.hot.data.store;
+      if (store) {
+        store.disposeOldHosts();
+        store.restoreInputValues();
+        appRef.tick();
+        delete import.meta.hot.data.store;
+      }
+    }
     return appRef;
   });
 };
-if (import.meta.hot) {
-  //@ts-ignore
-  import.meta.hot.accept(() => {
-    //@ts-ignore
-    const store = import.meta.hot.data.store;
-    if (!store) return;
-    if ('restoreInputValues' in store) {
-      store.restoreInputValues();
-    }
-    __appRef.tick();
-    store.disposeOldHosts();
-    delete store.disposeOldHosts;
-    delete store.state;
-    delete store.restoreInputValues;
-  });
-  //@ts-ignore
-  import.meta.hot.dispose(() => {
-    const cmpLocation = __appRef.components.map(
-      (cmp) => cmp.location.nativeElement
-    );
-    const store = {};
-    //@ts-ignore
-    store.disposeOldHosts = createNewHosts(cmpLocation);
-    //@ts-ignore
-    store.restoreInputValues = createInputTransfer();
-    //@ts-ignore
-    import.meta.hot.data.store = store;
-  });
-}
 `;
 
 export const DevelopmentPlugin: Plugin = {
