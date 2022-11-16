@@ -15,24 +15,10 @@
     "build": "rimraf lib && tsc -b"
   },
   "exports": {
-    "./plugin": {
-      "node": "./lib/plugin/index.js"
-    },
-    "./server": {
-      "node": "./lib/server/index.js",
-      "default": "./lib/server/index.js",
-      "import": "./lib/server/index.js"
-    },
-    "./client": {
-      "default": "./lib/client/index.js",
-      "import": "./lib/client/index.js",
-      "browser": "./lib/client/index.js"
-    },
-    "./hmr": {
-      "default": "./lib/hmr/index.js",
-      "import": "./lib/hmr/index.js",
-      "browser": "./lib/hmr/index.js"
-    }
+    "./plugin": "./lib/plugin/index.js",
+    "./server": "./lib/server/index.js",
+    "./client": "./lib/client/index.js",
+    "./hmr": "./lib/hmr/index.js"
   },
   "typesVersions": {
     "*": {

@@ -24,7 +24,6 @@ export const mountPage = <T, U>({
 
   if (!layout) {
     pageRef = compRef.instance.page.createComponent(page);
-    appRef.components.push(pageRef);
   } else {
     pageRef = compRef.instance.resolver
       .resolveComponentFactory(page)
@@ -35,7 +34,6 @@ export const mountPage = <T, U>({
     layoutRef = compRef.instance.page.createComponent(layout, {
       projectableNodes: [[pageRef.location.nativeElement]],
     });
-    appRef.components.push(layoutRef);
   }
 
   if (pageProps || page) {
@@ -60,7 +58,6 @@ export const mountPage = <T, U>({
           }
         }
       }
-      layoutRef.changeDetectorRef.detectChanges();
     }
 
     if (pageRef) {
@@ -78,7 +75,6 @@ export const mountPage = <T, U>({
           }
         }
       }
-      pageRef.changeDetectorRef.detectChanges();
     }
   }
   return {

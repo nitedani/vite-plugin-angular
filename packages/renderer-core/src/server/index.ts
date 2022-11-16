@@ -88,9 +88,7 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
           appRef.isStable.pipe(filter(isStable => isStable))
         );
 
-        for (const c of appRef.components) {
-          c.changeDetectorRef.detectChanges();
-        }
+        appRef.tick();
       });
     };
   },
