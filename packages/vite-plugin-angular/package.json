@@ -16,7 +16,7 @@
   },
   "exports": {
     "./plugin": {
-      "node": "./lib/plugin/index.js"
+      "import": "./lib/plugin/index.js"
     },
     "./server": {
       "node": "./lib/server/index.js",
