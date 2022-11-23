@@ -6,14 +6,10 @@ import {
   transform,
 } from '@swc/core';
 
-import {
-  AngularComponents,
-  AngularImportCompilerComponents,
-  AngularInjector,
-  AngularSwapPlatformDynamic,
-} from './index.js';
+import { AngularComponents, AngularInjector } from './index.js';
 const fileExtensionRE = /\.[^/\s?]+$/;
-
+const JS_EXT_REGEX = /\.[cm]?js[^x]?\??/;
+const JS_TS_EXT_REGEX = /\.[cm]?[tj]s[^x]?\??/;
 export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
   const minifyOptions: JsMinifyOptions = {
     compress: !isSsr && isProduction,
@@ -26,17 +22,13 @@ export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
   };
 
   if (id.includes('node_modules')) {
-    if (isProduction) {
+    if (isProduction && JS_EXT_REGEX.test(id)) {
       return minify(code, minifyOptions);
     }
     return;
   }
 
-  const [filepath, querystring = ''] = id.split('?');
-  const [extension = ''] =
-    querystring.match(fileExtensionRE) || filepath.match(fileExtensionRE) || [];
-
-  if (!/\.(js|ts|tsx|jsx?)$/.test(extension)) {
+  if (!JS_TS_EXT_REGEX.test(id)) {
     return;
   }
 
@@ -57,26 +49,26 @@ export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
       minify: minifyOptions,
     },
     minify: !isSsr && isProduction,
-    plugin: plugins([
-      (m: Program) => {
-        const angularComponentPlugin = new AngularComponents({
-          sourceUrl: id,
-        });
-        return angularComponentPlugin.visitProgram(m);
-      },
-      (m: Program) => {
-        const angularInjectorPlugin = new AngularInjector();
-        return angularInjectorPlugin.visitProgram(m);
-      },
-      (m: Program) => {
-        return new AngularImportCompilerComponents().visitProgram(m);
-      },
-      ...(isProduction
-        ? [
-            (m: Program) =>
-              new AngularSwapPlatformDynamic().visitProgram(m),
-          ]
-        : []),
-    ]),
+    // plugin: plugins([
+    //   (m: Program) => {
+    //     const angularComponentPlugin = new AngularComponents({
+    //       sourceUrl: id,
+    //     });
+    //     return angularComponentPlugin.visitProgram(m);
+    //   },
+    //   (m: Program) => {
+    //     const angularInjectorPlugin = new AngularInjector();
+    //     return angularInjectorPlugin.visitProgram(m);
+    //   },
+    //   // (m: Program) => {
+    //   //   return new AngularImportCompilerComponents().visitProgram(m);
+    //   // },
+    //   // ...(isProduction
+    //   //   ? [
+    //   //       (m: Program) =>
+    //   //         new AngularSwapPlatformDynamic().visitProgram(m),
+    //   //     ]
+    //   //   : []),
+    // ]),
   });
 };

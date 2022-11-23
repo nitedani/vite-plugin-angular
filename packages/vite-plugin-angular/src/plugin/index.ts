@@ -6,6 +6,7 @@ import { DevelopmentPlugin } from './plugins/dev.plugin.js';
 import { ProductionPlugin } from './plugins/prod.plugin.js';
 import { checker } from 'vite-plugin-checker';
 import defu from 'defu';
+import { HmrPlugin } from './plugins/hmr.plugin.js';
 
 export function angular(options?: VitePluginAngularOptions): Plugin[] {
   const { typecheck } = defu(options, {
@@ -14,7 +15,8 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
   const plugins = [
     CommonPlugin,
     DirImporterPlugin,
-    DevelopmentPlugin,
+    HmrPlugin,
+    // DevelopmentPlugin,
     ...ProductionPlugin(),
   ];
   if (typecheck) {
