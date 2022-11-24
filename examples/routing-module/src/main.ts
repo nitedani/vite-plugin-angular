@@ -1,10 +1,10 @@
 import 'zone.js/dist/zone';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { importProvidersFrom } from '@angular/core';
-import { RoutingModule } from './routing.module';
+import { routes } from './router';
 import { RootComponent } from './pages/layout';
 import { AppService } from './services/app.service';
+import { provideRouter } from '@angular/router';
 
 bootstrapApplication(RootComponent, {
-  providers: [AppService, importProvidersFrom(RoutingModule)],
+  providers: [AppService, provideRouter(routes)],
 });

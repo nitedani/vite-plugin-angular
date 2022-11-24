@@ -1,7 +1,6 @@
-// needs to be first import, it loads the polyfills
 import { renderToString } from '@nitedani/vite-plugin-angular/server';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
-import { QueryClientService } from '@ngneat/query';
+import { provideQueryClient } from '@ngneat/query';
 import { QueryClient, dehydrate } from '@tanstack/query-core';
 import logoUrl from './logo.svg';
 import { PageContext } from 'types_';
@@ -38,12 +37,7 @@ export async function render(pageContext: PageContext) {
       pageContext,
       layout: exports.Layout,
       imports: [SharedModule],
-      providers: [
-        {
-          provide: QueryClientService,
-          useValue: queryClient,
-        },
-      ],
+      providers: [provideQueryClient(queryClient)],
       document,
     });
   }

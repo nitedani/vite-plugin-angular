@@ -4,6 +4,7 @@ import {
   Component,
   createComponent,
   enableProdMode,
+  EnvironmentProviders,
   importProvidersFrom,
   ImportProvidersSource,
   NgZone,
@@ -29,7 +30,9 @@ export const renderPage = async <T, U>({
   page: Type<T>;
   layout?: Type<U>;
   pageContext?: any;
-} & Pick<Component, 'imports' | 'selector' | 'providers'>) => {
+  providers?: (Provider | EnvironmentProviders)[];
+  imports?: ImportProvidersSource;
+} & Pick<Component, 'selector'>) => {
   const appId = 'server-app';
   componentParameters.selector ??= 'app-root';
   //@ts-ignore
@@ -55,7 +58,7 @@ export const renderPage = async <T, U>({
       ...providers,
       ...extraProviders,
       importProvidersFrom(
-        imports as ImportProvidersSource,
+        imports,
         BrowserModule.withServerTransition({ appId })
       ),
     ],

@@ -1,9 +1,9 @@
 import { renderPage } from '@nitedani/vite-plugin-angular/client';
 import { SharedModule } from './shared.module';
 import { PageContext } from 'types_';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { QueryClient, hydrate } from '@tanstack/query-core';
-import { QueryClientService } from '@ngneat/query';
+import { provideQueryClient } from '@ngneat/query';
 
 export const clientRouting = true;
 export { render };
@@ -26,12 +26,7 @@ async function render(pageContext: PageContext) {
     page: Page,
     pageContext,
     layout: exports.Layout,
-    imports: [SharedModule, HttpClientModule],
-    providers: [
-      {
-        provide: QueryClientService,
-        useValue: queryClient,
-      },
-    ],
+    imports: [SharedModule],
+    providers: [provideQueryClient(queryClient), provideHttpClient()],
   });
 }

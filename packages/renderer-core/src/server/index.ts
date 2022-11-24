@@ -6,6 +6,7 @@ import {
   ApplicationRef,
   Component,
   enableProdMode,
+  EnvironmentProviders,
   importProvidersFrom,
   ImportProvidersSource,
   InjectionToken,
@@ -99,7 +100,9 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
 
 let indexHtmlString: string | null = null;
 export interface RenderToStringOptions<T = any, U = any>
-  extends Pick<Component, 'imports' | 'selector' | 'providers'> {
+  extends Pick<Component, 'selector'> {
+  imports?: ImportProvidersSource;
+  providers?: (Provider | EnvironmentProviders)[];
   page: Type<T>;
   layout?: Type<U>;
   pageContext?: { pageProps?: any; req?: any; res?: any; urlOriginal?: string };
@@ -193,7 +196,7 @@ export const renderToString = async <T, U>({
     providers: [
       ...providers,
       ...extraProviders,
-      importProvidersFrom(imports as ImportProvidersSource),
+      importProvidersFrom(imports),
       { provide: XhrFactory, useClass: ServerXhr },
       {
         provide: SSR_PAGE_PROPS,
