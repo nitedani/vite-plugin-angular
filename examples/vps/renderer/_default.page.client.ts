@@ -1,4 +1,3 @@
-// needs to be first import, it loads the polyfills
 import { renderPage } from '@nitedani/vite-plugin-angular/client';
 import { HttpClientModule } from '@angular/common/http';
 import { PageContext } from 'types';
