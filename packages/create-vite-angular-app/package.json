@@ -1,6 +1,6 @@
 {
   "name": "@nitedani/create-vite-angular-app",
-  "version": "14.3.29",
+  "version": "15.0.1",
   "description": "Quickly create a Vite Angular app",
   "keywords": [
     "angular",
