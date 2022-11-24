@@ -84,6 +84,7 @@ export const ProductionPlugin = (): Plugin[] => {
                     workspaceRoot,
                     sourcemap: false,
                     optimization: true,
+                    target: ['es2020'],
                   }
                 ),
               ],

@@ -5,6 +5,7 @@ import {
   createComponent,
   enableProdMode,
   importProvidersFrom,
+  ImportProvidersSource,
   NgZone,
   Provider,
   Type,
@@ -54,7 +55,7 @@ export const renderPage = async <T, U>({
       ...providers,
       ...extraProviders,
       importProvidersFrom(
-        imports,
+        imports as ImportProvidersSource,
         BrowserModule.withServerTransition({ appId })
       ),
     ],

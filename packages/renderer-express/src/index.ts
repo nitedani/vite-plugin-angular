@@ -12,7 +12,7 @@ import {
   renderToString,
   RenderToStringOptions,
 } from '@nitedani/angular-renderer-core/server';
-import { Type } from '@angular/core';
+import type { Type } from '@angular/core';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export type Middleware = (
   req: Request,

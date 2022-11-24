@@ -7,6 +7,7 @@ import {
   Component,
   enableProdMode,
   importProvidersFrom,
+  ImportProvidersSource,
   InjectionToken,
   NgZone,
   Provider,
@@ -189,7 +190,7 @@ export const renderToString = async <T, U>({
     providers: [
       ...providers,
       ...extraProviders,
-      importProvidersFrom(imports),
+      importProvidersFrom(imports as ImportProvidersSource),
       { provide: XhrFactory, useClass: ServerXhr },
       {
         provide: SSR_PAGE_PROPS,
