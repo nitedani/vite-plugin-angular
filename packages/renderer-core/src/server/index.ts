@@ -139,14 +139,13 @@ export const renderToString = async <T, U>({
     document = indexHtmlString.replace('<body>', `<body>${document}`);
     if (import.meta.env.DEV) {
       const devScript = `<script type="module" src="/@vite/client"></script>`;
-      const compilerScript = `<script type="module" src="/@angular/compiler"></script>`;
-      document = document.replace(
-        '</head>',
-        `${devScript}\n${compilerScript}</head>`
-      );
+      document = document.replace('</head>', `${devScript}</head>`);
     }
   }
-
+  if (import.meta.env.DEV) {
+    const compilerScript = `<script type="module" src="/@angular/compiler"></script>`;
+    document = document.replace('</head>', `${compilerScript}</head>`);
+  }
   if (!serverUrl && pageContext?.req) {
     serverUrl = `${pageContext.req.protocol}://${pageContext.req.get('host')}`;
   }
