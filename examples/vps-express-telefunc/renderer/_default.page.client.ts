@@ -11,7 +11,7 @@ export { render };
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity,
+      staleTime: 2000,
     },
   },
 });
