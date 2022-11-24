@@ -139,7 +139,11 @@ export const renderToString = async <T, U>({
     document = indexHtmlString.replace('<body>', `<body>${document}`);
     if (import.meta.env.DEV) {
       const devScript = `<script type="module" src="/@vite/client"></script>`;
-      document = document.replace('</head>', `${devScript}</head>`);
+      const compilerScript = `<script type="module" src="/@angular/compiler"></script>`;
+      document = document.replace(
+        '</head>',
+        `${devScript}\n${compilerScript}</head>`
+      );
     }
   }
 

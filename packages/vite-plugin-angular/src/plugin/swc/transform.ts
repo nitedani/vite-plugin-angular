@@ -68,15 +68,15 @@ export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
         const angularInjectorPlugin = new AngularInjector();
         return angularInjectorPlugin.visitProgram(m);
       },
-      (m: Program) => {
-        return new AngularImportCompilerComponents().visitProgram(m);
-      },
-      ...(isProduction
-        ? [
-            (m: Program) =>
-              new AngularSwapPlatformDynamic().visitProgram(m),
-          ]
-        : []),
+      // (m: Program) => {
+      //   return new AngularImportCompilerComponents().visitProgram(m);
+      // },
+      // ...(isProduction
+      //   ? [
+      //       (m: Program) =>
+      //         new AngularSwapPlatformDynamic().visitProgram(m),
+      //     ]
+      //   : []),
     ]),
   });
 };

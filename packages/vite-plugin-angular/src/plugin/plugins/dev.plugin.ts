@@ -53,6 +53,15 @@ export const DevelopmentPlugin: Plugin = {
       esbuild: false,
     };
   },
+  resolveId(id) {
+    if (id === '/@angular/compiler') {
+      return this.resolve('@angular/compiler');
+    }
+  },
+  transformIndexHtml(html) {
+    const compilerScript = `<script type="module" src="/@angular/compiler"></script>`;
+    return html.replace('</head>', `${compilerScript}</head>`);
+  },
   transform(code, id) {
     //TODO: do this better
     const isEntry = id.endsWith('main.ts');
