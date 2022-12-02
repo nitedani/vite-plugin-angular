@@ -13,7 +13,7 @@ const findNodeModules = () => {
   ];
   for (const candidate of candidates) {
     if (existsSync(candidate) && statSync(candidate).isDirectory()) {
-      return candidate.replace('/@angular', '');
+      return candidate.replace('@angular', '');
     }
   }
 };
@@ -59,7 +59,7 @@ export const CommonPlugin: Plugin = {
           {
             find: /~/,
             //@ts-ignore
-            replacement: nodeModulesDir + '/',
+            replacement: nodeModulesDir,
           },
         ],
       },
