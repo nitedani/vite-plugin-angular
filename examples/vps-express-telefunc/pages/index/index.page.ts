@@ -4,7 +4,7 @@ import { UseQuery } from '@ngneat/query';
 import { wait$ } from '@nitedani/angular-renderer-core';
 import { Layout } from 'pages/layout';
 import { AppService } from 'services/app.service';
-import { getPokemon as getPokemon } from './index.telefunc';
+import { getPokemon } from './index.telefunc';
 
 export { Page, Layout };
 
