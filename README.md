@@ -23,6 +23,7 @@ npm init @nitedani/vite-angular-app
 
 ### Examples with SSR:
 
+- [Express SSR](./examples/express/)
 - [NestJS SSR](./examples/universal/)
 - [vite-plugin-ssr + NestJS](./examples/vps/)
 - [vite-plugin-ssr + Express](./examples/vps-express/)

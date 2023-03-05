@@ -1,4 +1,4 @@
-# vavite + nestjs + angular universal ssr
+# vavite + nestjs + angular ssr
 
 How to run:
 
