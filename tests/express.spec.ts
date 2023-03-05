@@ -3,8 +3,8 @@ import { exec } from "child_process";
 import killPort from "kill-port";
 import { gotoWithRetry } from "./utils.js";
 
-const port = 5009;
-const folder = "examples/simple";
+const port = 5013;
+const folder = "examples/express";
 
 test.beforeAll(async () => {
   try {

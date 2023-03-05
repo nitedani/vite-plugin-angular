@@ -69,6 +69,8 @@ export const ProductionPlugin = (): Plugin[] => {
         const isSsrBuild = env.ssrBuild;
         return isBuild && !isSsrBuild;
       },
+      //TODO: fix this
+      //@ts-ignore
       config(_userConfig, env) {
         return {
           optimizeDeps: {
@@ -85,6 +87,7 @@ export const ProductionPlugin = (): Plugin[] => {
                     sourcemap: false,
                     optimization: true,
                     target: ['es2020'],
+                    inlineStyleLanguage: 'scss',
                   }
                 ),
               ],

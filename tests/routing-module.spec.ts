@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import { exec } from "child_process";
 import killPort from "kill-port";
-
+import { gotoWithRetry } from "./utils.js";
 const port = 5011;
 const folder = "examples/routing-module";
 
@@ -31,6 +31,5 @@ test("logs Hello", async ({ page }) =>
       }
     });
 
-    await page.goto(`http://127.0.0.1:${port}`);
-
+    await gotoWithRetry(page, `http://127.0.0.1:${port}`);
   }));
