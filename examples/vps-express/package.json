@@ -1,6 +1,6 @@
 {
   "name": "vite-ng-vps-express-app",
-  "version": "15.0.4",
+  "version": "15.0.5",
   "type": "module",
   "private": true,
   "scripts": {
