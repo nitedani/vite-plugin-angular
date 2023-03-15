@@ -1,6 +1,6 @@
 import '@angular/compiler';
 import '@angular/platform-server/init';
-import 'zone.js/dist/zone.js';
+import 'zone.js/dist/zone-node.js';
 
 import {
   ApplicationRef,

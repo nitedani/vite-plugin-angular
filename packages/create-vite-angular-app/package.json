@@ -26,8 +26,8 @@
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",
-    "tiged": "^2.12.3",
     "promisify-child-process": "^4.1.1",
-    "prompts": "^2.4.1"
+    "prompts": "^2.4.2",
+    "tiged": "^2.12.4"
   }
 }
