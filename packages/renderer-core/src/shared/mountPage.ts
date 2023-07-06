@@ -1,6 +1,7 @@
 import {
   ApplicationRef,
   ComponentRef,
+  createComponent,
   reflectComponentType,
   Type,
 } from '@angular/core';
@@ -25,9 +26,7 @@ export const mountPage = <T, U>({
   if (!layout) {
     pageRef = compRef.instance.page.createComponent(page);
   } else {
-    pageRef = compRef.instance.resolver
-      .resolveComponentFactory(page)
-      .create(compRef.injector);
+    pageRef = createComponent(page, { environmentInjector: appRef.injector });
 
     appRef.components.push(pageRef);
     appRef.attachView(pageRef.hostView);

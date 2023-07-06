@@ -40,12 +40,12 @@
     "lib"
   ],
   "dependencies": {
-    "@angular-devkit/build-angular": "^15.2.3",
-    "@angular/compiler": "^15.2.2",
-    "@angular/compiler-cli": "^15.2.2",
+    "@angular-devkit/build-angular": "^16.1.3",
+    "@angular/compiler": "^16.1.3",
+    "@angular/compiler-cli": "^16.1.3",
     "@angularclass/hmr": "^3.0.0",
     "@babel/core": "^7.21.3",
-    "@ngtools/webpack": "^15.2.3",
+    "@ngtools/webpack": "^16.1.3",
     "@nitedani/angular-renderer-core": "*",
     "@swc/core": "1.3.3",
     "defu": "^6.1.2",
@@ -58,7 +58,7 @@
   "devDependencies": {
     "@types/node": "^18.15.3",
     "rimraf": "^3.0.2",
-    "typescript": "4.8.4"
+    "typescript": "5.1.6"
   },
   "prettier": {
     "singleQuote": true,

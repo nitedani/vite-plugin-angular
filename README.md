@@ -1,9 +1,5 @@
 ## Vite plugin for Angular.
 
-This plugin is work in progress. The interfaces can change any time. Don't use it for production!
-
-
-
 ```
 npm init @nitedani/vite-angular-app
 ```

@@ -1,12 +1,20 @@
 import '@angular/compiler';
 import '@angular/platform-server/init';
 import 'zone.js/dist/zone-node.js';
-
 import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+  ɵwithHttpTransferCache,
+  HttpHandler,
+  HttpRequest,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
+import {
+  APP_BOOTSTRAP_LISTENER,
   ApplicationRef,
   Component,
+  ComponentRef,
   enableProdMode,
-  EnvironmentProviders,
   importProvidersFrom,
   ImportProvidersSource,
   InjectionToken,
@@ -15,18 +23,14 @@ import {
   Type,
 } from '@angular/core';
 import {
-  BEFORE_APP_SERIALIZED,
+  provideServerRendering,
   renderApplication,
 } from '@angular/platform-server';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { DefaultWrapper } from '../shared/angular/wrapper.js';
 import { mountPage } from '../shared/mountPage.js';
 import { XhrFactory } from '@angular/common';
 import xhr2 from 'xhr2';
-import {
-  HttpHandler,
-  HttpRequest,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
 import { readFile } from 'fs/promises';
 import { cwd } from 'process';
 import { dirname, join } from 'path';
@@ -61,7 +65,7 @@ export const SSR_PAGE_PROPS = new InjectionToken<{
 });
 
 export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
-  provide: BEFORE_APP_SERIALIZED,
+  provide: APP_BOOTSTRAP_LISTENER,
   useFactory: (
     appRef: ApplicationRef,
     {
@@ -72,9 +76,15 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
       page: Type<{}>;
       layout?: Type<{}>;
       pageProps?: Record<string, unknown>;
-    }
+    },
   ) => {
-    return async () => {
+    let done = false;
+    return async (componentRef: ComponentRef<any>) => {
+      if (done) {
+        return;
+      }
+      done = true;
+
       const compRef = appRef.components[0];
       const zone = appRef.injector.get(NgZone);
       await zone.run(async () => {
@@ -87,7 +97,7 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
         });
 
         await firstValueFrom(
-          appRef.isStable.pipe(filter(isStable => isStable))
+          appRef.isStable.pipe(filter(isStable => isStable)),
         );
 
         appRef.tick();
@@ -102,7 +112,7 @@ let indexHtmlString: string | null = null;
 export interface RenderToStringOptions<T = any, U = any>
   extends Pick<Component, 'selector'> {
   imports?: ImportProvidersSource;
-  providers?: (Provider | EnvironmentProviders)[];
+  providers?: Provider[];
   page: Type<T>;
   layout?: Type<U>;
   pageContext?: { pageProps?: any; req?: any; res?: any; urlOriginal?: string };
@@ -122,15 +132,14 @@ export const renderToString = async <T, U>({
   serverUrl,
   indexHtml,
   root,
-  ...componentParameters
+  selector,
 }: RenderToStringOptions<T, U>) => {
-  const appId = 'server-app';
-  componentParameters.selector ??= 'app-root';
-  document ??= `<${componentParameters.selector}></${componentParameters.selector}>`;
+  selector ??= 'app-root';
+  document ??= `<${selector}></${selector}>`;
   root ??= join(__dirname, '..', 'client');
 
   //@ts-ignore
-  DefaultWrapper.ɵcmp.selectors = [[componentParameters.selector]];
+  DefaultWrapper.ɵcmp.selectors = [[selector]];
   //TODO: check if anything else needs to be set
 
   if (indexHtml) {
@@ -161,12 +170,15 @@ export const renderToString = async <T, U>({
       useFactory: () => ({
         intercept(req: HttpRequest<any>, next: HttpHandler) {
           // check if the request is for the server
-          if (req.url.startsWith('/') || req.url.startsWith(serverUrl!)) {
+          if (
+            serverUrl &&
+            (req.url.startsWith('/') || req.url.startsWith(serverUrl))
+          ) {
             // if so, call the server
             return next.handle(
               req.clone({
                 url: `${serverUrl}${req.url}`,
-              })
+              }),
             );
           }
           return next.handle(req);
@@ -190,19 +202,26 @@ export const renderToString = async <T, U>({
     });
   }
 
-  return renderApplication(DefaultWrapper, {
-    appId,
-    document,
-    providers: [
-      ...providers,
-      ...extraProviders,
-      importProvidersFrom(imports),
-      { provide: XhrFactory, useClass: ServerXhr },
-      {
-        provide: SSR_PAGE_PROPS,
-        useValue: { pageProps: pageContext?.pageProps, page, layout },
-      },
-      SSR_PAGE_PROPS_HOOK_PROVIDER,
-    ],
-  });
+  return renderApplication(
+    () =>
+      bootstrapApplication(DefaultWrapper, {
+        providers: [
+          ...providers,
+          ...extraProviders,
+          provideServerRendering(),
+          provideHttpClient(withInterceptorsFromDi()),
+          ɵwithHttpTransferCache(),
+          importProvidersFrom(imports),
+          { provide: XhrFactory, useClass: ServerXhr },
+          {
+            provide: SSR_PAGE_PROPS,
+            useValue: { pageProps: pageContext?.pageProps, page, layout },
+          },
+          SSR_PAGE_PROPS_HOOK_PROVIDER,
+        ],
+      }),
+    {
+      document,
+    },
+  );
 };

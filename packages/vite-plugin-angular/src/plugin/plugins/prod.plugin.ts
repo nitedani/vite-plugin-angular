@@ -1,5 +1,5 @@
-import angularApplicationPreset from '@angular-devkit/build-angular/src/babel/presets/application.js';
-import { createCompilerPlugin } from '@angular-devkit/build-angular/src/builders/browser-esbuild/compiler-plugin.js';
+import angularApplicationPreset from '@angular-devkit/build-angular/src/tools/babel/presets/application.js';
+import { createCompilerPlugin } from '@angular-devkit/build-angular/src/tools/esbuild/angular/compiler-plugin.js';
 import {
   CompilerHost,
   join,
@@ -15,6 +15,7 @@ import { cwd } from 'process';
 import ts from 'typescript';
 import { Plugin } from 'vite';
 import { OptimizerPlugin } from './optimizer.plugin.js';
+
 
 interface EmitFileResult {
   code: string;
@@ -84,6 +85,7 @@ export const ProductionPlugin = (): Plugin[] => {
                   },
                   {
                     workspaceRoot,
+                    browsers: ['safari 15'],
                     sourcemap: false,
                     optimization: true,
                     target: ['es2020'],

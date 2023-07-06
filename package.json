@@ -14,7 +14,8 @@
     "fs-extra": "^10.1.0",
     "kill-port": "^2.0.1",
     "playwright": "^1.31.2",
-    "turbo": "^1.8.3"
+    "turbo": "^1.8.3",
+    "prettier": "^3.0.0"
   },
   "engines": {}
 }

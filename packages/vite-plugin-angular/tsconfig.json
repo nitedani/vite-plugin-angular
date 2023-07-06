@@ -20,7 +20,6 @@
         "noImplicitThis": true,
         "skipLibCheck": true,
         "noImplicitAny": false,
-        "suppressImplicitAnyIndexErrors": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },

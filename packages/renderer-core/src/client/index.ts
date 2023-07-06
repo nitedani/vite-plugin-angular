@@ -11,9 +11,19 @@ import {
   Provider,
   Type,
 } from '@angular/core';
-import { BrowserModule, createApplication } from '@angular/platform-browser';
+import {
+  createApplication,
+  provideClientHydration,
+} from '@angular/platform-browser';
 import { mountPage } from '../shared/mountPage.js';
 import { DefaultWrapper } from '../shared/angular/wrapper.js';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+  HttpHandler,
+  HttpRequest,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 
 if (import.meta.env.PROD) {
   enableProdMode();
@@ -33,7 +43,6 @@ export const renderPage = async <T, U>({
   providers?: (Provider | EnvironmentProviders)[];
   imports?: ImportProvidersSource;
 } & Pick<Component, 'selector'>) => {
-  const appId = 'server-app';
   componentParameters.selector ??= 'app-root';
   //@ts-ignore
   DefaultWrapper.ɵcmp.selectors = [[componentParameters.selector]];
@@ -53,14 +62,32 @@ export const renderPage = async <T, U>({
     });
   }
 
+  extraProviders.push({
+    provide: HTTP_INTERCEPTORS,
+    useFactory: () => ({
+      intercept(req: HttpRequest<any>, next: HttpHandler) {
+        // check if the request is for the server
+        if (req.url.startsWith('/')) {
+          // if so, call the server
+          return next.handle(
+            req.clone({
+              url: `${window.location.origin}${req.url}`,
+            }),
+          );
+        }
+        return next.handle(req);
+      },
+    }),
+    multi: true,
+  });
+
   const appRef = await createApplication({
     providers: [
       ...providers,
       ...extraProviders,
-      importProvidersFrom(
-        imports,
-        BrowserModule.withServerTransition({ appId })
-      ),
+      provideHttpClient(withInterceptorsFromDi()),
+      provideClientHydration(),
+      importProvidersFrom(imports),
     ],
   });
 
