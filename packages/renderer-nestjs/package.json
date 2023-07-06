@@ -28,8 +28,8 @@
     "typescript": "5.1.6"
   },
   "peerDependencies": {
-    "@nestjs/common": "^9.0.0",
-    "@nestjs/core": "^9.0.0"
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/core": "^10.0.0"
   },
   "prettier": {
     "singleQuote": true,
