@@ -4,8 +4,12 @@ import {
   createComponent,
   reflectComponentType,
   Type,
+  ViewContainerRef,
 } from '@angular/core';
-import type { IDefaultWrapper } from './angular/wrapper.js';
+
+export interface LayoutComponent<U> {
+  page: ViewContainerRef;
+}
 
 export const mountPage = <T, U>({
   compRef,
@@ -14,25 +18,20 @@ export const mountPage = <T, U>({
   layout,
   appRef,
 }: {
-  compRef: ComponentRef<IDefaultWrapper>;
+  compRef: ComponentRef<T | LayoutComponent<U>>;
   page: Type<T>;
   pageProps: any;
-  layout?: Type<U>;
+  layout?: Type<LayoutComponent<U>>;
   appRef: ApplicationRef;
 }) => {
   let pageRef: ComponentRef<T> | null = null;
-  let layoutRef: ComponentRef<U> | null = null;
+  let layoutRef: ComponentRef<LayoutComponent<U>> | null = null;
 
   if (!layout) {
-    pageRef = compRef.instance.page.createComponent(page);
+    pageRef = compRef as ComponentRef<T>;
   } else {
-    pageRef = createComponent(page, { environmentInjector: appRef.injector });
-
-    appRef.components.push(pageRef);
-    appRef.attachView(pageRef.hostView);
-    layoutRef = compRef.instance.page.createComponent(layout, {
-      projectableNodes: [[pageRef.location.nativeElement]],
-    });
+    layoutRef = compRef as ComponentRef<LayoutComponent<U>>;
+    pageRef = layoutRef.instance.page.createComponent(page);
   }
 
   if (pageProps || page) {

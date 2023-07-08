@@ -4,7 +4,7 @@ import { AppService } from '../services/app.service';
 
 @Component({
   standalone: true,
-  selector: 'app-root',
+  selector: 'app-component',
   imports: [RouterModule],
   template: `<h1>Angular Router App</h1>
     <!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->

@@ -4,7 +4,6 @@ import 'zone.js/dist/zone-node.js';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
-  ɵwithHttpTransferCache,
   HttpHandler,
   HttpRequest,
   HTTP_INTERCEPTORS,
@@ -26,9 +25,11 @@ import {
   provideServerRendering,
   renderApplication,
 } from '@angular/platform-server';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { DefaultWrapper } from '../shared/angular/wrapper.js';
-import { mountPage } from '../shared/mountPage.js';
+import {
+  bootstrapApplication,
+  provideClientHydration,
+} from '@angular/platform-browser';
+import { LayoutComponent, mountPage } from '../shared/mountPage.js';
 import { XhrFactory } from '@angular/common';
 import xhr2 from 'xhr2';
 import { readFile } from 'fs/promises';
@@ -74,7 +75,7 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
       pageProps,
     }: {
       page: Type<{}>;
-      layout?: Type<{}>;
+      layout?: Type<LayoutComponent<{}>>;
       pageProps?: Record<string, unknown>;
     },
   ) => {
@@ -134,13 +135,12 @@ export const renderToString = async <T, U>({
   root,
   selector,
 }: RenderToStringOptions<T, U>) => {
+  const rootComponent = layout ?? page;
   selector ??= 'app-root';
+  //@ts-ignore
+  rootComponent.ɵcmp.selectors = [[selector]];
   document ??= `<${selector}></${selector}>`;
   root ??= join(__dirname, '..', 'client');
-
-  //@ts-ignore
-  DefaultWrapper.ɵcmp.selectors = [[selector]];
-  //TODO: check if anything else needs to be set
 
   if (indexHtml) {
     const documentPath = import.meta.env.DEV
@@ -204,13 +204,13 @@ export const renderToString = async <T, U>({
 
   return renderApplication(
     () =>
-      bootstrapApplication(DefaultWrapper, {
+      bootstrapApplication(layout ?? page, {
         providers: [
           ...providers,
           ...extraProviders,
           provideServerRendering(),
+          provideClientHydration(),
           provideHttpClient(withInterceptorsFromDi()),
-          ɵwithHttpTransferCache(),
           importProvidersFrom(imports),
           { provide: XhrFactory, useClass: ServerXhr },
           {

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --open",
     "build": "vavite",
-    "start": "node dist/server/index.js"
+    "start": "node dist/server/index.mjs"
   },
   "dependencies": {
     "@angular/animations": "^16.1.3",
@@ -21,7 +21,7 @@
     "@nestjs/core": "^10.0.5",
     "@nestjs/platform-express": "^10.0.5",
     "@nguniversal/common": "^14.2.3",
-    "@nitedani/vite-plugin-ssr-adapter-nestjs": "^0.0.6",
+    "@nitedani/vite-plugin-ssr-adapter-nestjs": "^0.0.7",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "vite-plugin-ssr": "^0.4.94",

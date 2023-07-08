@@ -15,7 +15,7 @@ import {
   createApplication,
   provideClientHydration,
 } from '@angular/platform-browser';
-import { mountPage } from '../shared/mountPage.js';
+import { LayoutComponent, mountPage } from '../shared/mountPage.js';
 import { DefaultWrapper } from '../shared/angular/wrapper.js';
 import {
   provideHttpClient,
@@ -35,17 +35,18 @@ export const renderPage = async <T, U>({
   pageContext,
   providers = [],
   imports = [],
-  ...componentParameters
+  selector,
 }: {
   page: Type<T>;
-  layout?: Type<U>;
+  layout?: Type<LayoutComponent<U>>;
   pageContext?: any;
   providers?: (Provider | EnvironmentProviders)[];
   imports?: ImportProvidersSource;
 } & Pick<Component, 'selector'>) => {
-  componentParameters.selector ??= 'app-root';
+  const rootComponent = layout ?? page;
+  selector ??= 'app-root';
   //@ts-ignore
-  DefaultWrapper.ɵcmp.selectors = [[componentParameters.selector]];
+  rootComponent.ɵcmp.selectors = [[selector]];
 
   const extraProviders: Provider[] = [];
   if (pageContext) {
@@ -94,9 +95,9 @@ export const renderPage = async <T, U>({
   const zone = appRef.injector.get(NgZone);
 
   return zone.run(() => {
-    const compRef = createComponent(DefaultWrapper, {
+    const compRef = createComponent<LayoutComponent<U> | T>(rootComponent, {
       environmentInjector: appRef.injector,
-      hostElement: document.querySelector(componentParameters.selector!)!,
+      hostElement: document.querySelector(selector!)!,
     });
 
     mountPage({

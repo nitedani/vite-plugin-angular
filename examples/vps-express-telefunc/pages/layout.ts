@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -6,7 +6,10 @@ import { Component } from '@angular/core';
     <div>Layout works</div>
     <a href="/about">Go to about page</a>
     <a href="/">Go to index page</a>
-    <ng-content></ng-content>
+    <ng-template #page></ng-template>
   `,
 })
-export class Layout {}
+export class Layout {
+  @ViewChild('page', { static: true, read: ViewContainerRef })
+  page!: ViewContainerRef;
+}

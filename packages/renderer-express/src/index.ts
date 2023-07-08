@@ -17,7 +17,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export type Middleware = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => void;
 export type PageContextInit = {
   urlOriginal: string;
@@ -27,6 +27,7 @@ export type PageContextInit = {
 export interface AngularRendererOptions
   extends Omit<RenderToStringOptions, 'pageContext'> {
   page: Type<{}>;
+  layout?: Type<{}>;
   root?: string;
   pageContext?:
     | ((pageContextInit: PageContextInit) => Promise<any> | any)
@@ -43,7 +44,6 @@ export const angularRenderer = (options?: AngularRendererOptions) => {
     serveStaticProps,
     cache,
     compress,
-    page,
     ...rendererOptions
   } = defu(options, {
     root: join(__dirname, '..', 'client'),
@@ -62,7 +62,7 @@ export const angularRenderer = (options?: AngularRendererOptions) => {
         // @ts-ignore
         shrinkRay({
           cacheSize: cache ? '128mB' : false,
-        })
+        }),
       );
     }
 
@@ -86,7 +86,6 @@ export const angularRenderer = (options?: AngularRendererOptions) => {
         : pageContext),
     };
     const html = await renderToString({
-      page,
       root,
       // loads index.html from root
       indexHtml: true,
