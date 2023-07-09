@@ -1,6 +1,6 @@
 // needs to be first import, it loads the polyfills
 import { renderToString } from '@nitedani/vite-plugin-angular/server';
-import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
+import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr/server';
 import logoUrl from './logo.svg';
 import { PageContext } from 'types';
 import { SharedModule } from './shared.module';

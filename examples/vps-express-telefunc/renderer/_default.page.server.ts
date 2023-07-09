@@ -1,5 +1,5 @@
 import { renderToString } from '@nitedani/vite-plugin-angular/server';
-import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
+import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr/server';
 import { provideQueryClient } from '@ngneat/query';
 import { QueryClient, dehydrate } from '@tanstack/query-core';
 import logoUrl from './logo.svg';

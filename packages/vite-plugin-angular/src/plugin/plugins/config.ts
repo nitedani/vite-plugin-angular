@@ -44,8 +44,8 @@ export const CommonPlugin: Plugin = {
               const runtime1 = [
                 '@nitedani/angular-renderer-core',
                 '@nitedani/vite-plugin-angular/client',
-                '@angular',
-                'zone.js',
+                // '@angular',
+                // 'zone.js',
               ];
               if (runtime1.some(s => id.includes(s))) {
                 return 'runtime1';
@@ -53,6 +53,9 @@ export const CommonPlugin: Plugin = {
             },
           },
         },
+      },
+      optimizeDeps: {
+        exclude: ['@angular/compiler'],
       },
       resolve: {
         alias: [

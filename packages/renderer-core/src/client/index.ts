@@ -28,7 +28,7 @@ import {
 if (import.meta.env.PROD) {
   enableProdMode();
 }
-
+let hydrated = false;
 export const renderPage = async <T, U>({
   page,
   layout,
@@ -87,11 +87,11 @@ export const renderPage = async <T, U>({
       ...providers,
       ...extraProviders,
       provideHttpClient(withInterceptorsFromDi()),
-      provideClientHydration(),
+      ...(hydrated ? [] : [provideClientHydration()]),
       importProvidersFrom(imports),
     ],
   });
-
+  hydrated = true;
   const zone = appRef.injector.get(NgZone);
 
   return zone.run(() => {
