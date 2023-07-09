@@ -4,17 +4,19 @@ importers:
 
   .:
     specifiers:
-      '@playwright/test': ^1.35.1
+      '@playwright/test': 1.31.2
       bumpp: ^8.2.1
       fs-extra: ^10.1.0
       kill-port: ^2.0.1
+      playwright: 1.31.2
       prettier: ^3.0.0
       turbo: ^1.10.7
     devDependencies:
-      '@playwright/test': 1.35.1
+      '@playwright/test': 1.31.2
       bumpp: 8.2.1
       fs-extra: 10.1.0
       kill-port: 2.0.1
+      playwright: 1.31.2
       prettier: 3.0.0
       turbo: 1.10.7
 
@@ -3569,13 +3571,13 @@ packages:
     dev: false
     optional: true
 
-  /@playwright/test/1.35.1:
-    resolution: {integrity: sha512-b5YoFe6J9exsMYg0pQAobNDR85T1nLumUYgUTtKm4d21iX2L7WqKq9dW8NGJ+2vX0etZd+Y7UeuqsxDXm9+5ZA==}
-    engines: {node: '>=16'}
+  /@playwright/test/1.31.2:
+    resolution: {integrity: sha512-BYVutxDI4JeZKV1+ups6dt5WiqKhjBtIYowyZIJ3kBDmJgsuPKsqqKNIMFbUePLSCmp2cZu+BDL427RcNKTRYw==}
+    engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 20.4.1
-      playwright-core: 1.35.1
+      playwright-core: 1.31.2
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -6883,10 +6885,19 @@ packages:
       find-up: 4.1.0
     dev: false
 
-  /playwright-core/1.35.1:
-    resolution: {integrity: sha512-pNXb6CQ7OqmGDRspEjlxE49w+4YtR6a3X6mT1hZXeJHWmsEz7SunmvZeiG/+y1yyMZdHnnn73WKYdtV1er0Xyg==}
-    engines: {node: '>=16'}
+  /playwright-core/1.31.2:
+    resolution: {integrity: sha512-a1dFgCNQw4vCsG7bnojZjDnPewZcw7tZUNFN0ZkcLYKj+mPmXvg4MpaaKZ5SgqPsOmqIf2YsVRkgqiRDxD+fDQ==}
+    engines: {node: '>=14'}
     hasBin: true
+    dev: true
+
+  /playwright/1.31.2:
+    resolution: {integrity: sha512-jpC47n2PKQNtzB7clmBuWh6ftBRS/Bt5EGLigJ9k2QAKcNeYXZkEaDH5gmvb6+AbcE0DO6GnXdbl9ogG6Eh+og==}
+    engines: {node: '>=14'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      playwright-core: 1.31.2
     dev: true
 
   /postcss-loader/7.3.2_fmbjk56m65z72ui2a5m2errgtu:
