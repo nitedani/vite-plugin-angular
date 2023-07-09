@@ -1,6 +1,6 @@
 {
   "name": "@nitedani/vite-plugin-angular",
-  "version": "16.0.2",
+  "version": "16.1.0",
   "private": true,
   "type": "module",
   "scripts": {
