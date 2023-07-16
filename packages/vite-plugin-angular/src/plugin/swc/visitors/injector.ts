@@ -1,6 +1,7 @@
 import {
   Argument,
   CallExpression,
+  ClassDeclaration,
   Identifier,
   MemberExpression,
   ModuleItem,
@@ -26,12 +27,12 @@ const hasInjectDecorator = node =>
     dec =>
       isCallExpression(dec.expression) &&
       isIdentifer(dec.expression.callee) &&
-      dec.expression.callee.value === 'Inject'
+      dec.expression.callee.value === 'Inject',
   );
 
 function createCallExpression(
   callee: MemberExpression | Identifier,
-  args: Argument[] = []
+  args: Argument[] = [],
 ) {
   const object: CallExpression = {
     type: 'CallExpression',
@@ -45,6 +46,20 @@ function createCallExpression(
 export class AngularInjector extends Visitor {
   private hasInjectorImport = false;
   private hasInjectedConstructor = false;
+  private isAngularClass = false;
+
+  override visitClassDeclaration(decl: ClassDeclaration) {
+    this.isAngularClass = !!decl.decorators?.some(
+      dec =>
+        isCallExpression(dec.expression) &&
+        isIdentifer(dec.expression.callee) &&
+        ['NgModule', 'Component', 'Injectable'].includes(
+          dec.expression.callee.value,
+        ),
+    );
+
+    return super.visitClassDeclaration(decl);
+  }
 
   override visitModuleItems(items: ModuleItem[]): ModuleItem[] {
     const result = items.flatMap(item => this.visitModuleItem(item));
@@ -64,12 +79,13 @@ export class AngularInjector extends Visitor {
   }
 
   override visitConstructorParameter(
-    node: TsParameterProperty
+    node: TsParameterProperty,
   ): TsParameterProperty {
     if (hasInjectDecorator(node) || !node.param || !node.param.typeAnnotation) {
       return node;
     } else {
       if (
+        this.isAngularClass &&
         isTsTypeAnnotation(node.param.typeAnnotation) &&
         isTsTypeReference(node.param.typeAnnotation.typeAnnotation) &&
         isIdentifer(node.param.typeAnnotation.typeAnnotation.typeName)
@@ -81,7 +97,7 @@ export class AngularInjector extends Visitor {
           expression: createCallExpression(createIdentifer('Inject'), [
             {
               expression: createIdentifer(
-                node.param.typeAnnotation.typeAnnotation.typeName.value
+                node.param.typeAnnotation.typeAnnotation.typeName.value,
               ),
             },
           ]),
@@ -95,7 +111,7 @@ export class AngularInjector extends Visitor {
   }
 
   override visitNamedImportSpecifier(
-    node: NamedImportSpecifier
+    node: NamedImportSpecifier,
   ): NamedImportSpecifier {
     if (!this.hasInjectorImport && node.local.value === 'Inject') {
       this.hasInjectorImport = true;
