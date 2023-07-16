@@ -53,7 +53,7 @@ export class AngularInjector extends Visitor {
       dec =>
         isCallExpression(dec.expression) &&
         isIdentifer(dec.expression.callee) &&
-        ['NgModule', 'Component', 'Injectable'].includes(
+        ['NgModule', 'Component', 'Injectable', 'Directive'].includes(
           dec.expression.callee.value,
         ),
     );
