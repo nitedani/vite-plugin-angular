@@ -16,7 +16,6 @@ import ts from 'typescript';
 import { Plugin } from 'vite';
 import { OptimizerPlugin } from './optimizer.plugin.js';
 
-
 interface EmitFileResult {
   code: string;
   map?: string;
@@ -38,7 +37,7 @@ export const ProductionPlugin = (): Plugin[] => {
     const angularProgram: NgtscProgram = new NgtscProgram(
       rootNames,
       compilerOptions,
-      host as CompilerHost
+      host as CompilerHost,
     );
     const angularCompiler = angularProgram.compiler;
     const typeScriptProgram = angularProgram.getTsProgram();
@@ -57,7 +56,7 @@ export const ProductionPlugin = (): Plugin[] => {
       mergeTransformers(angularCompiler.prepareEmit().transformers, {
         before: [replaceBootstrap(() => builder.getProgram().getTypeChecker())],
       }),
-      () => []
+      () => [],
     );
   }
 
@@ -85,12 +84,16 @@ export const ProductionPlugin = (): Plugin[] => {
                   },
                   {
                     workspaceRoot,
-                    browsers: ['safari 15'],
+                    // browsers: ['safari 15'],
+                    outputNames: {
+                      bundles: '[name]',
+                      media: '',
+                    },
                     sourcemap: false,
                     optimization: true,
                     target: ['es2020'],
                     inlineStyleLanguage: 'scss',
-                  }
+                  },
                 ),
               ],
               define: {
@@ -122,7 +125,7 @@ export const ProductionPlugin = (): Plugin[] => {
             allowEmptyCodegenFiles: false,
             annotationsAs: 'decorators',
             enableResourceInlining: false,
-          }
+          },
         );
         rootNames = rn;
         compilerOptions = tsCompilerOptions;
@@ -180,7 +183,7 @@ export const ProductionPlugin = (): Plugin[] => {
 export function createFileEmitter(
   program: ts.BuilderProgram,
   transformers: ts.CustomTransformers = {},
-  onAfterEmit?: (sourceFile: ts.SourceFile) => void
+  onAfterEmit?: (sourceFile: ts.SourceFile) => void,
 ): FileEmitter {
   return async (file: string) => {
     const sourceFile = program.getSourceFile(file);
@@ -200,7 +203,7 @@ export function createFileEmitter(
       },
       undefined /* cancellationToken */,
       undefined /* emitOnlyDtsFiles */,
-      transformers
+      transformers,
     );
 
     onAfterEmit?.(sourceFile);

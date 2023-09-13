@@ -40,23 +40,23 @@
     "lib"
   ],
   "dependencies": {
-    "@angular-devkit/build-angular": "^16.1.4",
-    "@angular/compiler": "^16.1.4",
-    "@angular/compiler-cli": "^16.1.4",
+    "@angular-devkit/build-angular": "^16.2.1",
+    "@angular/compiler": "^16.2.4",
+    "@angular/compiler-cli": "^16.2.4",
     "@angularclass/hmr": "^3.0.0",
-    "@babel/core": "^7.22.8",
-    "@ngtools/webpack": "^16.1.4",
+    "@babel/core": "^7.22.17",
+    "@ngtools/webpack": "^16.2.1",
     "@nitedani/angular-renderer-core": "*",
     "@swc/core": "1.3.3",
     "defu": "^6.1.2",
     "swc-ast-helpers": "^0.2.2",
-    "vite-plugin-checker": "^0.6.1"
+    "vite-plugin-checker": "^0.6.2"
   },
   "peerDependencies": {
     "vite": "*"
   },
   "devDependencies": {
-    "@types/node": "^18.16.19",
+    "@types/node": "^18.17.15",
     "rimraf": "^3.0.2",
     "typescript": "5.1.6"
   },

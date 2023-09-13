@@ -1,8 +1,8 @@
 import angularApplicationPreset from '@angular-devkit/build-angular/src/tools/babel/presets/application.js';
 import { loadEsmModule } from '@angular-devkit/build-angular/src/utils/load-esm.js';
-import { requiresLinking } from '@angular-devkit/build-angular/src/tools/babel/webpack-loader.js';
 import { transformAsync } from '@babel/core';
 import { Plugin } from 'vite';
+import { requiresLinking } from './utils.js';
 
 export const OptimizerPlugin: Plugin = {
   name: 'vite-plugin-angular-optimizer',

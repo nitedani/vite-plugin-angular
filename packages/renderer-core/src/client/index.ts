@@ -1,4 +1,4 @@
-import 'zone.js/dist/zone.js';
+import 'zone.js';
 import {
   APP_BOOTSTRAP_LISTENER,
   Component,

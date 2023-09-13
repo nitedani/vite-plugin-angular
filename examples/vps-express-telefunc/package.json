@@ -9,33 +9,32 @@
     "start": "cross-env NODE_ENV=production node dist/server/index.mjs"
   },
   "dependencies": {
-    "@angular/animations": "^16.1.4",
-    "@angular/common": "^16.1.4",
-    "@angular/compiler": "^16.1.4",
-    "@angular/core": "^16.1.4",
-    "@angular/platform-browser": "^16.1.4",
-    "@angular/platform-browser-dynamic": "^16.1.4",
-    "@angular/platform-server": "^16.1.4",
+    "@angular/animations": "^16.2.4",
+    "@angular/common": "^16.2.4",
+    "@angular/compiler": "^16.2.4",
+    "@angular/core": "^16.2.4",
+    "@angular/platform-browser": "^16.2.4",
+    "@angular/platform-browser-dynamic": "^16.2.4",
+    "@angular/platform-server": "^16.2.4",
     "@ngneat/query": "1.0.0-beta.12",
     "@nitedani/angular-renderer-core": "*",
     "@nitedani/vite-plugin-ssr-adapter-express": "0.0.8",
-    "@tanstack/query-core": "^4.29.19",
+    "@tanstack/query-core": "^4.35.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "telefunc": "^0.1.58",
-    "vite-plugin-ssr": "^0.4.133",
-    "zone.js": "^0.13.1"
+    "telefunc": "^0.1.60",
+    "vite-plugin-ssr": "^0.4.140",
+    "zone.js": "^0.13.3"
   },
   "devDependencies": {
     "@nitedani/vite-plugin-angular": "*",
     "@types/express": "^4.17.17",
     "cross-env": "^7.0.3",
     "rimraf": "^3.0.2",
-    "sass": "^1.63.6",
+    "sass": "^1.66.1",
     "typescript": "5.1.6",
-    "vavite": "^1.8.1",
-    "vite": "^4.4.2",
-    "vite-tsconfig-paths": "^3.6.0"
+    "vavite": "^1.8.3",
+    "vite": "^4.4.9"
   },
   "prettier": {
     "singleQuote": true
