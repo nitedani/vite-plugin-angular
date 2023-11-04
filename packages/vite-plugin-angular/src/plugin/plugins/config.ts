@@ -20,10 +20,14 @@ const findNodeModules = () => {
 
 const nodeModulesDir = findNodeModules()!;
 
+const virtualModuleId = 'virtual:vite-plugin-angular';
+const resolvedVirtualModuleId = '\0' + virtualModuleId;
+let root = '';
 export const CommonPlugin: Plugin = {
   name: 'vite-plugin-angular-common',
   enforce: 'pre',
   config(config, env) {
+    const outDir = config.build?.outDir ?? 'dist';
     return {
       ssr: {
         external: ['reflect-metadata', 'xhr2'],
@@ -36,7 +40,7 @@ export const CommonPlugin: Plugin = {
         ],
       },
       build: {
-        outDir: env.ssrBuild ? 'dist/server' : 'dist/client',
+        outDir: env.ssrBuild ? join(outDir, 'server') : join(outDir, 'client'),
         rollupOptions: {
           external: ['xhr2'],
           output: {
@@ -67,5 +71,18 @@ export const CommonPlugin: Plugin = {
         ],
       },
     };
+  },
+  configResolved(config) {
+    root = config.root;
+  },
+  resolveId(id) {
+    if (id === virtualModuleId) {
+      return resolvedVirtualModuleId;
+    }
+  },
+  load(id) {
+    if (id === resolvedVirtualModuleId) {
+      return `export const projectRoot = "${root}"`;
+    }
   },
 };

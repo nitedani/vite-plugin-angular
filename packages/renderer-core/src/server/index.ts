@@ -33,12 +33,12 @@ import { LayoutComponent, mountPage } from '../shared/mountPage.js';
 import { XhrFactory } from '@angular/common';
 import xhr2 from 'xhr2';
 import { readFile } from 'fs/promises';
-import { cwd } from 'process';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { filter, firstValueFrom } from 'rxjs';
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
+//@ts-ignore
+import { projectRoot } from 'virtual:vite-plugin-angular';
 
 export class ServerXhr implements XhrFactory {
   build(): XMLHttpRequest {
@@ -144,7 +144,7 @@ export const renderToString = async <T, U>({
 
   if (indexHtml) {
     const documentPath = import.meta.env.DEV
-      ? join(cwd(), 'index.html')
+      ? join(projectRoot, 'index.html')
       : join(root, 'index.html');
 
     indexHtmlString ??= await readFile(documentPath, 'utf-8');
