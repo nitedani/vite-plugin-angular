@@ -16,19 +16,6 @@ const absolutePathAliases = readdirSync(__dirname, {
 });
 
 export default defineConfig({
-  buildSteps: [
-    {
-      name: 'client',
-    },
-    {
-      name: 'server',
-      config: {
-        build: {
-          ssr: true,
-        },
-      },
-    },
-  ],
   resolve: {
     alias: {
       ...absolutePathAliases,

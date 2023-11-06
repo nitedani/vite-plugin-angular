@@ -6,19 +6,6 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import vavite from 'vavite';
 
 export default defineConfig({
-  buildSteps: [
-    {
-      name: 'client',
-    },
-    {
-      name: 'server',
-      config: {
-        build: {
-          ssr: true,
-        },
-      },
-    },
-  ],
   plugins: [
     angular(),
     vavite({

@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --open",
-    "build": "vavite",
+    "build": "vite build && vite build --ssr",
     "start": "cross-env NODE_ENV=production node dist/server/index.mjs"
   },
   "dependencies": {
