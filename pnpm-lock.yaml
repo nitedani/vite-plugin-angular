@@ -228,6 +228,7 @@ importers:
       vavite: ^1.8.3
       vite: ^4.4.9
       vite-plugin-ssr: ^0.4.140
+      vite-tsconfig-paths: ^4.2.1
       zone.js: ^0.13.3
     dependencies:
       '@angular/animations': 16.2.4_@angular+core@16.2.4
@@ -255,6 +256,7 @@ importers:
       typescript: 5.1.6
       vavite: 1.8.3_vite@4.4.9
       vite: 4.4.9_sass@1.66.1
+      vite-tsconfig-paths: 4.2.1_vxtpzrd3ijvkhh2fvnu2mlkwnm
 
   examples/vps-express:
     specifiers:
@@ -276,6 +278,7 @@ importers:
       vavite: ^1.8.3
       vite: ^4.4.9
       vite-plugin-ssr: ^0.4.140
+      vite-tsconfig-paths: ^4.2.1
       zone.js: ^0.13.3
     dependencies:
       '@angular/animations': 16.2.4_@angular+core@16.2.4
@@ -298,6 +301,7 @@ importers:
       typescript: 5.1.6
       vavite: 1.8.3_vite@4.4.9
       vite: 4.4.9_sass@1.66.1
+      vite-tsconfig-paths: 4.2.1_vxtpzrd3ijvkhh2fvnu2mlkwnm
 
   examples/vps-express-telefunc:
     specifiers:
@@ -324,6 +328,7 @@ importers:
       vavite: ^1.8.3
       vite: ^4.4.9
       vite-plugin-ssr: ^0.4.140
+      vite-tsconfig-paths: ^4.2.1
       zone.js: ^0.13.3
     dependencies:
       '@angular/animations': 16.2.4_@angular+core@16.2.4
@@ -351,6 +356,7 @@ importers:
       typescript: 5.1.6
       vavite: 1.8.3_vite@4.4.9
       vite: 4.4.9_sass@1.66.1
+      vite-tsconfig-paths: 4.2.1_vxtpzrd3ijvkhh2fvnu2mlkwnm
 
   packages/create-vite-angular-app:
     specifiers:
@@ -8113,6 +8119,19 @@ packages:
       code-block-writer: 12.0.0
     dev: false
 
+  /tsconfck/2.1.2_typescript@5.1.6:
+    resolution: {integrity: sha512-ghqN1b0puy3MhhviwO2kGF8SeMDNhEbnKxjK7h6+fvY9JAxqvXi8y5NAHSQv687OVboS2uZIByzGd45/YxrRHg==}
+    engines: {node: ^14.13.1 || ^16 || >=18}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4.3.5 || ^5.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 5.1.6
+    dev: true
+
   /tsconfig-paths/4.2.0:
     resolution: {integrity: sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==}
     engines: {node: '>=6'}
@@ -8418,6 +8437,23 @@ packages:
       vite: 4.4.9_sass@1.66.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /vite-tsconfig-paths/4.2.1_vxtpzrd3ijvkhh2fvnu2mlkwnm:
+    resolution: {integrity: sha512-GNUI6ZgPqT3oervkvzU+qtys83+75N/OuDaQl7HmOqFTb0pjZsuARrRipsyJhJ3enqV8beI1xhGbToR4o78nSQ==}
+    peerDependencies:
+      vite: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+    dependencies:
+      debug: 4.3.4
+      globrex: 0.1.2
+      tsconfck: 2.1.2_typescript@5.1.6
+      vite: 4.4.9_sass@1.66.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
     dev: true
 
   /vite/4.4.7_tqj4dreassinqggxui6rsit2gu:

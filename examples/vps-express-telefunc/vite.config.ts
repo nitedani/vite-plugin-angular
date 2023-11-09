@@ -1,27 +1,13 @@
 /// <reference types="vavite/vite-config" />
 
-import { defineConfig } from 'vite';
 import { angular } from '@nitedani/vite-plugin-angular/plugin';
-import vavite from 'vavite';
-import ssr from 'vite-plugin-ssr/plugin';
 import { telefunc } from 'telefunc/vite';
-import { readdirSync } from 'fs';
-import { join } from 'path';
-
-const absolutePathAliases = readdirSync(__dirname, {
-  withFileTypes: true,
-}).reduce((acc, curr) => {
-  const dir = curr.name.replace(/\.tsx?/, '');
-  acc[dir] = join(__dirname, dir);
-  return acc;
-});
+import vavite from 'vavite';
+import { defineConfig } from 'vite';
+import ssr from 'vite-plugin-ssr/plugin';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      ...absolutePathAliases,
-    },
-  },
   plugins: [
     vavite({
       serverEntry: '/server/main.ts',
@@ -30,5 +16,7 @@ export default defineConfig({
     angular(),
     ssr({ disableAutoFullBuild: true }),
     telefunc(),
+    // https://github.com/vikejs/vike/issues/1145
+    { ...tsconfigPaths(), name: 'definitely-not-tsconfigPaths' },
   ],
 });
