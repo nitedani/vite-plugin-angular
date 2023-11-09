@@ -41,8 +41,8 @@
   ],
   "dependencies": {
     "@angular-devkit/build-angular": "^16.2.1",
-    "@angular/compiler": "^16.2.4",
-    "@angular/compiler-cli": "^16.2.4",
+    "@angular/compiler": "^17.0.0",
+    "@angular/compiler-cli": "^17.0.0",
     "@angularclass/hmr": "^3.0.0",
     "@babel/core": "^7.22.17",
     "@ngtools/webpack": "^16.2.1",
@@ -58,7 +58,7 @@
   "devDependencies": {
     "@types/node": "^18.17.15",
     "rimraf": "^3.0.2",
-    "typescript": "5.1.6"
+    "typescript": "^5.2.0"
   },
   "prettier": {
     "singleQuote": true,
