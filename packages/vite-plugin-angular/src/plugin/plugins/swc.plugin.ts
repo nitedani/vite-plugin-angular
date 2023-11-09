@@ -40,12 +40,20 @@ const __bootstrapApplication = async (...args) => {
 };
 `;
 
-export const DevelopmentPlugin: Plugin = {
+const serverCode = `
+import '@angular/compiler';
+import '@angular/platform-server/init';
+import 'zone.js/bundles/zone-node.umd.js';
+`;
+
+let isSsrBuild = false;
+
+export const SwcPlugin: Plugin = {
   name: 'vite-plugin-angular-dev',
   enforce: 'pre',
   apply(config, env) {
     const isBuild = env.command === 'build';
-    const isSsrBuild = env.ssrBuild === true;
+    isSsrBuild = env.ssrBuild === true;
     return !isBuild || isSsrBuild;
   },
   config(_userConfig, env) {
@@ -63,6 +71,10 @@ export const DevelopmentPlugin: Plugin = {
     return html.replace('</head>', `${compilerScript}</head>`);
   },
   transform(code, id) {
+    if (isSsrBuild && /([cm])?[tj]sx?$/.test(id)) {
+      code = serverCode + code;
+    }
+
     //TODO: do this better
     const isEntry = id.endsWith('main.ts');
 
