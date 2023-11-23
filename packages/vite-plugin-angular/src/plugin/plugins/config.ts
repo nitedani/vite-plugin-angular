@@ -1,24 +1,5 @@
-import { existsSync, statSync } from 'fs';
 import { join } from 'path';
-import { cwd } from 'process';
 import { Plugin } from 'vite';
-
-// a hack to support ~ angular scss imports
-const findNodeModules = () => {
-  const candidates = [
-    join(cwd(), '..', '..', '..', 'node_modules', '@angular'),
-    join(cwd(), '..', '..', 'node_modules', '@angular'),
-    join(cwd(), '..', 'node_modules', '@angular'),
-    join(cwd(), 'node_modules', '@angular'),
-  ];
-  for (const candidate of candidates) {
-    if (existsSync(candidate) && statSync(candidate).isDirectory()) {
-      return candidate.replace('@angular', '');
-    }
-  }
-};
-
-const nodeModulesDir = findNodeModules()!;
 
 const virtualModuleId = 'virtual:vite-plugin-angular';
 const resolvedVirtualModuleId = '\0' + virtualModuleId;
@@ -60,15 +41,6 @@ export const CommonPlugin: Plugin = {
       },
       optimizeDeps: {
         exclude: ['@angular/compiler'],
-      },
-      resolve: {
-        alias: [
-          {
-            find: /~/,
-            //@ts-ignore
-            replacement: nodeModulesDir,
-          },
-        ],
       },
     };
   },
