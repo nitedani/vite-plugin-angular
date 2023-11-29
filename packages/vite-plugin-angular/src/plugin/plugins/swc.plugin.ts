@@ -48,6 +48,7 @@ import 'zone.js/node';
 `;
 
 let isSsrBuild = false;
+let injectedSsrBanner = false;
 
 export const SwcPlugin: Plugin = {
   name: 'vite-plugin-angular-dev',
@@ -64,8 +65,9 @@ export const SwcPlugin: Plugin = {
   },
 
   transform(code, id) {
-    if (isSsrBuild && /([cm])?[tj]sx?$/.test(id)) {
+    if (!injectedSsrBanner && isSsrBuild && /([cm])?[tj]sx?$/.test(id)) {
       code = serverCode + code;
+      injectedSsrBanner = true;
     }
 
     //TODO: do this better
