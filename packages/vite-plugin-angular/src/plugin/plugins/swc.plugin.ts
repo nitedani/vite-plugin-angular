@@ -1,5 +1,6 @@
 import { Plugin } from 'vite';
 import { swcTransform } from '../swc/transform.js';
+import { readFile } from 'fs/promises';
 
 const hmrCode = `
 import {
@@ -61,9 +62,14 @@ export const SwcPlugin: Plugin = {
       esbuild: false,
     };
   },
-  resolveId(id) {
+  async load(id) {
     if (id === '/@angular/compiler') {
-      return this.resolve('@angular/compiler');
+      const resolved = await this.resolve('@angular/compiler');
+      if (!resolved) {
+        return;
+      }
+      const code = await readFile(resolved.id.split('?')[0], 'utf-8');
+      return code;
     }
   },
   transformIndexHtml(html) {
