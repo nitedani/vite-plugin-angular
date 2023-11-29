@@ -16,7 +16,7 @@
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
     "rxjs": "^7.8.1",
-    "zone.js": "^0.13.3"
+    "zone.js": "^0.14.2"
   },
   "devDependencies": {
     "@nitedani/vite-plugin-angular": "*",

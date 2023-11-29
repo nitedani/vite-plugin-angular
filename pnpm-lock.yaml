@@ -43,7 +43,7 @@ importers:
         version: 17.0.5(@angular/core@17.0.5)
       '@angular/core':
         specifier: ^17.0.0
-        version: 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+        version: 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser':
         specifier: ^17.0.0
         version: 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
@@ -63,8 +63,8 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
       zone.js:
-        specifier: ^0.13.3
-        version: 0.13.3
+        specifier: ^0.14.2
+        version: 0.14.2
     devDependencies:
       '@nitedani/vite-plugin-angular':
         specifier: '*'
@@ -107,7 +107,7 @@ importers:
         version: 17.0.5(@angular/core@17.0.5)
       '@angular/core':
         specifier: ^17.0.0
-        version: 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+        version: 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/material':
         specifier: ^16.2.3
         version: 16.2.12(@angular/animations@17.0.5)(@angular/cdk@16.2.12)(@angular/common@17.0.5)(@angular/core@17.0.5)(@angular/platform-browser@17.0.5)(rxjs@7.8.1)
@@ -121,8 +121,8 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
       zone.js:
-        specifier: ^0.13.3
-        version: 0.13.3
+        specifier: ^0.14.2
+        version: 0.14.2
     devDependencies:
       '@nitedani/vite-plugin-angular':
         specifier: '*'
@@ -147,7 +147,7 @@ importers:
         version: 17.0.5(@angular/core@17.0.5)
       '@angular/core':
         specifier: ^17.0.0
-        version: 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+        version: 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser':
         specifier: ^17.0.0
         version: 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
@@ -161,8 +161,8 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
       zone.js:
-        specifier: ^0.13.3
-        version: 0.13.3
+        specifier: ^0.14.2
+        version: 0.14.2
     devDependencies:
       '@nitedani/vite-plugin-angular':
         specifier: '*'
@@ -187,7 +187,7 @@ importers:
         version: 17.0.5(@angular/core@17.0.5)
       '@angular/core':
         specifier: ^17.0.0
-        version: 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+        version: 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser':
         specifier: ^17.0.0
         version: 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
@@ -198,8 +198,8 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
       zone.js:
-        specifier: ^0.13.3
-        version: 0.13.3
+        specifier: ^0.14.2
+        version: 0.14.2
     devDependencies:
       '@nitedani/vite-plugin-angular':
         specifier: '*'
@@ -227,7 +227,7 @@ importers:
         version: 17.0.5(@angular/core@17.0.5)
       '@angular/core':
         specifier: ^17.0.0
-        version: 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+        version: 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser':
         specifier: ^17.0.0
         version: 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
@@ -256,8 +256,8 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
       zone.js:
-        specifier: ^0.13.3
-        version: 0.13.3
+        specifier: ^0.14.2
+        version: 0.14.2
     devDependencies:
       '@nitedani/angular-renderer-nestjs':
         specifier: '*'
@@ -300,7 +300,7 @@ importers:
         version: 17.0.5(@angular/core@17.0.5)
       '@angular/core':
         specifier: ^17.0.0
-        version: 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+        version: 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser':
         specifier: ^17.0.0
         version: 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
@@ -338,8 +338,8 @@ importers:
         specifier: ^0.4.140
         version: 0.4.142(vite@5.0.4)
       zone.js:
-        specifier: ^0.13.3
-        version: 0.13.3
+        specifier: ^0.14.2
+        version: 0.14.2
     devDependencies:
       '@nitedani/vite-plugin-angular':
         specifier: '*'
@@ -379,7 +379,7 @@ importers:
         version: 17.0.5(@angular/core@17.0.5)
       '@angular/core':
         specifier: ^17.0.0
-        version: 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+        version: 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser':
         specifier: ^17.0.0
         version: 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
@@ -402,8 +402,8 @@ importers:
         specifier: ^0.4.140
         version: 0.4.142(vite@5.0.4)
       zone.js:
-        specifier: ^0.13.3
-        version: 0.13.3
+        specifier: ^0.14.2
+        version: 0.14.2
     devDependencies:
       '@nitedani/vite-plugin-angular':
         specifier: '*'
@@ -443,7 +443,7 @@ importers:
         version: 17.0.5(@angular/core@17.0.5)
       '@angular/core':
         specifier: ^17.0.0
-        version: 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+        version: 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser':
         specifier: ^17.0.0
         version: 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
@@ -478,8 +478,8 @@ importers:
         specifier: ^0.4.140
         version: 0.4.142(vite@5.0.4)
       zone.js:
-        specifier: ^0.13.3
-        version: 0.13.3
+        specifier: ^0.14.2
+        version: 0.14.2
     devDependencies:
       '@nitedani/vite-plugin-angular':
         specifier: '*'
@@ -535,7 +535,7 @@ importers:
         version: 17.0.5(@angular/core@17.0.5)
       '@angular/core':
         specifier: ^17.0.0
-        version: 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+        version: 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser':
         specifier: ^17.0.0
         version: 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
@@ -555,8 +555,8 @@ importers:
         specifier: 5.2.2
         version: 5.2.2
       zone.js:
-        specifier: ^0.13.3
-        version: 0.13.3
+        specifier: ^0.14.2
+        version: 0.14.2
 
   packages/renderer-express:
     dependencies:
@@ -572,7 +572,7 @@ importers:
     devDependencies:
       '@angular/core':
         specifier: ^17.0.0
-        version: 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+        version: 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.21
@@ -827,7 +827,7 @@ packages:
     peerDependencies:
       '@angular/core': 17.0.5
     dependencies:
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       tslib: 2.6.2
 
   /@angular/cdk@16.2.12(@angular/common@17.0.5)(@angular/core@17.0.5)(rxjs@7.8.1):
@@ -838,7 +838,7 @@ packages:
       rxjs: ^6.5.3 || ^7.4.0
     dependencies:
       '@angular/common': 17.0.5(@angular/core@17.0.5)(rxjs@7.8.1)
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       rxjs: 7.8.1
       tslib: 2.6.2
     optionalDependencies:
@@ -852,7 +852,7 @@ packages:
       '@angular/core': 17.0.5
       rxjs: ^6.5.3 || ^7.4.0
     dependencies:
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       rxjs: 7.8.1
       tslib: 2.6.2
 
@@ -887,10 +887,10 @@ packages:
       '@angular/core':
         optional: true
     dependencies:
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       tslib: 2.6.2
 
-  /@angular/core@17.0.5(rxjs@7.8.1)(zone.js@0.13.3):
+  /@angular/core@17.0.5(rxjs@7.8.1)(zone.js@0.14.2):
     resolution: {integrity: sha512-siWUrdBWgTAqMnRF+qxGZznj5AdR/x3+8l0/bj4CkSZzwZGL/CHy40ec71bbgiPkYob1v4v40voXu2aSSeCLPg==}
     engines: {node: ^18.13.0 || >=20.9.0}
     peerDependencies:
@@ -899,7 +899,7 @@ packages:
     dependencies:
       rxjs: 7.8.1
       tslib: 2.6.2
-      zone.js: 0.13.3
+      zone.js: 0.14.2
 
   /@angular/material@16.2.12(@angular/animations@17.0.5)(@angular/cdk@16.2.12)(@angular/common@17.0.5)(@angular/core@17.0.5)(@angular/platform-browser@17.0.5)(rxjs@7.8.1):
     resolution: {integrity: sha512-k1DGRfP1mMmhg/nLJjZBOPzX3SyAjgbRBY2KauKOV8OFCXJGoMn/oLgMBh+qB1WugzIna/31dBV8ruHD3Uvp2w==}
@@ -915,7 +915,7 @@ packages:
       '@angular/animations': 17.0.5(@angular/core@17.0.5)
       '@angular/cdk': 16.2.12(@angular/common@17.0.5)(@angular/core@17.0.5)(rxjs@7.8.1)
       '@angular/common': 17.0.5(@angular/core@17.0.5)(rxjs@7.8.1)
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser': 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
       '@material/animation': 15.0.0-canary.bc9ae6c9c.0
       '@material/auto-init': 15.0.0-canary.bc9ae6c9c.0
@@ -979,7 +979,7 @@ packages:
     dependencies:
       '@angular/common': 17.0.5(@angular/core@17.0.5)(rxjs@7.8.1)
       '@angular/compiler': 17.0.5(@angular/core@17.0.5)
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser': 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
       tslib: 2.6.2
     dev: false
@@ -997,7 +997,7 @@ packages:
     dependencies:
       '@angular/animations': 17.0.5(@angular/core@17.0.5)
       '@angular/common': 17.0.5(@angular/core@17.0.5)(rxjs@7.8.1)
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       tslib: 2.6.2
 
   /@angular/platform-server@17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/compiler@17.0.5)(@angular/core@17.0.5)(@angular/platform-browser@17.0.5):
@@ -1013,7 +1013,7 @@ packages:
       '@angular/animations': 17.0.5(@angular/core@17.0.5)
       '@angular/common': 17.0.5(@angular/core@17.0.5)(rxjs@7.8.1)
       '@angular/compiler': 17.0.5(@angular/core@17.0.5)
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser': 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
       tslib: 2.6.2
       xhr2: 0.2.1
@@ -1028,7 +1028,7 @@ packages:
       rxjs: ^6.5.3 || ^7.4.0
     dependencies:
       '@angular/common': 17.0.5(@angular/core@17.0.5)(rxjs@7.8.1)
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@angular/platform-browser': 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/core@17.0.5)
       rxjs: 7.8.1
       tslib: 2.6.2
@@ -3882,7 +3882,7 @@ packages:
       '@angular/core': ^14.0.0
     dependencies:
       '@angular/common': 17.0.5(@angular/core@17.0.5)(rxjs@7.8.1)
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       '@tanstack/query-core': 4.36.1
       tslib: 2.6.2
     dev: false
@@ -3908,7 +3908,7 @@ packages:
       '@angular/core': ^14.2.0
     dependencies:
       '@angular/common': 17.0.5(@angular/core@17.0.5)(rxjs@7.8.1)
-      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.13.3)
+      '@angular/core': 17.0.5(rxjs@7.8.1)(zone.js@0.14.2)
       critters: 0.0.16
       jsdom: 20.0.0
       tslib: 2.6.2
@@ -9692,7 +9692,7 @@ packages:
     engines: {node: '>=12.20'}
     dev: false
 
-  /zone.js@0.13.3:
-    resolution: {integrity: sha512-MKPbmZie6fASC/ps4dkmIhaT5eonHkEt6eAy80K42tAm0G2W+AahLJjbfi6X9NPdciOE9GRFTTM8u2IiF6O3ww==}
+  /zone.js@0.14.2:
+    resolution: {integrity: sha512-X4U7J1isDhoOmHmFWiLhloWc2lzMkdnumtfQ1LXzf/IOZp5NQYuMUTaviVzG/q1ugMBIXzin2AqeVJUoSEkNyQ==}
     dependencies:
       tslib: 2.6.2

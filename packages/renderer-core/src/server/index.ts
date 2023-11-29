@@ -1,6 +1,6 @@
 import '@angular/compiler';
 import '@angular/platform-server/init';
-import 'zone.js/bundles/zone-node.umd.js';
+import 'zone.js/node';
 import {
   provideHttpClient,
   withInterceptorsFromDi,

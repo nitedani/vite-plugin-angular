@@ -47,7 +47,7 @@
     "defu": "^6.1.2",
     "rimraf": "^3.0.2",
     "typescript": "5.2.2",
-    "zone.js": "^0.13.3"
+    "zone.js": "^0.14.2"
   },
   "prettier": {
     "singleQuote": true,
