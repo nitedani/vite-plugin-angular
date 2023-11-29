@@ -62,20 +62,7 @@ export const SwcPlugin: Plugin = {
       esbuild: false,
     };
   },
-  async load(id) {
-    if (id === '/@angular/compiler') {
-      const resolved = await this.resolve('@angular/compiler');
-      if (!resolved) {
-        return;
-      }
-      const code = await readFile(resolved.id.split('?')[0], 'utf-8');
-      return code;
-    }
-  },
-  transformIndexHtml(html) {
-    const compilerScript = `<script type="module" src="/@angular/compiler"></script>`;
-    return html.replace('</head>', `${compilerScript}</head>`);
-  },
+
   transform(code, id) {
     if (isSsrBuild && /([cm])?[tj]sx?$/.test(id)) {
       code = serverCode + code;
@@ -107,5 +94,29 @@ export const SwcPlugin: Plugin = {
       isSsr: false,
       isProduction: false,
     });
+  },
+};
+
+export const InjectCompilerInDev: Plugin = {
+  name: 'vite-plugin-angular-dev-compiler',
+  enforce: 'pre',
+  apply(config, env) {
+    const isBuild = env.command === 'build';
+    return !isBuild;
+  },
+  transformIndexHtml(html) {
+    const compilerScript = `<script type="module" src="/@angular/compiler"></script>`;
+    return html.replace('</head>', `${compilerScript}</head>`);
+  },
+  async load(id) {
+    if (id === '/@angular/compiler') {
+      const resolved = await this.resolve('@angular/compiler');
+      if (!resolved) {
+        return null;
+      }
+      const code = await readFile(resolved.id.split('?')[0], 'utf-8');
+      return code;
+    }
+    return null;
   },
 };

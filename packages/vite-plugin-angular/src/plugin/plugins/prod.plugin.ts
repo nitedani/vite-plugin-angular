@@ -134,12 +134,7 @@ export const ProductionPlugin = (): Plugin[] => {
         await buildAndAnalyze();
       },
       async transform(code, id) {
-        if (
-          id.includes('node_modules') ||
-          //TODO: why is this needed? vite-plugin-ssr throws an error if this is not here
-          // debug and remove this if possible
-          code.includes('@nitedani/vite-plugin-angular/client')
-        ) {
+        if (id.includes('node_modules')) {
           return;
         }
 
