@@ -54,7 +54,7 @@ export const SwcPlugin: Plugin = {
   enforce: 'pre',
   apply(config, env) {
     const isBuild = env.command === 'build';
-    isSsrBuild = env.ssrBuild === true;
+    isSsrBuild = env.isSsrBuild === true;
     return !isBuild || isSsrBuild;
   },
   config(_userConfig, env) {

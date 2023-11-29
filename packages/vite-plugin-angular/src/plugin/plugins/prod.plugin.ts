@@ -66,7 +66,7 @@ export const ProductionPlugin = (): Plugin[] => {
       enforce: 'pre',
       apply(config, env) {
         const isBuild = env.command === 'build';
-        const isSsrBuild = env.ssrBuild;
+        const isSsrBuild = env.isSsrBuild;
         return isBuild && !isSsrBuild;
       },
       //TODO: fix this
@@ -81,6 +81,7 @@ export const ProductionPlugin = (): Plugin[] => {
                     tsconfig: tsconfigPath,
                     sourcemap: false,
                     advancedOptimizations: true,
+                    incremental: true,
                   },
                   {
                     workspaceRoot,

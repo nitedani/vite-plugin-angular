@@ -20,8 +20,8 @@
   "devDependencies": {
     "@nitedani/vite-plugin-angular": "*",
     "sass": "^1.66.1",
-    "typescript": "^5.2.0",
-    "vite": "^4.4.9"
+    "typescript": "5.2.2",
+    "vite": "^5.0.0"
   },
   "prettier": {
     "singleQuote": true

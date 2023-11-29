@@ -21,7 +21,9 @@ export const CommonPlugin: Plugin = {
         ],
       },
       build: {
-        outDir: env.ssrBuild ? join(outDir, 'server') : join(outDir, 'client'),
+        outDir: env.isSsrBuild
+          ? join(outDir, 'server')
+          : join(outDir, 'client'),
         rollupOptions: {
           external: ['xhr2'],
           output: {

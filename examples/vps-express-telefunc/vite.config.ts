@@ -1,8 +1,6 @@
-/// <reference types="vavite/vite-config" />
-
 import { angular } from '@nitedani/vite-plugin-angular/plugin';
 import { telefunc } from 'telefunc/vite';
-import vavite from 'vavite';
+import { vavite } from 'vavite';
 import { defineConfig } from 'vite';
 import ssr from 'vite-plugin-ssr/plugin';
 import tsconfigPaths from 'vite-tsconfig-paths';

@@ -8,7 +8,7 @@ export const OptimizerPlugin: Plugin = {
   name: 'vite-plugin-angular-optimizer',
   apply(config, env) {
     const isBuild = env.command === 'build';
-    const isSsrBuild = env.ssrBuild;
+    const isSsrBuild = env.isSsrBuild;
     return isBuild && !isSsrBuild;
   },
   enforce: 'post',

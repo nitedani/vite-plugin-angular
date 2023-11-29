@@ -46,7 +46,7 @@
     "@types/node": "^18.17.15",
     "defu": "^6.1.2",
     "rimraf": "^3.0.2",
-    "typescript": "^5.2.0",
+    "typescript": "5.2.2",
     "zone.js": "^0.13.3"
   },
   "prettier": {
