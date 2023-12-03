@@ -1,3 +1,5 @@
+export { onRenderHtml };
+
 import { renderToString } from '@nitedani/vite-plugin-angular/server';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr/server';
 import { provideQueryClient } from '@ngneat/query';
@@ -6,10 +8,7 @@ import logoUrl from './logo.svg';
 import { PageContext } from 'types_';
 import { SharedModule } from './shared.module';
 
-// See https://vite-plugin-ssr.com/data-fetching
-export const passToClient = ['pageProps', 'queryState'];
-
-export async function render(pageContext: PageContext) {
+const onRenderHtml = async (pageContext: PageContext) => {
   const { Page, exports, documentProps } = pageContext;
   const title = (documentProps && documentProps.title) || 'App';
 
@@ -46,4 +45,4 @@ export async function render(pageContext: PageContext) {
     documentHtml: escapeInject`${dangerouslySkipEscape(document)}`,
     pageContext: { queryState: dehydrate(queryClient) },
   };
-}
+};

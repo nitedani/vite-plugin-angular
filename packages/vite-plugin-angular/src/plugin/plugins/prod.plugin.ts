@@ -66,8 +66,7 @@ export const ProductionPlugin = (): Plugin[] => {
       enforce: 'pre',
       apply(config, env) {
         const isBuild = env.command === 'build';
-        const isSsrBuild = env.isSsrBuild;
-        return isBuild && !isSsrBuild;
+        return isBuild;
       },
       //TODO: fix this
       //@ts-ignore

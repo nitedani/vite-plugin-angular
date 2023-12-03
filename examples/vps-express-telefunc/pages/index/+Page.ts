@@ -2,11 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { UseQuery } from '@ngneat/query';
 import { wait$ } from '@nitedani/angular-renderer-core';
-import { Layout } from 'pages/layout';
 import { AppService } from 'services/app.service';
 import { getPokemon } from './index.telefunc';
-
-export { Page, Layout };
 
 @Component({
   standalone: true,
@@ -24,7 +21,7 @@ export { Page, Layout };
     </div>
   </div>`,
 })
-class Page implements OnInit {
+export default class Page implements OnInit {
   private appService = inject(AppService);
   private useQuery = inject(UseQuery);
 

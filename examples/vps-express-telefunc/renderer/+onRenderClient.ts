@@ -1,12 +1,11 @@
+export { onRenderClient };
+
 import { renderPage } from '@nitedani/vite-plugin-angular/client';
 import { SharedModule } from './shared.module';
 import { PageContext } from 'types_';
 import { provideHttpClient } from '@angular/common/http';
 import { QueryClient, hydrate } from '@tanstack/query-core';
 import { provideQueryClient } from '@ngneat/query';
-
-export const clientRouting = true;
-export { render };
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,7 +15,7 @@ const queryClient = new QueryClient({
   },
 });
 
-async function render(pageContext: PageContext) {
+const onRenderClient = async (pageContext: PageContext) => {
   const { Page, exports, queryState } = pageContext;
   if (queryState) {
     hydrate(queryClient, queryState);
@@ -29,4 +28,4 @@ async function render(pageContext: PageContext) {
     imports: [SharedModule],
     providers: [provideQueryClient(queryClient), provideHttpClient()],
   });
-}
+};

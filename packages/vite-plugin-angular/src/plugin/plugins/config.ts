@@ -18,6 +18,7 @@ export const CommonPlugin: Plugin = {
           /@nitedani\/angular-renderer-core/,
           /@nitedani\/angular-renderer-express/,
           /@nitedani\/angular-renderer-nestjs/,
+          /@angular\/platform/
         ],
       },
       build: {
@@ -25,6 +26,15 @@ export const CommonPlugin: Plugin = {
           ? join(outDir, 'server')
           : join(outDir, 'client'),
         rollupOptions: {
+          onwarn: log => {
+            if (
+              /__PURE__|'this' keyword is equivalent to 'undefined'/.test(
+                log.message,
+              )
+            )
+              return;
+            console.error(log.message);
+          },
           external: ['xhr2'],
           output: {
             manualChunks: id => {

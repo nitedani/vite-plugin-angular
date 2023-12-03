@@ -2,7 +2,8 @@ import { Plugin } from 'vite';
 import { swcTransform } from '../swc/transform.js';
 import { readFile } from 'fs/promises';
 
-const hmrCode = `
+type BootstrapFnName = 'bootstrapApplication' | 'renderPage';
+const hmrCode = (bootstrapFnName: BootstrapFnName) => `
 import {
   createInputTransfer,
   createNewHosts,
@@ -10,10 +11,10 @@ import {
 } from '@nitedani/vite-plugin-angular/hmr';
 
 // @ts-ignore
-const __bootstrapApplication = async (...args) => {
+const __${bootstrapFnName} = async (...args) => {
   removeNgStyles();
   // @ts-ignore
-  return bootstrapApplication(...args).then((appRef) => {
+  return ${bootstrapFnName}(...args).then((appRef) => {
     if (import.meta.hot) {
       import.meta.hot.accept();
       import.meta.hot.dispose(() => {
@@ -41,70 +42,17 @@ const __bootstrapApplication = async (...args) => {
 };
 `;
 
-const serverCode = `
-import '@angular/compiler';
-import '@angular/platform-server/init';
-import 'zone.js/node';
-`;
-
-let isSsrBuild = false;
-let injectedSsrBanner = false;
-
-export const SwcPlugin: Plugin = {
+export const DevelopmentPlugin: Plugin = {
   name: 'vite-plugin-angular-dev',
   enforce: 'pre',
   apply(config, env) {
     const isBuild = env.command === 'build';
-    isSsrBuild = env.isSsrBuild === true;
-    return !isBuild || isSsrBuild;
+    return !isBuild;
   },
   config(_userConfig, env) {
     return {
       esbuild: false,
     };
-  },
-
-  transform(code, id) {
-    if (!injectedSsrBanner && isSsrBuild && /([cm])?[tj]sx?$/.test(id)) {
-      code = serverCode + code;
-      injectedSsrBanner = true;
-    }
-
-    //TODO: do this better
-    const isEntry = id.endsWith('main.ts');
-
-    if (isEntry) {
-      let t = 0;
-      let found = false;
-      code = code.replace(/bootstrapApplication/g, match => {
-        if (++t === 2) {
-          found = true;
-          return '__bootstrapApplication';
-        }
-        return match;
-      });
-      if (found) {
-        code = hmrCode + code;
-      }
-    }
-    // Run everything else through SWC
-    // On the server, we need decorator metadata,
-    // @analogjs/vite-plugin-angular uses esbuild, but esbuild doesn't support decorator metadata
-    return swcTransform({
-      code,
-      id,
-      isSsr: false,
-      isProduction: false,
-    });
-  },
-};
-
-export const InjectCompilerInDev: Plugin = {
-  name: 'vite-plugin-angular-dev-compiler',
-  enforce: 'pre',
-  apply(config, env) {
-    const isBuild = env.command === 'build';
-    return !isBuild;
   },
   transformIndexHtml(html) {
     const compilerScript = `<script type="module" src="/@angular/compiler"></script>`;
@@ -120,5 +68,32 @@ export const InjectCompilerInDev: Plugin = {
       return code;
     }
     return null;
+  },
+  transform(code, id) {
+    //TODO: do this better
+    const isEntry = id.endsWith('main.ts');
+
+    if (isEntry) {
+      let bootstrapFnName: BootstrapFnName | undefined = undefined;
+      code = code.replace('bootstrapApplication(', match => {
+        bootstrapFnName = 'bootstrapApplication';
+        return '__bootstrapApplication(';
+      });
+
+      // Won't work because vavite(I think) reloads the page anyway
+      // code = code.replace('renderPage(', match => {
+      //   bootstrapFnName = 'renderPage';
+      //   return '__renderPage(';
+      // });
+
+      if (bootstrapFnName) {
+        code = hmrCode(bootstrapFnName) + code;
+      }
+    }
+
+    return swcTransform({
+      code,
+      id,
+    });
   },
 };

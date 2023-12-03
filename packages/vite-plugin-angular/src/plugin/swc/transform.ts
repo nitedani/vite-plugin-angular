@@ -1,23 +1,12 @@
-import {
-  JsMinifyOptions,
-  minify,
-  plugins,
-  Program,
-  transform,
-} from '@swc/core';
+import { JsMinifyOptions, plugins, Program, transform } from '@swc/core';
+import { AngularComponents, AngularInjector } from './index.js';
 
-import {
-  AngularComponents,
-  AngularImportCompilerComponents,
-  AngularInjector,
-  AngularSwapPlatformDynamic,
-} from './index.js';
 const fileExtensionRE = /\.[^/\s?]+$/;
 
-export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
+export const swcTransform = async ({ code, id }) => {
   const minifyOptions: JsMinifyOptions = {
-    compress: !isSsr && isProduction,
-    mangle: !isSsr && isProduction,
+    compress: false,
+    mangle: false,
     ecma: '2020',
     module: true,
     format: {
@@ -26,9 +15,6 @@ export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
   };
 
   if (id.includes('node_modules')) {
-    if (isProduction) {
-      return minify(code, minifyOptions);
-    }
     return;
   }
 
@@ -41,7 +27,7 @@ export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
   }
 
   return transform(code, {
-    sourceMaps: !isProduction,
+    sourceMaps: true,
     jsc: {
       target: 'es2020',
       parser: {
@@ -56,7 +42,7 @@ export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
       },
       minify: minifyOptions,
     },
-    minify: !isSsr && isProduction,
+    minify: false,
     plugin: plugins([
       (m: Program) => {
         const angularComponentPlugin = new AngularComponents({
@@ -68,15 +54,6 @@ export const swcTransform = async ({ code, id, isSsr, isProduction }) => {
         const angularInjectorPlugin = new AngularInjector();
         return angularInjectorPlugin.visitProgram(m);
       },
-      // (m: Program) => {
-      //   return new AngularImportCompilerComponents().visitProgram(m);
-      // },
-      // ...(isProduction
-      //   ? [
-      //       (m: Program) =>
-      //         new AngularSwapPlatformDynamic().visitProgram(m),
-      //     ]
-      //   : []),
     ]),
   });
 };

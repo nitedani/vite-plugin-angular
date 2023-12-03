@@ -13,7 +13,7 @@ export default defineConfig({
     }),
     angular(),
     ssr({ disableAutoFullBuild: true }),
-    telefunc(),
+    telefunc({ disableNamingConvention: true }),
     // https://github.com/vikejs/vike/issues/1145
     { ...tsconfigPaths(), name: 'definitely-not-tsconfigPaths' },
   ],

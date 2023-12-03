@@ -1,11 +1,10 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-export { Page };
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   standalone: true,
   template: `<div>Error page works</div>`,
 })
-class Page implements OnInit {
+export default class Page implements OnInit {
   @Input() pageProps: any;
 
   ngOnInit() {
