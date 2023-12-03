@@ -24,7 +24,7 @@
     "@nitedani/vite-plugin-ssr-adapter-nestjs": "^0.0.8",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "vite-plugin-ssr": "^0.4.140",
+    "vike": "^0.4.147",
     "zone.js": "^0.14.2"
   },
   "devDependencies": {

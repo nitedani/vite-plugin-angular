@@ -1,16 +1,16 @@
 export { onRenderHtml };
 
 import { renderToString } from '@nitedani/vite-plugin-angular/server';
-import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr/server';
+import { dangerouslySkipEscape, escapeInject } from 'vike/server';
 import { provideQueryClient } from '@ngneat/query';
 import { QueryClient, dehydrate } from '@tanstack/query-core';
 import logoUrl from './logo.svg';
-import { PageContext } from 'types_';
+import type { PageContextServer } from 'types_';
 import { SharedModule } from './shared.module';
 
-const onRenderHtml = async (pageContext: PageContext) => {
-  const { Page, exports, documentProps } = pageContext;
-  const title = (documentProps && documentProps.title) || 'App';
+const onRenderHtml = async (pageContext: PageContextServer) => {
+  const { Page, exports } = pageContext;
+  const title = 'App';
 
   // See https://vite-plugin-ssr.com/head
   let document = `<!DOCTYPE html>

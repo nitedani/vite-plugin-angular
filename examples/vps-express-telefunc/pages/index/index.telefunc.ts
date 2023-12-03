@@ -1,7 +1,7 @@
 // only runs on server
 
 import { getContext } from 'telefunc';
-import { ReqRes } from 'types_';
+import type { ReqRes } from 'types_';
 
 export const getPokemon = async (): Promise<{
   results: { name: string; url: string }[];

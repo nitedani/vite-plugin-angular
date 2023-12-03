@@ -2,7 +2,7 @@ export { onRenderClient };
 
 import { renderPage } from '@nitedani/vite-plugin-angular/client';
 import { SharedModule } from './shared.module';
-import { PageContext } from 'types_';
+import type { PageContextClient } from 'types_';
 import { provideHttpClient } from '@angular/common/http';
 import { QueryClient, hydrate } from '@tanstack/query-core';
 import { provideQueryClient } from '@ngneat/query';
@@ -15,7 +15,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const onRenderClient = async (pageContext: PageContext) => {
+const onRenderClient = async (pageContext: PageContextClient) => {
   const { Page, exports, queryState } = pageContext;
   if (queryState) {
     hydrate(queryClient, queryState);
