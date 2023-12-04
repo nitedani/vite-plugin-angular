@@ -22,7 +22,6 @@
     "@nestjs/platform-express": "^10.2.5",
     "@nguniversal/common": "^14.2.3",
     "@nitedani/vite-plugin-ssr-adapter-nestjs": "0.0.11",
-    "@nitedani/angular-renderer-core": "*",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "vike": "^0.4.147",

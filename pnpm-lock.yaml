@@ -310,9 +310,6 @@ importers:
       '@angular/platform-server':
         specifier: ^17.0.0
         version: 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/compiler@17.0.5)(@angular/core@17.0.5)(@angular/platform-browser@17.0.5)
-      '@nitedani/angular-renderer-core':
-        specifier: '*'
-        version: link:../../packages/renderer-core
       '@nitedani/vite-plugin-ssr-adapter-express':
         specifier: 0.0.11
         version: 0.0.11
@@ -465,9 +462,6 @@ importers:
       '@nguniversal/common':
         specifier: ^14.2.3
         version: 14.2.3(@angular/common@17.0.5)(@angular/core@17.0.5)
-      '@nitedani/angular-renderer-core':
-        specifier: '*'
-        version: link:../../packages/renderer-core
       '@nitedani/vite-plugin-ssr-adapter-nestjs':
         specifier: 0.0.11
         version: 0.0.11
