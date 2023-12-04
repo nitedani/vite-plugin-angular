@@ -16,7 +16,6 @@ import {
   provideClientHydration,
 } from '@angular/platform-browser';
 import { LayoutComponent, mountPage } from '../shared/mountPage.js';
-import { DefaultWrapper } from '../shared/angular/wrapper.js';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
@@ -49,19 +48,6 @@ export const renderPage = async <T, U>({
   rootComponent.ɵcmp.selectors = [[selector]];
 
   const extraProviders: Provider[] = [];
-  if (pageContext) {
-    extraProviders.push({
-      provide: 'pageContext',
-      useValue: new Proxy(pageContext, {
-        get: (target, prop) => {
-          if (prop === 'ngOnDestroy') {
-            return null;
-          }
-          return target[prop];
-        },
-      }),
-    });
-  }
 
   extraProviders.push({
     provide: HTTP_INTERCEPTORS,
@@ -102,10 +88,8 @@ export const renderPage = async <T, U>({
 
     mountPage({
       page,
-      compRef,
-      pageProps: pageContext?.pageProps,
       layout,
-      appRef,
+      compRef,
     });
 
     appRef.attachView(compRef.hostView);

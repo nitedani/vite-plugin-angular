@@ -21,7 +21,7 @@
     "lib"
   ],
   "dependencies": {
-    "@nitedani/angular-renderer-express": "*"
+    "@nitedani/angular-renderer-express": "^17.0.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",

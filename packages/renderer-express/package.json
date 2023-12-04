@@ -21,7 +21,7 @@
     "lib"
   ],
   "dependencies": {
-    "@nitedani/angular-renderer-core": "*",
+    "@nitedani/angular-renderer-core": "^17.0.0",
     "@nitedani/shrink-ray-current": "^4.1.4",
     "defu": "^6.1.2"
   },

@@ -38,7 +38,7 @@ import { fileURLToPath } from 'url';
 import { filter, firstValueFrom } from 'rxjs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 //@ts-ignore
-import { projectRoot } from 'virtual:vite-plugin-angular';
+import { projectRoot, swc } from 'virtual:vite-plugin-angular';
 
 export class ServerXhr implements XhrFactory {
   build(): XMLHttpRequest {
@@ -72,11 +72,9 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
     {
       page,
       layout,
-      pageProps,
     }: {
       page: Type<{}>;
       layout?: Type<LayoutComponent<{}>>;
-      pageProps?: Record<string, unknown>;
     },
   ) => {
     let done = false;
@@ -92,9 +90,7 @@ export const SSR_PAGE_PROPS_HOOK_PROVIDER: Provider = {
         mountPage({
           page,
           compRef,
-          pageProps,
           layout,
-          appRef,
         });
 
         await firstValueFrom(
@@ -154,7 +150,7 @@ export const renderToString = async <T, U>({
       document = document.replace('</head>', `${devScript}</head>`);
     }
   }
-  if (import.meta.env.DEV) {
+  if (import.meta.env.DEV && swc) {
     const compilerScript = `<script type="module" src="/@angular/compiler"></script>`;
     document = document.replace('</head>', `${compilerScript}</head>`);
   }
@@ -188,20 +184,6 @@ export const renderToString = async <T, U>({
     });
   }
 
-  if (pageContext) {
-    extraProviders.push({
-      provide: 'pageContext',
-      useValue: new Proxy(pageContext, {
-        get: (target, prop) => {
-          if (prop === 'ngOnDestroy') {
-            return null;
-          }
-          return target[prop];
-        },
-      }),
-    });
-  }
-
   return renderApplication(
     () =>
       bootstrapApplication(layout ?? page, {
@@ -215,7 +197,7 @@ export const renderToString = async <T, U>({
           { provide: XhrFactory, useClass: ServerXhr },
           {
             provide: SSR_PAGE_PROPS,
-            useValue: { pageProps: pageContext?.pageProps, page, layout },
+            useValue: { page, layout },
           },
           SSR_PAGE_PROPS_HOOK_PROVIDER,
         ],

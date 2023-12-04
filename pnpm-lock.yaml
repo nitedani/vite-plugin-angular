@@ -249,6 +249,9 @@ importers:
       '@nestjs/platform-express':
         specifier: ^10.2.5
         version: 10.2.10(@nestjs/common@10.2.10)(@nestjs/core@10.2.10)
+      '@nitedani/angular-renderer-nestjs':
+        specifier: '*'
+        version: link:../../packages/renderer-nestjs
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
@@ -259,9 +262,6 @@ importers:
         specifier: ^0.14.2
         version: 0.14.2
     devDependencies:
-      '@nitedani/angular-renderer-nestjs':
-        specifier: '*'
-        version: link:../../packages/renderer-nestjs
       '@nitedani/vite-plugin-angular':
         specifier: '*'
         version: link:../../packages/vite-plugin-angular
@@ -325,9 +325,12 @@ importers:
       '@nguniversal/common':
         specifier: ^14.2.3
         version: 14.2.3(@angular/common@17.0.5)(@angular/core@17.0.5)
+      '@nitedani/angular-renderer-core':
+        specifier: '*'
+        version: link:../../packages/renderer-core
       '@nitedani/vite-plugin-ssr-adapter-nestjs':
-        specifier: ^0.0.8
-        version: 0.0.8
+        specifier: 0.0.11
+        version: 0.0.11
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
@@ -362,9 +365,6 @@ importers:
       vite:
         specifier: ^5.0.0
         version: 5.0.4(sass@1.69.5)
-      vite-tsconfig-paths:
-        specifier: ^4.2.1
-        version: 4.2.1(typescript@5.2.2)(vite@5.0.4)
 
   examples/vps-express:
     dependencies:
@@ -389,6 +389,9 @@ importers:
       '@angular/platform-server':
         specifier: ^17.0.0
         version: 17.0.5(@angular/animations@17.0.5)(@angular/common@17.0.5)(@angular/compiler@17.0.5)(@angular/core@17.0.5)(@angular/platform-browser@17.0.5)
+      '@nitedani/angular-renderer-core':
+        specifier: '*'
+        version: link:../../packages/renderer-core
       '@nitedani/vite-plugin-ssr-adapter-express':
         specifier: 0.0.11
         version: 0.0.11
@@ -426,9 +429,6 @@ importers:
       vite:
         specifier: ^5.0.0
         version: 5.0.4(sass@1.69.5)
-      vite-tsconfig-paths:
-        specifier: ^4.2.1
-        version: 4.2.1(typescript@5.2.2)(vite@5.0.4)
 
   examples/vps-express-telefunc:
     dependencies:
@@ -505,9 +505,6 @@ importers:
       vite:
         specifier: ^5.0.0
         version: 5.0.4(sass@1.69.5)
-      vite-tsconfig-paths:
-        specifier: ^4.2.1
-        version: 4.2.1(typescript@5.2.2)(vite@5.0.4)
 
   packages/create-vite-angular-app:
     dependencies:
@@ -561,7 +558,7 @@ importers:
   packages/renderer-express:
     dependencies:
       '@nitedani/angular-renderer-core':
-        specifier: '*'
+        specifier: ^17.0.0
         version: link:../renderer-core
       '@nitedani/shrink-ray-current':
         specifier: ^4.1.4
@@ -589,7 +586,7 @@ importers:
   packages/renderer-nestjs:
     dependencies:
       '@nitedani/angular-renderer-express':
-        specifier: '*'
+        specifier: ^17.0.0
         version: link:../renderer-express
     devDependencies:
       rimraf:
@@ -620,7 +617,7 @@ importers:
         specifier: ^17.0.0
         version: 17.0.5(@angular/compiler-cli@17.0.5)(typescript@5.2.2)(webpack@5.89.0)
       '@nitedani/angular-renderer-core':
-        specifier: '*'
+        specifier: ^17.0.0
         version: link:../renderer-core
       '@swc/core':
         specifier: 1.3.3
@@ -631,9 +628,6 @@ importers:
       swc-ast-helpers:
         specifier: ^0.2.2
         version: 0.2.2(@swc/core@1.3.3)
-      vite-plugin-checker:
-        specifier: ^0.6.2
-        version: 0.6.2(typescript@5.2.2)
     devDependencies:
       '@types/node':
         specifier: ^18.17.15
@@ -3947,19 +3941,10 @@ packages:
       - supports-color
     dev: false
 
-  /@nitedani/vite-plugin-ssr-adapter-express@0.0.8:
-    resolution: {integrity: sha512-u3JWAjUQXzjzcGYZWCW/QgvgYyzw58ZHU1wY6mOFowEQ3T5a0gfbKm4BTLDiId4EDswst32iBi5SWt32/Pl4LQ==}
+  /@nitedani/vite-plugin-ssr-adapter-nestjs@0.0.11:
+    resolution: {integrity: sha512-wbGZIJG07zpK8ZVaMICkjptVqqZH2Vib/uNgDpGa2/teIWlRXAYco4L2vomullhRk/zsmtvNz5QXRfijLGdbSw==}
     dependencies:
-      '@nitedani/shrink-ray-current': 4.1.4
-      defu: 6.1.3
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@nitedani/vite-plugin-ssr-adapter-nestjs@0.0.8:
-    resolution: {integrity: sha512-xIkEeyTGcL5xV3ZRvvxozZevFrJXiZReGj19K6+k6KL+yp7wkd5+fhmlUdxW0JtUZwdi48ausrH2GZLiD6kaIA==}
-    dependencies:
-      '@nitedani/vite-plugin-ssr-adapter-express': 0.0.8
+      '@nitedani/vite-plugin-ssr-adapter-express': 0.0.11
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5295,11 +5280,6 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /commander@8.3.0:
-    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
-    engines: {node: '>= 12'}
-    dev: false
-
   /common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
     dev: false
@@ -6312,15 +6292,6 @@ packages:
       jsonfile: 6.1.0
       universalify: 2.0.1
 
-  /fs-extra@11.2.0:
-    resolution: {integrity: sha512-PmDi3uwK5nFuXh7XDTlVnS17xJS7vW36is2+w3xcv8SVxiB4NyATf4ctkVY5bkSjX0Y4nbvZCq1/EjtEyr9ktw==}
-    engines: {node: '>=14.14'}
-    dependencies:
-      graceful-fs: 4.2.11
-      jsonfile: 6.1.0
-      universalify: 2.0.1
-    dev: false
-
   /fs-extra@3.0.1:
     resolution: {integrity: sha512-V3Z3WZWVUYd8hoCL5xfXJCaHWYzmtwW5XWYSlLgERi8PWd8bx1kUHUk8L1BT57e49oKnDDD180mjfrHc1yA9rg==}
     dependencies:
@@ -7145,10 +7116,6 @@ packages:
 
   /lodash.isfinite@3.3.2:
     resolution: {integrity: sha512-7FGG40uhC8Mm633uKW1r58aElFlBlxCrg9JfSi3P6aYiWmfiWF0PgMd86ZUsxE5GwWPdHoS2+48bwTh2VPkIQA==}
-    dev: false
-
-  /lodash.pick@4.4.0:
-    resolution: {integrity: sha512-hXt6Ul/5yWjfklSGvLQl8vM//l3FtyHZeuelpzK6mm99pNvN9yTDruNZPEJZD1oWrqo+izBmB7oUfWgcCX7s4Q==}
     dev: false
 
   /lodash@4.17.21:
@@ -8808,10 +8775,6 @@ packages:
       globrex: 0.1.2
     dev: false
 
-  /tiny-invariant@1.3.1:
-    resolution: {integrity: sha512-AD5ih2NlSssTCwsMznbvwMZpJ1cbhkGd2uueNxzv2jDlEeZdU04JQfRnggJQ8DrcVBGjAsCKwFBbDlVNtEMlzw==}
-    dev: false
-
   /tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
     engines: {node: '>=0.6.0'}
@@ -8875,19 +8838,6 @@ packages:
       '@ts-morph/common': 0.20.0
       code-block-writer: 12.0.0
     dev: false
-
-  /tsconfck@2.1.2(typescript@5.2.2):
-    resolution: {integrity: sha512-ghqN1b0puy3MhhviwO2kGF8SeMDNhEbnKxjK7h6+fvY9JAxqvXi8y5NAHSQv687OVboS2uZIByzGd45/YxrRHg==}
-    engines: {node: ^14.13.1 || ^16 || >=18}
-    hasBin: true
-    peerDependencies:
-      typescript: ^4.3.5 || ^5.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      typescript: 5.2.2
-    dev: true
 
   /tsconfig-paths@4.2.0:
     resolution: {integrity: sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==}
@@ -9146,57 +9096,6 @@ packages:
       vite: 5.0.4(sass@1.69.5)
     dev: false
 
-  /vite-plugin-checker@0.6.2(typescript@5.2.2):
-    resolution: {integrity: sha512-YvvvQ+IjY09BX7Ab+1pjxkELQsBd4rPhWNw8WLBeFVxu/E7O+n6VYAqNsKdK/a2luFlX/sMpoWdGFfg4HvwdJQ==}
-    engines: {node: '>=14.16'}
-    peerDependencies:
-      eslint: '>=7'
-      meow: ^9.0.0
-      optionator: ^0.9.1
-      stylelint: '>=13'
-      typescript: '*'
-      vite: '>=2.0.0'
-      vls: '*'
-      vti: '*'
-      vue-tsc: '>=1.3.9'
-    peerDependenciesMeta:
-      eslint:
-        optional: true
-      meow:
-        optional: true
-      optionator:
-        optional: true
-      stylelint:
-        optional: true
-      typescript:
-        optional: true
-      vls:
-        optional: true
-      vti:
-        optional: true
-      vue-tsc:
-        optional: true
-    dependencies:
-      '@babel/code-frame': 7.23.5
-      ansi-escapes: 4.3.2
-      chalk: 4.1.2
-      chokidar: 3.5.3
-      commander: 8.3.0
-      fast-glob: 3.3.2
-      fs-extra: 11.2.0
-      lodash.debounce: 4.0.8
-      lodash.pick: 4.4.0
-      npm-run-path: 4.0.1
-      semver: 7.5.4
-      strip-ansi: 6.0.1
-      tiny-invariant: 1.3.1
-      typescript: 5.2.2
-      vscode-languageclient: 7.0.0
-      vscode-languageserver: 7.0.0
-      vscode-languageserver-textdocument: 1.0.11
-      vscode-uri: 3.0.8
-    dev: false
-
   /vite-tsconfig-paths@3.6.0(vite@5.0.4):
     resolution: {integrity: sha512-UfsPYonxLqPD633X8cWcPFVuYzx/CMNHAjZTasYwX69sXpa4gNmQkR0XCjj82h7zhLGdTWagMjC1qfb9S+zv0A==}
     peerDependencies:
@@ -9209,23 +9108,6 @@ packages:
       vite: 5.0.4(sass@1.69.5)
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /vite-tsconfig-paths@4.2.1(typescript@5.2.2)(vite@5.0.4):
-    resolution: {integrity: sha512-GNUI6ZgPqT3oervkvzU+qtys83+75N/OuDaQl7HmOqFTb0pjZsuARrRipsyJhJ3enqV8beI1xhGbToR4o78nSQ==}
-    peerDependencies:
-      vite: '*'
-    peerDependenciesMeta:
-      vite:
-        optional: true
-    dependencies:
-      debug: 4.3.4
-      globrex: 0.1.2
-      tsconfck: 2.1.2(typescript@5.2.2)
-      vite: 5.0.4(sass@1.69.5)
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
     dev: true
 
   /vite@4.5.0(@types/node@18.19.1)(less@4.2.0)(sass@1.69.5)(terser@5.24.0):
@@ -9301,46 +9183,6 @@ packages:
       sass: 1.69.5
     optionalDependencies:
       fsevents: 2.3.3
-
-  /vscode-jsonrpc@6.0.0:
-    resolution: {integrity: sha512-wnJA4BnEjOSyFMvjZdpiOwhSq9uDoK8e/kpRJDTaMYzwlkrhG1fwDIZI94CLsLzlCK5cIbMMtFlJlfR57Lavmg==}
-    engines: {node: '>=8.0.0 || >=10.0.0'}
-    dev: false
-
-  /vscode-languageclient@7.0.0:
-    resolution: {integrity: sha512-P9AXdAPlsCgslpP9pRxYPqkNYV7Xq8300/aZDpO35j1fJm/ncize8iGswzYlcvFw5DQUx4eVk+KvfXdL0rehNg==}
-    engines: {vscode: ^1.52.0}
-    dependencies:
-      minimatch: 3.1.2
-      semver: 7.5.4
-      vscode-languageserver-protocol: 3.16.0
-    dev: false
-
-  /vscode-languageserver-protocol@3.16.0:
-    resolution: {integrity: sha512-sdeUoAawceQdgIfTI+sdcwkiK2KU+2cbEYA0agzM2uqaUy2UpnnGHtWTHVEtS0ES4zHU0eMFRGN+oQgDxlD66A==}
-    dependencies:
-      vscode-jsonrpc: 6.0.0
-      vscode-languageserver-types: 3.16.0
-    dev: false
-
-  /vscode-languageserver-textdocument@1.0.11:
-    resolution: {integrity: sha512-X+8T3GoiwTVlJbicx/sIAF+yuJAqz8VvwJyoMVhwEMoEKE/fkDmrqUgDMyBECcM2A2frVZIUj5HI/ErRXCfOeA==}
-    dev: false
-
-  /vscode-languageserver-types@3.16.0:
-    resolution: {integrity: sha512-k8luDIWJWyenLc5ToFQQMaSrqCHiLwyKPHKPQZ5zz21vM+vIVUSvsRpcbiECH4WR88K2XZqc4ScRcZ7nk/jbeA==}
-    dev: false
-
-  /vscode-languageserver@7.0.0:
-    resolution: {integrity: sha512-60HTx5ID+fLRcgdHfmz0LDZAXYEV68fzwG0JWwEPBode9NuMYTIxuYXPg4ngO8i8+Ou0lM7y6GzaYWbiDL0drw==}
-    hasBin: true
-    dependencies:
-      vscode-languageserver-protocol: 3.16.0
-    dev: false
-
-  /vscode-uri@3.0.8:
-    resolution: {integrity: sha512-AyFQ0EVmsOZOlAnxoFOGOq1SQDWAB7C6aqMGS23svWAllfOaxbuFvcT8D1i8z3Gyn8fraVeZNNmN6e9bxxXkKw==}
-    dev: false
 
   /w3c-hr-time@1.0.2:
     resolution: {integrity: sha512-z8P5DvDNjKDoFIHK7q8r8lackT6l+jo/Ye3HOle7l9nICP9lf1Ci25fy9vHd0JOWewkIFzXIEig3TdKT7JQ5fQ==}

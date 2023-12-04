@@ -1,6 +1,7 @@
 import { Plugin } from 'vite';
 import { swcTransform } from '../swc/transform.js';
 import { readFile } from 'fs/promises';
+import { ResolvedVitePluginAngularOptions } from '../../plugin/plugin-options.js';
 
 type BootstrapFnName = 'bootstrapApplication' | 'renderPage';
 const hmrCode = (bootstrapFnName: BootstrapFnName) => `
@@ -42,58 +43,70 @@ const __${bootstrapFnName} = async (...args) => {
 };
 `;
 
-export const DevelopmentPlugin: Plugin = {
-  name: 'vite-plugin-angular-dev',
-  enforce: 'pre',
-  apply(config, env) {
-    const isBuild = env.command === 'build';
-    return !isBuild;
-  },
-  config(_userConfig, env) {
-    return {
-      esbuild: false,
-    };
-  },
-  transformIndexHtml(html) {
-    const compilerScript = `<script type="module" src="/@angular/compiler"></script>`;
-    return html.replace('</head>', `${compilerScript}</head>`);
-  },
-  async load(id) {
-    if (id === '/@angular/compiler') {
-      const resolved = await this.resolve('@angular/compiler');
-      if (!resolved) {
+export const DevelopmentPlugin = (
+  options: ResolvedVitePluginAngularOptions,
+): Plugin => {
+  return {
+    name: 'vite-plugin-angular-dev',
+    enforce: 'pre',
+    apply(config, env) {
+      const isBuild = env.command === 'build';
+      return options.swc && !isBuild;
+    },
+
+    ...(options.swc && {
+      config(_userConfig, env) {
+        return {
+          esbuild: false,
+        };
+      },
+      async transformIndexHtml(html) {
+        const compilerScript = `<script type="module" src="/@angular/compiler"></script>`;
+        return html.replace('</head>', `${compilerScript}</head>`);
+      },
+      async load(id) {
+        if (id === '/@angular/compiler') {
+          const resolved = await this.resolve('@angular/compiler');
+          if (!resolved) {
+            return null;
+          }
+          const code = await readFile(resolved.id.split('?')[0], 'utf-8');
+          return code;
+        }
         return null;
-      }
-      const code = await readFile(resolved.id.split('?')[0], 'utf-8');
-      return code;
-    }
-    return null;
-  },
-  transform(code, id) {
-    //TODO: do this better
-    const isEntry = id.endsWith('main.ts');
+      },
+    }),
 
-    if (isEntry) {
-      let bootstrapFnName: BootstrapFnName | undefined = undefined;
-      code = code.replace('bootstrapApplication(', match => {
-        bootstrapFnName = 'bootstrapApplication';
-        return '__bootstrapApplication(';
+    transform(code, id) {
+      //TODO: do this better
+      const isEntry = id.endsWith('main.ts');
+
+      if (isEntry) {
+        let bootstrapFnName: BootstrapFnName | undefined = undefined;
+        code = code.replace('bootstrapApplication(', match => {
+          bootstrapFnName = 'bootstrapApplication';
+          return '__bootstrapApplication(';
+        });
+
+        // Won't work because vavite(I think) reloads the page anyway
+        // code = code.replace('renderPage(', match => {
+        //   bootstrapFnName = 'renderPage';
+        //   return '__renderPage(';
+        // });
+
+        if (bootstrapFnName) {
+          code = hmrCode(bootstrapFnName) + code;
+        }
+      }
+
+      if (!options.swc) {
+        return code;
+      }
+
+      return swcTransform({
+        code,
+        id,
       });
-
-      // Won't work because vavite(I think) reloads the page anyway
-      // code = code.replace('renderPage(', match => {
-      //   bootstrapFnName = 'renderPage';
-      //   return '__renderPage(';
-      // });
-
-      if (bootstrapFnName) {
-        code = hmrCode(bootstrapFnName) + code;
-      }
-    }
-
-    return swcTransform({
-      code,
-      id,
-    });
-  },
+    },
+  };
 };

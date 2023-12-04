@@ -46,11 +46,10 @@
     "@angularclass/hmr": "^3.0.0",
     "@babel/core": "^7.22.17",
     "@ngtools/webpack": "^17.0.0",
-    "@nitedani/angular-renderer-core": "*",
+    "@nitedani/angular-renderer-core": "^17.0.0",
     "@swc/core": "1.3.3",
     "defu": "^6.1.2",
-    "swc-ast-helpers": "^0.2.2",
-    "vite-plugin-checker": "^0.6.2"
+    "swc-ast-helpers": "^0.2.2"
   },
   "peerDependencies": {
     "vite": "*"

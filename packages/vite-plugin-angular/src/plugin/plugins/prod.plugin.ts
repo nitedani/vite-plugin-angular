@@ -15,6 +15,7 @@ import { cwd } from 'process';
 import ts from 'typescript';
 import { Plugin } from 'vite';
 import { OptimizerPlugin } from './optimizer.plugin.js';
+import { ResolvedVitePluginAngularOptions } from '../../plugin/plugin-options.js';
 
 interface EmitFileResult {
   code: string;
@@ -24,9 +25,12 @@ interface EmitFileResult {
 }
 type FileEmitter = (file: string) => Promise<EmitFileResult | undefined>;
 
-export const ProductionPlugin = (): Plugin[] => {
+export const ProductionPlugin = (
+  options: ResolvedVitePluginAngularOptions,
+): Plugin[] => {
   const tsconfigPath = join(cwd(), 'tsconfig.json');
   const workspaceRoot = cwd();
+  let isBuild = false;
 
   let rootNames: string[] = [];
   let compilerOptions: any = {};
@@ -39,6 +43,7 @@ export const ProductionPlugin = (): Plugin[] => {
       compilerOptions,
       host as CompilerHost,
     );
+
     const angularCompiler = angularProgram.compiler;
     const typeScriptProgram = angularProgram.getTsProgram();
     const builder = ts.createAbstractBuilder(typeScriptProgram, host);
@@ -47,8 +52,7 @@ export const ProductionPlugin = (): Plugin[] => {
 
     const msg = ts.formatDiagnosticsWithColorAndContext(diagnostics, host);
     if (msg) {
-      console.log(msg);
-      process.exit(1);
+      return msg;
     }
 
     fileEmitter = createFileEmitter(
@@ -64,13 +68,12 @@ export const ProductionPlugin = (): Plugin[] => {
     {
       name: 'vite-plugin-angular-prod',
       enforce: 'pre',
-      apply(config, env) {
-        const isBuild = env.command === 'build';
-        return isBuild;
-      },
-      //TODO: fix this
-      //@ts-ignore
+
       config(_userConfig, env) {
+        isBuild = env.command === 'build';
+        if (options.swc && !isBuild) {
+          return;
+        }
         return {
           optimizeDeps: {
             esbuildOptions: {
@@ -105,34 +108,11 @@ export const ProductionPlugin = (): Plugin[] => {
           },
         };
       },
-
-      async buildStart(options) {
-        const { options: tsCompilerOptions, rootNames: rn } = readConfiguration(
-          tsconfigPath,
-          {
-            enableIvy: true,
-            compilationMode: 'full',
-            noEmitOnError: false,
-            suppressOutputPathCheck: true,
-            outDir: undefined,
-            inlineSources: false,
-            inlineSourceMap: false,
-            sourceMap: false,
-            mapRoot: undefined,
-            sourceRoot: undefined,
-            declaration: false,
-            declarationMap: false,
-            allowEmptyCodegenFiles: false,
-            annotationsAs: 'decorators',
-            enableResourceInlining: false,
-          },
-        );
-        rootNames = rn;
-        compilerOptions = tsCompilerOptions;
-        host = ts.createIncrementalCompilerHost(compilerOptions);
-        await buildAndAnalyze();
-      },
       async transform(code, id) {
+        if (options.swc && !isBuild) {
+          return;
+        }
+
         if (id.includes('node_modules')) {
           return;
         }
@@ -170,8 +150,48 @@ export const ProductionPlugin = (): Plugin[] => {
 
         return undefined;
       },
+
+      async buildStart(options) {
+        const { options: tsCompilerOptions, rootNames: rn } = readConfiguration(
+          tsconfigPath,
+          {
+            enableIvy: true,
+            compilationMode: 'full',
+            noEmitOnError: false,
+            suppressOutputPathCheck: true,
+            outDir: undefined,
+            inlineSources: false,
+            inlineSourceMap: false,
+            sourceMap: false,
+            mapRoot: undefined,
+            sourceRoot: undefined,
+            declaration: false,
+            declarationMap: false,
+            allowEmptyCodegenFiles: false,
+            annotationsAs: 'decorators',
+            enableResourceInlining: false,
+          },
+        );
+        rootNames = rn;
+        compilerOptions = tsCompilerOptions;
+        host = ts.createIncrementalCompilerHost(compilerOptions);
+        const msg = await buildAndAnalyze();
+        if (msg) {
+          console.log(msg);
+          if (isBuild) {
+            process.exit(1);
+          }
+        }
+      },
+      async handleHotUpdate(ctx) {
+        const msg = await buildAndAnalyze();
+        if (msg) {
+          console.log(msg);
+          return [];
+        }
+      },
     },
-    OptimizerPlugin,
+    OptimizerPlugin(options),
   ];
 };
 

@@ -4,16 +4,6 @@ import { AngularComponents, AngularInjector } from './index.js';
 const fileExtensionRE = /\.[^/\s?]+$/;
 
 export const swcTransform = async ({ code, id }) => {
-  const minifyOptions: JsMinifyOptions = {
-    compress: false,
-    mangle: false,
-    ecma: '2020',
-    module: true,
-    format: {
-      comments: false,
-    },
-  };
-
   if (id.includes('node_modules')) {
     return;
   }
@@ -40,7 +30,6 @@ export const swcTransform = async ({ code, id }) => {
         decoratorMetadata: true,
         legacyDecorator: true,
       },
-      minify: minifyOptions,
     },
     minify: false,
     plugin: plugins([
