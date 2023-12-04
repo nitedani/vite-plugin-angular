@@ -1,6 +1,6 @@
 {
   "name": "vite-ng-material-app",
-  "version": "17.0.6",
+  "version": "17.0.7",
   "type": "module",
   "private": true,
   "scripts": {
