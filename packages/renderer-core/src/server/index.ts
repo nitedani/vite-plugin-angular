@@ -117,6 +117,7 @@ export interface RenderToStringOptions<T = any, U = any>
   serverUrl?: string;
   indexHtml?: boolean;
   root?: string;
+  url?: string;
 }
 
 export const renderToString = async <T, U>({
@@ -130,6 +131,7 @@ export const renderToString = async <T, U>({
   indexHtml,
   root,
   selector,
+  url,
 }: RenderToStringOptions<T, U>) => {
   const rootComponent = layout ?? page;
   selector ??= 'app-root';
@@ -137,6 +139,7 @@ export const renderToString = async <T, U>({
   rootComponent.ɵcmp.selectors = [[selector]];
   document ??= `<${selector}></${selector}>`;
   root ??= join(__dirname, '..', 'client');
+  const urlOriginal = url ?? pageContext?.urlOriginal;
 
   if (indexHtml) {
     const documentPath = import.meta.env.DEV
@@ -204,6 +207,7 @@ export const renderToString = async <T, U>({
       }),
     {
       document,
+      url: urlOriginal,
     },
   );
 };
