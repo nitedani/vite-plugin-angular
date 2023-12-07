@@ -11,7 +11,7 @@ export function angular(options?: VitePluginAngularOptions): Plugin[] {
     swc: false,
   });
   const plugins = [
-    CommonPlugin(resolvedOptions),
+    ...CommonPlugin(resolvedOptions),
     DirImporterPlugin,
     DevelopmentPlugin(resolvedOptions),
     ...ProductionPlugin(resolvedOptions),

@@ -11,11 +11,10 @@ import {
   mergeTransformers,
   replaceBootstrap,
 } from '@ngtools/webpack/src/ivy/transformation.js';
-import { cwd } from 'process';
 import ts from 'typescript';
 import { Plugin } from 'vite';
-import { OptimizerPlugin } from './optimizer.plugin.js';
 import { ResolvedVitePluginAngularOptions } from '../../plugin/plugin-options.js';
+import { OptimizerPlugin } from './optimizer.plugin.js';
 
 interface EmitFileResult {
   code: string;
@@ -28,8 +27,9 @@ type FileEmitter = (file: string) => Promise<EmitFileResult | undefined>;
 export const ProductionPlugin = (
   options: ResolvedVitePluginAngularOptions,
 ): Plugin[] => {
-  const tsconfigPath = join(cwd(), 'tsconfig.json');
-  const workspaceRoot = cwd();
+  let root = '';
+  let tsconfigPath = '';
+  let workspaceRoot = '';
   let isBuild = false;
 
   let rootNames: string[] = [];
@@ -66,10 +66,12 @@ export const ProductionPlugin = (
 
   return [
     {
-      name: 'vite-plugin-angular-prod',
-      enforce: 'pre',
-
+      name: 'vite-plugin-angular-prod-post',
+      enforce: 'post',
       config(_userConfig, env) {
+        root = globalThis.__vite_plugin_angular.root;
+        workspaceRoot = globalThis.__vite_plugin_angular.workspaceRoot;
+        tsconfigPath = join(root, 'tsconfig.json');
         isBuild = env.command === 'build';
         if (options.swc && !isBuild) {
           return;
@@ -108,6 +110,10 @@ export const ProductionPlugin = (
           },
         };
       },
+    },
+    {
+      name: 'vite-plugin-angular-prod',
+      enforce: 'pre',
       async transform(code, id) {
         if (options.swc && !isBuild) {
           return;

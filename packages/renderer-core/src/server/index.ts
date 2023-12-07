@@ -1,44 +1,43 @@
-import '@angular/compiler';
-import '@angular/platform-server/init';
-import 'zone.js/node';
+import { XhrFactory } from '@angular/common';
 import {
-  provideHttpClient,
-  withInterceptorsFromDi,
+  HTTP_INTERCEPTORS,
   HttpHandler,
   HttpRequest,
-  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
 } from '@angular/common/http';
+import '@angular/compiler';
 import {
   APP_BOOTSTRAP_LISTENER,
   ApplicationRef,
   Component,
   ComponentRef,
-  enableProdMode,
-  importProvidersFrom,
   ImportProvidersSource,
   InjectionToken,
   NgZone,
   Provider,
   Type,
+  enableProdMode,
+  importProvidersFrom,
 } from '@angular/core';
-import {
-  provideServerRendering,
-  renderApplication,
-} from '@angular/platform-server';
 import {
   bootstrapApplication,
   provideClientHydration,
 } from '@angular/platform-browser';
-import { LayoutComponent, mountPage } from '../shared/mountPage.js';
-import { XhrFactory } from '@angular/common';
-import xhr2 from 'xhr2';
+import {
+  provideServerRendering,
+  renderApplication,
+} from '@angular/platform-server';
+import '@angular/platform-server/init';
 import { readFile } from 'fs/promises';
 import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
 import { filter, firstValueFrom } from 'rxjs';
+import { fileURLToPath } from 'url';
+import xhr2 from 'xhr2';
+import 'zone.js/node';
+import { LayoutComponent, mountPage } from '../shared/mountPage.js';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
-//@ts-ignore
-import { projectRoot, swc } from 'virtual:vite-plugin-angular';
 
 export class ServerXhr implements XhrFactory {
   build(): XMLHttpRequest {
@@ -133,6 +132,8 @@ export const renderToString = async <T, U>({
   selector,
   url,
 }: RenderToStringOptions<T, U>) => {
+  const { root: projectRoot, swc } = globalThis.__vite_plugin_angular;
+
   const rootComponent = layout ?? page;
   selector ??= 'app-root';
   //@ts-ignore
