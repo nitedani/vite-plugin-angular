@@ -1,41 +1,41 @@
-import { XhrFactory } from '@angular/common';
+import '@angular/compiler';
+import '@angular/platform-server/init';
+import 'zone.js/node';
 import {
-  HTTP_INTERCEPTORS,
-  HttpHandler,
-  HttpRequest,
   provideHttpClient,
   withInterceptorsFromDi,
+  HttpHandler,
+  HttpRequest,
+  HTTP_INTERCEPTORS,
 } from '@angular/common/http';
-import '@angular/compiler';
 import {
   APP_BOOTSTRAP_LISTENER,
   ApplicationRef,
   Component,
   ComponentRef,
+  enableProdMode,
+  importProvidersFrom,
   ImportProvidersSource,
   InjectionToken,
   NgZone,
   Provider,
   Type,
-  enableProdMode,
-  importProvidersFrom,
 } from '@angular/core';
-import {
-  bootstrapApplication,
-  provideClientHydration,
-} from '@angular/platform-browser';
 import {
   provideServerRendering,
   renderApplication,
 } from '@angular/platform-server';
-import '@angular/platform-server/init';
+import {
+  bootstrapApplication,
+  provideClientHydration,
+} from '@angular/platform-browser';
+import { LayoutComponent, mountPage } from '../shared/mountPage.js';
+import { XhrFactory } from '@angular/common';
+import xhr2 from 'xhr2';
 import { readFile } from 'fs/promises';
 import { dirname, join } from 'path';
-import { filter, firstValueFrom } from 'rxjs';
 import { fileURLToPath } from 'url';
-import xhr2 from 'xhr2';
-import 'zone.js/node';
-import { LayoutComponent, mountPage } from '../shared/mountPage.js';
+import { filter, firstValueFrom } from 'rxjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
