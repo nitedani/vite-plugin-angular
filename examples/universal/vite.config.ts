@@ -5,7 +5,7 @@ import { vavite } from 'vavite';
 
 export default defineConfig({
   plugins: [
-    angular(),
+    angular({ swc: true }),
     vavite({
       serverEntry: '/server/main.ts',
       serveClientAssetsInDev: true,

@@ -8,7 +8,7 @@ import defu from 'defu';
 
 export function angular(options?: VitePluginAngularOptions): Plugin[] {
   const resolvedOptions = defu(options, {
-    swc: false,
+    swc: true,
   });
   const plugins = [
     ...CommonPlugin(resolvedOptions),

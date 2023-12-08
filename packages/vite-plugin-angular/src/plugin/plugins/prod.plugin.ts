@@ -12,8 +12,13 @@ import {
   replaceBootstrap,
 } from '@ngtools/webpack/src/ivy/transformation.js';
 import ts from 'typescript';
-import { Plugin } from 'vite';
+import { Plugin, PluginContainer, ViteDevServer } from 'vite';
 import { ResolvedVitePluginAngularOptions } from '../../plugin/plugin-options.js';
+import {
+  StyleUrlsResolver,
+  TemplateUrlsResolver,
+} from './component.resolver.js';
+import { augmentHostWithResources } from './host.js';
 import { OptimizerPlugin } from './optimizer.plugin.js';
 
 interface EmitFileResult {
@@ -36,6 +41,11 @@ export const ProductionPlugin = (
   let compilerOptions: any = {};
   let host: ts.CompilerHost;
   let fileEmitter: FileEmitter | undefined;
+  let viteServer: ViteDevServer | undefined;
+  let cssPlugin: Plugin | undefined;
+  let styleTransform: PluginContainer['transform'] | undefined;
+  const styleResolver = new StyleUrlsResolver();
+  const templateResolver = new TemplateUrlsResolver();
 
   async function buildAndAnalyze() {
     const angularProgram: NgtscProgram = new NgtscProgram(
@@ -68,6 +78,9 @@ export const ProductionPlugin = (
     {
       name: 'vite-plugin-angular-prod-post',
       enforce: 'post',
+      apply(config, env) {
+        return env.command === 'build' || !options.swc;
+      },
       config(_userConfig, env) {
         root = globalThis.__vite_plugin_angular.root;
         workspaceRoot = globalThis.__vite_plugin_angular.workspaceRoot;
@@ -114,6 +127,9 @@ export const ProductionPlugin = (
     {
       name: 'vite-plugin-angular-prod',
       enforce: 'pre',
+      apply(config, env) {
+        return env.command === 'build' || !options.swc;
+      },
       async transform(code, id) {
         if (options.swc && !isBuild) {
           return;
@@ -121,6 +137,19 @@ export const ProductionPlugin = (
 
         if (id.includes('node_modules')) {
           return;
+        }
+
+        if (!isBuild) {
+          for (const urlSet of [
+            ...templateResolver.resolve(code, id),
+            ...styleResolver.resolve(code, id),
+          ]) {
+            // `urlSet` is a string where a relative path is joined with an
+            // absolute path using the `|` symbol.
+            // For example: `./app.component.html|/home/projects/analog/src/app/app.component.html`.
+            const [, absoluteFileUrl] = urlSet.split('|');
+            this.addWatchFile(absoluteFileUrl);
+          }
         }
 
         if (/\.[cm]?tsx?$/.test(id)) {
@@ -156,8 +185,18 @@ export const ProductionPlugin = (
 
         return undefined;
       },
+      configureServer(server) {
+        viteServer = server;
+      },
 
-      async buildStart(options) {
+      async buildStart({ plugins }) {
+        if (Array.isArray(plugins)) {
+          cssPlugin = plugins.find(plugin => plugin.name === 'vite:css');
+        }
+        styleTransform = isBuild
+          ? (cssPlugin!.transform as PluginContainer['transform'])
+          : viteServer!.pluginContainer.transform;
+
         const { options: tsCompilerOptions, rootNames: rn } = readConfiguration(
           tsconfigPath,
           {
@@ -178,9 +217,15 @@ export const ProductionPlugin = (
             enableResourceInlining: false,
           },
         );
+
         rootNames = rn;
         compilerOptions = tsCompilerOptions;
         host = ts.createIncrementalCompilerHost(compilerOptions);
+        if (!options.swc || isBuild) {
+          augmentHostWithResources(host, styleTransform, {
+            inlineStylesExtension: 'scss',
+          });
+        }
         const msg = await buildAndAnalyze();
         if (msg) {
           console.log(msg);
@@ -191,10 +236,12 @@ export const ProductionPlugin = (
       },
       async handleHotUpdate(ctx) {
         const msg = await buildAndAnalyze();
+
         if (msg) {
           console.log(msg);
           return [];
         }
+        return ctx.modules;
       },
     },
     OptimizerPlugin(options),
