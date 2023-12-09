@@ -22,3 +22,6 @@ jobs:
 
       - name: Build examples
         run: pnpm --filter {examples/*} run build
+
+      - name: Test examples
+        run: pnpm run test
