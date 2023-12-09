@@ -1,0 +1,24 @@
+name: CI
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+      - run: pnpm install
+
+      - name: Build packages
+        run: pnpm --filter {packages/*} run build
+
+      - name: Build examples
+        run: pnpm --filter {examples/*} run build
