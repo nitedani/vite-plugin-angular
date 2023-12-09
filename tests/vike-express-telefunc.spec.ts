@@ -11,7 +11,7 @@ test.beforeAll(async () => {
     await killPort(port);
   } catch (error) {}
   const cp = exec(
-    `cd ${folder} && node node_modules/vite/bin/vite --port ${port} --strictPort`
+    `cd ${folder} && node node_modules/vite/bin/vite --host 127.0.0.1 --port ${port} --strictPort`
   );
   cp.stdout?.pipe(process.stdout);
   cp.stderr?.pipe(process.stderr);
