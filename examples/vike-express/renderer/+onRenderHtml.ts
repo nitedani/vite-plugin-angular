@@ -1,6 +1,6 @@
 export { onRenderHtml };
 
-import { renderToString } from '@nitedani/vite-plugin-angular/server';
+import { renderToString } from '@vikejs/vite-plugin-angular/server';
 import { dangerouslySkipEscape, escapeInject } from 'vike/server';
 import logoUrl from './logo.svg';
 import { PageContext, type PageContextServer } from './types';
@@ -33,6 +33,7 @@ const onRenderHtml = async (pageContext: PageContextServer) => {
       imports: [SharedModule],
       providers: [{ provide: PageContext, useValue: pageContext }],
       document,
+      serverUrl: `${pageContext.req.protocol}://${pageContext.req.get('host')}`,
     });
   }
 

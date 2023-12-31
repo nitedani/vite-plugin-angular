@@ -1,5 +1,5 @@
-import { JsMinifyOptions, plugins, Program, transform } from '@swc/core';
-import { AngularComponents, AngularInjector } from './index.js';
+import { plugins, Program, transform } from '@swc/core';
+import { AngularComponents, AngularInjector } from './visitors/index.js';
 
 const fileExtensionRE = /\.[^/\s?]+$/;
 

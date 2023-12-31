@@ -1,0 +1,1 @@
+Files in this directory are compiled using the Angular AOT compiler on pnpm build.

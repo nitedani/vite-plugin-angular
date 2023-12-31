@@ -1,5 +1,5 @@
 {
-  "name": "@vikejs/vite-plugin-angular",
+  "name": "@vikejs/angular-renderer-core",
   "version": "17.0.11",
   "license": "MIT",
   "type": "module",
@@ -12,23 +12,23 @@
     "url": "https://github.com/vikejs/vite-plugin-angular"
   },
   "scripts": {
-    "build": "rimraf lib && tsc -b"
+    "build": "rimraf lib && tsc -b && node scripts/compile-angular"
   },
   "exports": {
-    "./plugin": "./lib/plugin/index.js",
+    ".": "./lib/index.js",
     "./server": "./lib/server/index.js",
     "./client": "./lib/client/index.js"
   },
   "typesVersions": {
     "*": {
-      "plugin": [
-        "lib/plugin/index.d.ts"
-      ],
       "server": [
         "lib/server/index.d.ts"
       ],
       "client": [
         "lib/client/index.d.ts"
+      ],
+      "*": [
+        "lib/index.d.ts"
       ]
     }
   },
@@ -36,22 +36,26 @@
     "lib"
   ],
   "dependencies": {
-    "@angular-devkit/build-angular": "^17.0.0",
-    "@angular/compiler": "^17.0.0",
-    "@angular/compiler-cli": "^17.0.0",
-    "@babel/core": "^7.22.17",
-    "@ngtools/webpack": "^17.0.0",
-    "@vikejs/angular-renderer-core": "^17.0.0",
-    "@swc/core": "1.3.3",
-    "swc-ast-helpers": "^0.2.2"
+    "rxjs": "^7.8.1"
   },
   "peerDependencies": {
-    "vite": "*"
+    "@angular/core": "^17.0.0",
+    "@angular/common": "^17.0.0",
+    "@angular/platform-browser": "^17.0.0",
+    "@angular/platform-server": "^17.0.0",
+    "zone.js": "*",
+    "vite": "^5.0.10"
   },
   "devDependencies": {
+    "@angular/compiler": "^17.0.0",
+    "@angular/compiler-cli": "^17.0.8",
+    "@angular/core": "^17.0.0",
+    "@angular/platform-browser": "^17.0.0",
+    "@angular/platform-server": "^17.0.0",
     "@types/node": "^18.17.15",
     "rimraf": "^3.0.2",
     "typescript": "5.2.2",
+    "zone.js": "^0.14.2",
     "vite": "^5.0.10"
   },
   "prettier": {

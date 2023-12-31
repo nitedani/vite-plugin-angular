@@ -11,7 +11,7 @@ export default class Page implements OnInit {
   pageContext = inject(PageContext);
 
   ngOnInit(): void {
-    console.log(this.appService.getHello());
+    this.appService.getHello();
     console.log('Page props', this.pageContext.pageProps);
   }
 }

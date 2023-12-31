@@ -1,4 +1,4 @@
-import { angular } from '@nitedani/vite-plugin-angular/plugin';
+import { angular } from '@vikejs/vite-plugin-angular/plugin';
 import { vavite } from 'vavite';
 import { defineConfig } from 'vite';
 import vike from 'vike/plugin';
@@ -15,6 +15,6 @@ export default defineConfig({
       serveClientAssetsInDev: true,
     }),
     angular(),
-    vike({ disableAutoFullBuild: true }),
+    vike(),
   ],
 });

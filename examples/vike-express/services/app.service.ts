@@ -1,8 +1,13 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return `Hello from ${import.meta.env.SSR ? 'server' : 'client'}`;
+  httpClient = inject(HttpClient);
+  async getHello() {
+    const response = await this.httpClient
+      .get<{ message: string }>('/api/hello')
+      .toPromise();
+    console.log(response?.message);
   }
 }

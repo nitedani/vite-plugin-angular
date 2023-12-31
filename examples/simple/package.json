@@ -1,5 +1,5 @@
 {
-  "name": "vite-ng-app",
+  "name": "simple",
   "version": "17.0.11",
   "type": "module",
   "private": true,
@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@angular/common": "^17.0.0",
-    "@angular/compiler": "^17.0.0",
     "@angular/core": "^17.0.0",
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
@@ -18,7 +17,8 @@
     "zone.js": "^0.14.2"
   },
   "devDependencies": {
-    "@nitedani/vite-plugin-angular": "*",
+    "@angular/compiler": "^17.0.0",
+    "@vikejs/vite-plugin-angular": "^17.0.0",
     "sass": "^1.66.1",
     "typescript": "5.2.2",
     "vite": "^5.0.0"

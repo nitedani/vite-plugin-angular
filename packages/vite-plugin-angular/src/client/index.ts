@@ -1,1 +1,1 @@
-export * from '@nitedani/angular-renderer-core/client';
+export * from '@vikejs/angular-renderer-core/client';
