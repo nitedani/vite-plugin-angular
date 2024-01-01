@@ -2,7 +2,6 @@
 - vike
 - angular
 - express
-- vavite
 
 How to run:
 

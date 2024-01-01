@@ -1,10 +1,18 @@
-export { ConfigPlugin };
+export { ConfigPlugin, getGlobalConfig };
 
 import { resolve } from 'path';
 import { cwd } from 'process';
+import { getGlobalObject } from '../../utils/getGlobalObject.js';
 import { Plugin, normalizePath, searchForWorkspaceRoot } from 'vite';
 
-globalThis.__vite_plugin_angular = {};
+const globalObject = getGlobalObject('angularConfigPlugin.ts', {
+  root: undefined as string | undefined,
+  workspaceRoot: undefined as string | undefined,
+});
+
+function getGlobalConfig() {
+  return globalObject;
+}
 
 const ConfigPlugin: Plugin[] = [
   {
@@ -17,9 +25,8 @@ const ConfigPlugin: Plugin[] = [
       const configResolvedRoot = normalizePath(
         config.root ? resolve(config.root) : cwd(),
       );
-      globalThis.__vite_plugin_angular.root = configResolvedRoot;
-      globalThis.__vite_plugin_angular.workspaceRoot =
-        searchForWorkspaceRoot(configResolvedRoot);
+      globalObject.root = configResolvedRoot;
+      globalObject.workspaceRoot = searchForWorkspaceRoot(configResolvedRoot);
     },
   },
   {

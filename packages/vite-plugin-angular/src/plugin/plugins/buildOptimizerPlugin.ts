@@ -31,6 +31,8 @@ export const BuildOptimizerPlugin: Plugin = {
           // NOTE: If esbuild adds support in the future, the babel support for these can be disabled.
           'async-generator': false,
           'for-await': false,
+          'class-field': false,
+          'class-static-field': false,
         },
       },
     };

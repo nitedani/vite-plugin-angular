@@ -1,7 +1,8 @@
 export { BuildPlugin };
 
 import angularApplicationPreset from '@angular-devkit/build-angular/src/tools/babel/presets/application.js';
-import { createCompilerPlugin } from '@angular-devkit/build-angular/src/tools/esbuild/angular/compiler-plugin.js';
+import { CompilerPluginOptions } from '@angular-devkit/build-angular/src/tools/esbuild/angular/compiler-plugin.js';
+import { JavaScriptTransformer } from '@angular-devkit/build-angular/src/tools/esbuild/javascript-transformer.js';
 import {
   CompilerHost,
   join,
@@ -14,8 +15,15 @@ import {
   replaceBootstrap,
 } from '@ngtools/webpack/src/ivy/transformation.js';
 import ts from 'typescript';
-import { normalizePath, Plugin, PluginContainer } from 'vite';
+import {
+  DepOptimizationConfig,
+  normalizePath,
+  Plugin,
+  PluginContainer,
+} from 'vite';
+import { assert } from '../../utils/assert.js';
 import { BuildOptimizerPlugin } from './buildOptimizerPlugin.js';
+import { getGlobalConfig } from './configPlugin.js';
 
 interface EmitFileResult {
   code: string;
@@ -26,9 +34,7 @@ interface EmitFileResult {
 type FileEmitter = (file: string) => Promise<EmitFileResult | undefined>;
 
 const BuildPlugin = (): Plugin[] => {
-  let root = '';
   let tsconfigPath = '';
-  let workspaceRoot = '';
 
   let rootNames: string[] = [];
   let compilerOptions: any = {};
@@ -71,33 +77,25 @@ const BuildPlugin = (): Plugin[] => {
         return env.command === 'build';
       },
       config(_userConfig, env) {
-        root = globalThis.__vite_plugin_angular.root;
-        workspaceRoot = globalThis.__vite_plugin_angular.workspaceRoot;
+        const { root, workspaceRoot } = getGlobalConfig();
+        assert(root);
+        assert(workspaceRoot);
+
+        //TODO: users may name it tsconfig.app.json(angular cli convention)
+        // add wrong usage message -> rename it to tsconfig.json
         tsconfigPath = join(root, 'tsconfig.json');
         return {
           optimizeDeps: {
+            include: ['rxjs/operators', 'rxjs'],
+            exclude: ['@angular/platform-server'],
             esbuildOptions: {
               plugins: [
-                createCompilerPlugin(
-                  {
-                    tsconfig: tsconfigPath,
-                    sourcemap: false,
-                    advancedOptimizations: true,
-                    incremental: true,
-                  },
-                  {
-                    workspaceRoot,
-                    // browsers: ['safari 15'],
-                    outputNames: {
-                      bundles: '[name]',
-                      media: '',
-                    },
-                    sourcemap: false,
-                    optimization: true,
-                    target: ['es2020'],
-                    inlineStyleLanguage: 'scss',
-                  },
-                ),
+                createCompilerPlugin({
+                  tsconfig: tsconfigPath,
+                  sourcemap: false,
+                  advancedOptimizations: true,
+                  incremental: true,
+                }),
               ],
               define: {
                 ngDevMode: 'false',
@@ -157,21 +155,17 @@ const BuildPlugin = (): Plugin[] => {
         const { options: tsCompilerOptions, rootNames: rn } = readConfiguration(
           tsconfigPath,
           {
-            enableIvy: true,
             compilationMode: 'full',
-            noEmitOnError: false,
             suppressOutputPathCheck: true,
             outDir: undefined,
-            inlineSources: false,
             inlineSourceMap: false,
-            sourceMap: false,
-            mapRoot: undefined,
-            sourceRoot: undefined,
+            inlineSources: false,
             declaration: false,
             declarationMap: false,
             allowEmptyCodegenFiles: false,
             annotationsAs: 'decorators',
             enableResourceInlining: false,
+            supportTestBed: false,
           },
         );
 
@@ -195,15 +189,6 @@ const BuildPlugin = (): Plugin[] => {
           console.log(msg);
           process.exit(1);
         }
-      },
-      async handleHotUpdate(ctx) {
-        const msg = await buildAndAnalyze();
-
-        if (msg) {
-          console.log(msg);
-          return [];
-        }
-        return ctx.modules;
       },
     },
     BuildOptimizerPlugin,
@@ -293,5 +278,29 @@ function augmentHostWithResources(
     }
 
     return null;
+  };
+}
+
+type EsbuildOptions = NonNullable<DepOptimizationConfig['esbuildOptions']>;
+type EsbuildPlugin = NonNullable<EsbuildOptions['plugins']>[number];
+function createCompilerPlugin(
+  pluginOptions: CompilerPluginOptions,
+): EsbuildPlugin {
+  const javascriptTransformer = new JavaScriptTransformer(pluginOptions, 1);
+
+  return {
+    name: 'vite-plugin-angular-deps-optimizer',
+    async setup(build) {
+      build.onLoad({ filter: /\.[cm]?js$/ }, async args => {
+        const contents = await javascriptTransformer.transformFile(args.path);
+
+        return {
+          contents,
+          loader: 'js',
+        };
+      });
+
+      build.onEnd(() => javascriptTransformer.close());
+    },
   };
 }

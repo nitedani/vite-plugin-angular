@@ -4,9 +4,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "vite --open",
+    "dev": "npm run server:dev",
+    "prod": "npm run build && npm run server:prod",
     "build": "vite build",
-    "prod": "pnpm run build && cross-env NODE_ENV=production node dist/server/index.mjs"
+    "server:dev": "node ./server",
+    "server:prod": "cross-env NODE_ENV=production node ./server"
   },
   "dependencies": {
     "@angular/animations": "^17.0.0",
@@ -29,7 +31,6 @@
     "cross-env": "^7.0.3",
     "sass": "^1.66.1",
     "typescript": "5.2.2",
-    "vavite": "^3.0.0",
     "vite": "^5.0.0"
   },
   "prettier": {
