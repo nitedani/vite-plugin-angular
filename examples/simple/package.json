@@ -1,6 +1,6 @@
 {
   "name": "simple",
-  "version": "17.0.11",
+  "version": "17.0.12",
   "type": "module",
   "private": true,
   "scripts": {

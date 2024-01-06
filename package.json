@@ -1,6 +1,6 @@
 {
   "name": "@vikejs/vite-plugin-angular",
-  "version": "17.0.11",
+  "version": "17.0.12",
   "private": true,
   "type": "module",
   "scripts": {
