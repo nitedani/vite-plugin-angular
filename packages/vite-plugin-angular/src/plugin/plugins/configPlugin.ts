@@ -37,9 +37,9 @@ const ConfigPlugin: Plugin[] = [
         ssr: {
           external: ['reflect-metadata', 'xhr2'],
           noExternal: [
-            /@vikejs\/vite-plugin-angular/,
-            /@vikejs\/angular-renderer-core/,
-            /vike-adapter-.*/,
+            '@vikejs/vite-plugin-angular',
+            '@vikejs/angular-renderer-core',
+            'vike-angular',
             /@angular\/platform/,
           ],
         },
